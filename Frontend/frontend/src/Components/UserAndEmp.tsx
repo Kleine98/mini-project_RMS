@@ -17,7 +17,7 @@ function UserAndEmp() {
         <div className="content-right">
           <h1>Employee</h1>
           <Link to="/Emplogin">
-            <button className="content-button">Select</button>
+            <button className="content-button">Select Emp</button>
           </Link>
         </div>
       </div>
