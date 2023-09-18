@@ -1,7 +1,19 @@
-import React from "react";
+import { useState } from "react";
 import "./Userlogin.css";
 
 function Userlogin() {
+  const [inputs, setInputs] = useState({});
+
+  const handleChange = (event) => {
+    const name = event.target.name;
+    const value = event.target.value;
+    setInputs((values) => ({ ...values, [name]: value }));
+  };
+
+  const handleSubmit = (event) => {
+    event.preventDefault();
+    alert(inputs);
+  };
   return (
     <>
       <div className="logincontainer">
@@ -10,13 +22,19 @@ function Userlogin() {
           <div className="icon">
             <i className="fas fa-user"></i>
           </div>
-          <form className="login-form" action="#" method="post">
+          <form
+            className="login-form"
+            action="#"
+            method="post"
+            onSubmit={handleSubmit}
+          >
             <div className="form-group">
               <label className="username">Username:</label>
               <input
                 type="text"
-                id="username"
                 name="username"
+                value={inputs.username || ""}
+                onChange={handleChange}
                 placeholder="Enter your username"
                 required
               ></input>
@@ -25,8 +43,9 @@ function Userlogin() {
               <label className="password">Password:</label>
               <input
                 type="password"
-                id="password"
                 name="password"
+                value={inputs.password || ""}
+                onChange={handleChange}
                 placeholder="Enter your password"
                 required
               ></input>
