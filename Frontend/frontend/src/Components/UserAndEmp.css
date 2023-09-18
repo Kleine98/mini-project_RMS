@@ -1,0 +1,30 @@
+.content {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  height: 80vh; /* Adjust the height as needed */
+}
+
+.content-left,
+.content-right {
+  flex: 1;
+  text-align: center;
+}
+
+.content-button {
+  margin-top: 20px;
+  background-color: #333;
+  color: #fff;
+  padding: 10px 20px;
+  text-decoration: none;
+  border: none;
+  border-radius: 5px;
+  font-weight: bold;
+  font-size: 1rem;
+  cursor: pointer;
+}
+
+.content-button a {
+  text-decoration: none;
+  color: #fff;
+}
