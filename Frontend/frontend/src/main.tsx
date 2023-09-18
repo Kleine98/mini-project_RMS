@@ -10,6 +10,17 @@ import Userlogin from "./Components/Userlogin";
 import About from "./Components/About";
 import Job from "./Components/Job";
 import Contact from "./Components/Contact";
+import HomeEmp from "./Components/HomeEmp";
+import EmpRequest from "./Components/EmpRequest";
+import EmpUser from "./Components/EmpUser";
+import HrHome from "./Components/HrHome";
+import HrEmployee from "./Components/HrEmployee";
+import HrRequest from "./Components/HrRequest";
+import HrUser from "./Components/HrUser";
+import SuperHome from "./Components/SuperHome";
+import SuperEmployee from "./Components/SuperEmployee";
+import SuperRequest from "./Components/SuperRequest";
+import SuperUser from "./Components/SuperUser";
 
 const router = createBrowserRouter([
   {
@@ -39,6 +50,50 @@ const router = createBrowserRouter([
   {
     path: "/Userlogin",
     element: <Userlogin />,
+  },
+  {
+    path: "/HomeEmp",
+    element: <HomeEmp />,
+  },
+  {
+    path: "/Request",
+    element: <EmpRequest />,
+  },
+  {
+    path: "/User",
+    element: <EmpUser />,
+  },
+  {
+    path: "/HrHome",
+    element: <HrHome />,
+  },
+  {
+    path: "/HrEmployee",
+    element: <HrEmployee />,
+  },
+  {
+    path: "/HrRequest",
+    element: <HrRequest />,
+  },
+  {
+    path: "/HrUser",
+    element: <HrUser />,
+  },
+  {
+    path: "/SuperHome",
+    element: <SuperHome />,
+  },
+  {
+    path: "/SuperEmployee",
+    element: <SuperEmployee />,
+  },
+  {
+    path: "/SuperRequest",
+    element: <SuperRequest />,
+  },
+  {
+    path: "/SuperUser",
+    element: <SuperUser />,
   },
 ]);
 
