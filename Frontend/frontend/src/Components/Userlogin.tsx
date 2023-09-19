@@ -53,6 +53,9 @@ function Userlogin() {
             <div className="form-group">
               <input type="submit" value="Login"></input>
             </div>
+            <div className="sign_up">
+              <input type="submit" value="Sign Up"></input>
+            </div>
           </form>
         </div>
       </div>

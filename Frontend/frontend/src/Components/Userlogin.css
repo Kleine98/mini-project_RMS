@@ -44,3 +44,16 @@ h2 {
   border: none;
   cursor: pointer;
 }
+
+.sign_up input {
+  padding: 10px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+}
+
+.sign_up input[type="submit"] {
+  background-color: #007bff;
+  color: #fff;
+  border: none;
+  cursor: pointer;
+}
