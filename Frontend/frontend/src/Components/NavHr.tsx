@@ -30,6 +30,9 @@ function NavHr() {
             <li className="menu-link" onClick={closeMoblieMenu}>
               <Link to="/HrUser">User</Link>
             </li>
+            <li className="menu-link" onClick={closeMoblieMenu}>
+              <Link to="/">Logout</Link>
+            </li>
           </ul>
           <div className="mobile-menu" onClick={handleClick}>
             {click ? <FiX /> : <FiMenu />}

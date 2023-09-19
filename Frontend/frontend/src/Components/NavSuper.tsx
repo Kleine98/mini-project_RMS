@@ -30,6 +30,9 @@ function NavSuper() {
             <li className="menu-link" onClick={closeMoblieMenu}>
               <Link to="/SuperUser">User</Link>
             </li>
+            <li className="menu-link" onClick={closeMoblieMenu}>
+              <Link to="/">Logout</Link>
+            </li>
           </ul>
           <div className="mobile-menu" onClick={handleClick}>
             {click ? <FiX /> : <FiMenu />}
