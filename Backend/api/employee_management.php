@@ -2,12 +2,23 @@
 include "./aws-db.php";
 
 // Set response headers
+// Allow requests from any origin during development (not recommended for production)
+header('Access-Control-Allow-Origin: *');
+header('Access-Control-Allow-Methods: GET, POST, OPTIONS');
+header('Access-Control-Allow-Headers: Origin, Content-Type, X-Auth-Token');
+header('Access-Control-Allow-Credentials: true');
 header("Content-Type: application/json");
 
 // Function to handle GET request to retrieve all employees
 function getAllEmployees($conn)
 {
-    $sql = "SELECT * FROM Employee";
+    $sql = "SELECT Employee.*, User_Management.*, Permission.*
+        FROM Employee
+        JOIN User_Management ON Employee.id = User_Management.employee_id
+        JOIN Permission ON User_Management.permission_id = Permission.id
+        JOIN Employee_Position ON Employee.position_id = Employee_Position.id";
+
+
     $result = mysqli_query($conn, $sql);
 
     if (!$result) {
@@ -57,8 +68,6 @@ function addEmployee($conn)
     }
 }
 
-// Function to handle PUT request to edit an employee
-// Function to handle PUT request to edit an employee
 // Function to handle PUT request to edit an employee
 function editEmployee($conn, $id)
 {
@@ -121,8 +130,6 @@ function deleteEmployee($conn, $id)
         echo json_encode($response);
     }
 }
-
-
 
 // Handle HTTP requests
 $method = $_SERVER['REQUEST_METHOD'];
