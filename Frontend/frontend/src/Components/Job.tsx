@@ -5,7 +5,7 @@ function Home() {
   return (
     <>
       <Navbar />
-      <div>Home</div>
+      <div>Job</div>
     </>
   );
 }
