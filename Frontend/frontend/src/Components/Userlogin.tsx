@@ -1,19 +1,58 @@
-import { useState } from "react";
+import React, { useState } from "react";
+import { useNavigate } from "react-router-dom"; // Import useNavigate
 import "./Userlogin.css";
 
 function Userlogin() {
   const [inputs, setInputs] = useState({});
+  const [message, setMessage] = useState("");
+  const [loading, setLoading] = useState(false);
 
-  const handleChange = (event) => {
-    const name = event.target.name;
-    const value = event.target.value;
-    setInputs((values) => ({ ...values, [name]: value }));
+  // Use useNavigate inside the component function
+  const navigate = useNavigate();
+
+  const setUser = (user) => {
+    // Implement setUser function if needed
   };
 
   const handleSubmit = (event) => {
     event.preventDefault();
-    alert(inputs);
+    setLoading(true);
+
+    // Perform the API request and handle the response here
+
+    // Example fetch request
+    fetch(
+      "http://203.188.54.9/~u6411130038/mini-project/Backend/api/login.php?request=login",
+      {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/x-www-form-urlencoded",
+        },
+        body: `id=${inputs.username}&password=${inputs.password}`,
+      }
+    )
+      .then((response) => response.json())
+      .then((result) => {
+        console.log("API Response:", result);
+        setLoading(false);
+
+        if (result.id) {
+          setMessage("Login successful.");
+          setUser(result);
+
+          // Redirect to the homepage with user data
+          navigate("/", { state: { user: result } });
+        } else {
+          setMessage("Login failed. Please check your credentials.");
+        }
+      })
+      .catch((error) => {
+        console.error("Error during login:", error);
+        setLoading(false);
+        setMessage("Login failed. An error occurred.");
+      });
   };
+
   return (
     <>
       <div className="logincontainer">
@@ -34,7 +73,9 @@ function Userlogin() {
                 type="text"
                 name="username"
                 value={inputs.username || ""}
-                onChange={handleChange}
+                onChange={(e) =>
+                  setInputs({ ...inputs, username: e.target.value })
+                }
                 placeholder="Enter your username"
                 required
               ></input>
@@ -45,7 +86,9 @@ function Userlogin() {
                 type="password"
                 name="password"
                 value={inputs.password || ""}
-                onChange={handleChange}
+                onChange={(e) =>
+                  setInputs({ ...inputs, password: e.target.value })
+                }
                 placeholder="Enter your password"
                 required
               ></input>

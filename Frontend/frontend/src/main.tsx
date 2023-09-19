@@ -21,6 +21,7 @@ import SuperHome from "./Components/SuperHome";
 import SuperEmployee from "./Components/SuperEmployee";
 import SuperRequest from "./Components/SuperRequest";
 import SuperUser from "./Components/SuperUser";
+import EmployeeManagement from "./Components/EmployeeManagement";
 
 const router = createBrowserRouter([
   {
@@ -94,6 +95,10 @@ const router = createBrowserRouter([
   {
     path: "/SuperUser",
     element: <SuperUser />,
+  },
+  {
+    path: "/EmployeeManagement",
+    element: <EmployeeManagement />,
   },
 ]);
 

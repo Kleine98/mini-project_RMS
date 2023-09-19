@@ -30,6 +30,10 @@ function Navbar() {
             <li className="menu-link" onClick={closeMoblieMenu}>
               <Link to="/Contact">Contact</Link>
             </li>
+            {/* Add a link to the EmployeeManagement page */}
+            <li className="menu-link" onClick={closeMoblieMenu}>
+              <Link to="/EmployeeManagement">Employee Management</Link>
+            </li>
             <li className="menu-link" onClick={closeMoblieMenu}>
               <Link to="/UserAndEmp">Login/Signup</Link>
             </li>
