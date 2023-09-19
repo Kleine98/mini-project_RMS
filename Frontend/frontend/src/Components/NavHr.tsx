@@ -31,7 +31,7 @@ function NavHr() {
               <Link to="/HrUser">User</Link>
             </li>
             <li className="menu-link" onClick={closeMoblieMenu}>
-              <Link to="/">Logout</Link>
+              <Link to="/">logout</Link>
             </li>
           </ul>
           <div className="mobile-menu" onClick={handleClick}>
