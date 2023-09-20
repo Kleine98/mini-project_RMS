@@ -1,59 +1,118 @@
+* {
+  padding: 0;
+  margin: 0;
+  box-sizing: border-box;
+}
+
 .logincontainer {
   display: flex;
   justify-content: center;
   align-items: center;
-  min-height: 100vh;
+  position: fixed;
+  width: 100%;
+  height: 80%;
+  z-index: 1;
 }
 
 .login-form {
-  max-width: 400px;
   padding: 20px;
-  background-color: #fff;
-  border-radius: 5px;
-  box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
-}
-
-h2 {
+  width: 300px;
   text-align: center;
-  margin-bottom: 20px;
+  position: relative;
+  border: 3px solid #000;
+  background: #fff;
+  box-shadow: 0px 4px 4px 0px rgba(0, 0, 0, 0.25);
+  margin: auto;
 }
 
-.icon {
+form {
   text-align: center;
-  font-size: 40px;
-  color: #333;
 }
 
-.form-group {
-  margin-bottom: 20px;
+label {
+  display: block;
 }
 
-.form-group label {
-  font-weight: bold;
-}
-
-.form-group input {
+input[type="email"],
+input[type="password"],
+input[type="submit"] {
+  width: 75%;
   padding: 10px;
-  border: 1px solid #ccc;
-  border-radius: 5px;
+  margin-bottom: 10px;
 }
 
-.form-group input[type="submit"] {
-  background-color: #007bff;
-  color: #fff;
-  border: none;
+input[type="submit"] {
+  border-radius: 200px;
+  background: #c83939;
+  box-shadow: 5px 4px 4px 0px rgba(0, 0, 0, 0.25);
+  color: white;
   cursor: pointer;
 }
 
-.sign_up input {
-  padding: 10px;
-  border: 1px solid #ccc;
-  border-radius: 5px;
+input[type="submit"]:hover {
+  background-color: #555;
 }
 
-.sign_up input[type="submit"] {
-  background-color: #007bff;
-  color: #fff;
-  border: none;
-  cursor: pointer;
+.forgot {
+  text-decoration: none;
+  color: black;
+}
+
+.forgot:hover {
+  color: #555;
+}
+
+.logo {
+  width: 100px;
+  height: 89px;
+  flex-shrink: 0;
+}
+
+.height {
+  height: 75%;
+}
+
+.contain {
+  color: black;
+  text-align: center;
+  text-shadow: 10px 4px 4px rgba(0, 0, 0, 0.25);
+  font-family: League Gothic;
+  font-size: 50px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: normal;
+  text-decoration-line: underline;
+  text-transform: uppercase;
+}
+
+.center {
+  height: 350px;
+  text-align: left;
+  width: 41%;
+}
+
+.left {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 450px;
+}
+
+.hin {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  height: 0px;
+}
+
+.conta {
+  color: black;
+  text-align: center;
+  text-shadow: 10px 4px 4px rgba(0, 0, 0, 0.25);
+  font-family: League Gothic;
+  font-size: 50px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: normal;
 }

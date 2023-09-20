@@ -1,5 +1,6 @@
 import { useState } from "react";
 import "./Userlogin.css";
+import myImage from "./pngwing 1.png";
 
 function Userlogin() {
   const [inputs, setInputs] = useState({});
@@ -18,45 +19,61 @@ function Userlogin() {
     <>
       <div className="logincontainer">
         <div className="login-form">
-          <h2>Login</h2>
+          <img src={myImage} alt="My Image" className="logo" />
           <div className="icon">
             <i className="fas fa-user"></i>
           </div>
-          <form
-            className="login-form"
-            action="#"
-            method="post"
-            onSubmit={handleSubmit}
-          >
-            <div className="form-group">
-              <label className="username">Username:</label>
-              <input
-                type="text"
-                name="username"
-                value={inputs.username || ""}
-                onChange={handleChange}
-                placeholder="Enter your username"
-                required
-              ></input>
+          <br />
+          <form action="#" method="post" onSubmit={handleSubmit}>
+            <label htmlFor="email"></label>
+            <input
+              type="email"
+              name="email"
+              value={inputs.username || ""}
+              onChange={handleChange}
+              placeholder="Email"
+              required
+            ></input>
+            <br />
+            <br />
+            <label htmlFor="password"></label>
+            <input
+              type="password"
+              name="password"
+              value={inputs.password || ""}
+              onChange={handleChange}
+              placeholder="Password"
+              required
+            ></input>
+            <br />
+            <div>
+              <a href="#" className="forgot">
+                Forgot You Password?
+              </a>
             </div>
-            <div className="form-group">
-              <label className="password">Password:</label>
-              <input
-                type="password"
-                name="password"
-                value={inputs.password || ""}
-                onChange={handleChange}
-                placeholder="Enter your password"
-                required
-              ></input>
-            </div>
+            <br />
             <div className="form-group">
               <input type="submit" value="Login"></input>
             </div>
+            <br />
             <div className="sign_up">
               <input type="submit" value="Sign Up"></input>
             </div>
           </form>
+        </div>
+      </div>
+      <div className="contain">
+        <div className="center">
+          <p className="left">USER</p>
+        </div>
+      </div>
+      <div className="conta">
+        <div className="center">
+          <p className="hin">
+            Welcome you to see us <br />
+            We have many jobs and <br />
+            services for you.
+          </p>
         </div>
       </div>
     </>
