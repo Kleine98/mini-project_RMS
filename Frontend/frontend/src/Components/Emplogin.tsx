@@ -19,58 +19,60 @@ function Emplogin() {
   return (
     <>
       <Navbar />
-      <div className="logincontainer">
-        <div className="login-form">
-          <img src={myImage} alt="My Image" className="logo" />
-          <div className="icon">
-            <i className="fas fa-user"></i>
+      <div className="backcoloremp">
+        <div className="logincontainer">
+          <div className="login-form">
+            <img src={myImage} alt="My Image" className="logo" />
+            <div className="icon">
+              <i className="fas fa-user"></i>
+            </div>
+            <br />
+            <form action="#" method="post" onSubmit={handleSubmit}>
+              <label htmlFor="employee"></label>
+              <input
+                type="employee"
+                name="employee"
+                value={inputs.employee || ""}
+                onChange={handleChange}
+                placeholder="Employee ID"
+                required
+              ></input>
+              <br />
+              <br />
+              <label htmlFor="password"></label>
+              <input
+                type="password"
+                name="password"
+                value={inputs.password || ""}
+                onChange={handleChange}
+                placeholder="Password"
+                required
+              ></input>
+              <br />
+              <div>
+                <a href="#" className="forgot">
+                  Forgot You Password?
+                </a>
+              </div>
+              <br />
+              <div className="form-group">
+                <input type="submit" value="Login"></input>
+              </div>
+            </form>
           </div>
-          <br />
-          <form action="#" method="post" onSubmit={handleSubmit}>
-            <label htmlFor="employee"></label>
-            <input
-              type="employee"
-              name="employee"
-              value={inputs.employee || ""}
-              onChange={handleChange}
-              placeholder="Employee ID"
-              required
-            ></input>
-            <br />
-            <br />
-            <label htmlFor="password"></label>
-            <input
-              type="password"
-              name="password"
-              value={inputs.password || ""}
-              onChange={handleChange}
-              placeholder="Password"
-              required
-            ></input>
-            <br />
-            <div>
-              <a href="#" className="forgot">
-                Forgot You Password?
-              </a>
-            </div>
-            <br />
-            <div className="form-group">
-              <input type="submit" value="Login"></input>
-            </div>
-          </form>
         </div>
-      </div>
-      <div className="contain">
-        <div className="center">
-          <p className="right">EMPLOYEE</p>
+        <div className="contain">
+          <div className="center">
+            <p className="right">EMPLOYEE</p>
+          </div>
         </div>
-      </div>
-      <div className="conta">
-        <div className="center">
-          <p className="hin">
-            Work Hard Work Smart <br />
-            Work Faster Work Together
-          </p>
+        <div className="conta">
+          <div className="center">
+            <p className="hin">
+              Work Hard Work Smart <br />
+              Work Faster Work Together
+            </p>
+          </div>
         </div>
       </div>
     </>

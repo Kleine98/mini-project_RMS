@@ -73,7 +73,7 @@ input[type="submit"]:hover {
 }
 
 .contai {
-  color: black;
+  color: white;
   text-align: center;
   text-shadow: 10px 4px 4px rgba(0, 0, 0, 0.25);
   font-family: League Gothic;
@@ -107,7 +107,7 @@ input[type="submit"]:hover {
 }
 
 .cont {
-  color: black;
+  color: white;
   text-align: center;
   text-shadow: 10px 4px 4px rgba(0, 0, 0, 0.25);
   font-family: League Gothic;
@@ -115,4 +115,12 @@ input[type="submit"]:hover {
   font-style: normal;
   font-weight: 400;
   line-height: normal;
+}
+
+.backcoloruser {
+  margin: 0;
+  padding: 0;
+  height: 90vh;
+  background: #4793ff;
+  overflow: hidden;
 }
