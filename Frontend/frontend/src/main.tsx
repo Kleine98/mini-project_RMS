@@ -21,7 +21,7 @@ import SuperHome from "./Components/SuperHome";
 import SuperEmployee from "./Components/SuperEmployee";
 import SuperRequest from "./Components/SuperRequest";
 import SuperUser from "./Components/SuperUser";
-import Register from "./Components/Register";
+import Register from "./Components/Signup";
 
 const router = createBrowserRouter([
   {

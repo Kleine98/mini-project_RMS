@@ -33,7 +33,7 @@ label {
   display: block;
 }
 
-input[type="password"],
+input[type="employee"],
 input[type="password"],
 input[type="submit"] {
   width: 75%;
@@ -88,10 +88,10 @@ input[type="submit"]:hover {
 .center {
   height: 350px;
   text-align: left;
-  width: 41%;
+  width: 159%;
 }
 
-.left {
+.right {
   display: flex;
   justify-content: center;
   align-items: center;

@@ -2,29 +2,59 @@
   display: flex;
   justify-content: space-between;
   align-items: center;
-  height: 80vh; /* Adjust the height as needed */
+  height: 80vh;
+}
+
+.mainpage-html {
+  margin: 0;
+  padding: 0;
+  height: 90vh;
+  background: linear-gradient(to right, #4793ff 50%, #e58e00 50%);
+  overflow: hidden;
 }
 
 .content-left,
 .content-right {
   flex: 1;
+  color: #fff;
   text-align: center;
+  text-shadow: 20px 4px 4px rgba(0, 0, 0, 0.25);
+  font-family: League Gothic;
+  font-size: 50px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: normal;
+  text-transform: uppercase;
 }
 
 .content-button {
-  margin-top: 20px;
-  background-color: #333;
-  color: #fff;
-  padding: 10px 20px;
-  text-decoration: none;
-  border: none;
-  border-radius: 5px;
-  font-weight: bold;
-  font-size: 1rem;
+  background-color: green;
+  display: inline-block;
+  padding: 0.5rem 1rem;
+  border: 2px solid transparent;
+  transition: 0.3s;
+  margin-top: 1rem;
+  border-radius: 200px;
+  background: #0f6;
+  box-shadow: 0px 0px 5px 5px rgba(0, 0, 0, 0.5);
   cursor: pointer;
 }
 
-.content-button a {
+.content-button div {
   text-decoration: none;
+  color: #000;
+  text-align: center;
+  font-family: League Gothic;
+  font-size: 45px;
+  font-style: normal;
+  font-weight: 600;
+  line-height: normal;
+}
+
+.content-button:hover {
+  background: #555;
+}
+
+.content-button div:hover {
   color: #fff;
 }

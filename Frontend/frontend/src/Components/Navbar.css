@@ -5,13 +5,14 @@
 }
 
 .container {
-  max-width: 960px;
+  max-width: 1680px;
   margin: 0 auto;
 }
 
 .header {
-  background: #333;
+  background: black;
   height: 80px;
+  margin: 0 auto;
 }
 
 .header-con {
@@ -31,15 +32,28 @@
 .menu {
   display: flex;
   list-style-type: none;
+  padding: 0;
 }
 
 .menu li {
-  padding-right: 2rem;
+  display: inline;
+  margin: 0 20px;
 }
 
-.menu li a {
+.menu a {
   text-decoration: none;
-  color: #fff;
+  color: white;
+  font-weight: bold;
+}
+
+.menu a:hover {
+  text-decoration: underline;
+}
+
+.mut {
+  width: 140.389px;
+  height: 50px;
+  flex-shrink: 0;
 }
 
 .mobile-menu {

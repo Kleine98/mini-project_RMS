@@ -1,9 +1,8 @@
 import { useState } from "react";
-import "./Userlogin.css";
+import "./Signup.css";
 import myImage from "./pngwing 1.png";
-import Navbar from "./Navbar";
 
-function Userlogin() {
+function Signup() {
   const [inputs, setInputs] = useState({});
 
   const handleChange = (event) => {
@@ -18,7 +17,6 @@ function Userlogin() {
   };
   return (
     <>
-      <Navbar />
       <div className="logincontainer">
         <div className="login-form">
           <img src={myImage} alt="My Image" className="logo" />
@@ -27,13 +25,13 @@ function Userlogin() {
           </div>
           <br />
           <form action="#" method="post" onSubmit={handleSubmit}>
-            <label htmlFor="text"></label>
+            <label htmlFor="employee"></label>
             <input
-              type="password"
-              name="password"
+              type="employee"
+              name="employee"
               value={inputs.username || ""}
               onChange={handleChange}
-              placeholder="Email"
+              placeholder="Employee ID"
               required
             ></input>
             <br />
@@ -54,32 +52,18 @@ function Userlogin() {
               </a>
             </div>
             <br />
-            <div className="form-group">
-              <input type="submit" value="Login"></input>
+            <div>
+              <input type="submit" value="Sign up"></input>
             </div>
             <br />
-            <div className="sign_up">
-              <input type="submit" value="Sign Up"></input>
+            <div>
+              <input type="submit" value="Sign in"></input>
             </div>
           </form>
-        </div>
-      </div>
-      <div className="contain">
-        <div className="center">
-          <p className="left">USER</p>
-        </div>
-      </div>
-      <div className="conta">
-        <div className="center">
-          <p className="hin">
-            Welcome you to see us <br />
-            We have many jobs and <br />
-            services for you.
-          </p>
         </div>
       </div>
     </>
   );
 }
 
-export default Userlogin;
+export default Signup;
