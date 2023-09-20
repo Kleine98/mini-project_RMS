@@ -29,9 +29,9 @@ function Userlogin() {
           <form action="#" method="post" onSubmit={handleSubmit}>
             <label htmlFor="text"></label>
             <input
-              type="password"
-              name="password"
-              value={inputs.username || ""}
+              type="email"
+              name="email"
+              value={inputs.email || ""}
               onChange={handleChange}
               placeholder="Email"
               required
@@ -64,14 +64,14 @@ function Userlogin() {
           </form>
         </div>
       </div>
-      <div className="contain">
-        <div className="center">
+      <div className="contai">
+        <div className="cente">
           <p className="left">USER</p>
         </div>
       </div>
-      <div className="conta">
-        <div className="center">
-          <p className="hin">
+      <div className="cont">
+        <div className="cente">
+          <p className="hi">
             Welcome you to see us <br />
             We have many jobs and <br />
             services for you.

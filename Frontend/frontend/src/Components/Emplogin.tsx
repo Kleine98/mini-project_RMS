@@ -31,7 +31,7 @@ function Emplogin() {
             <input
               type="employee"
               name="employee"
-              value={inputs.username || ""}
+              value={inputs.employee || ""}
               onChange={handleChange}
               placeholder="Employee ID"
               required

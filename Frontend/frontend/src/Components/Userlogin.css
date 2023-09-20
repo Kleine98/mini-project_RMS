@@ -33,7 +33,7 @@ label {
   display: block;
 }
 
-input[type="password"],
+input[type="email"],
 input[type="password"],
 input[type="submit"] {
   width: 75%;
@@ -72,7 +72,7 @@ input[type="submit"]:hover {
   height: 75%;
 }
 
-.contain {
+.contai {
   color: black;
   text-align: center;
   text-shadow: 10px 4px 4px rgba(0, 0, 0, 0.25);
@@ -85,7 +85,7 @@ input[type="submit"]:hover {
   text-transform: uppercase;
 }
 
-.center {
+.cente {
   height: 350px;
   text-align: left;
   width: 41%;
@@ -98,7 +98,7 @@ input[type="submit"]:hover {
   height: 450px;
 }
 
-.hin {
+.hi {
   display: flex;
   justify-content: center;
   align-items: center;
@@ -106,7 +106,7 @@ input[type="submit"]:hover {
   height: 0px;
 }
 
-.conta {
+.cont {
   color: black;
   text-align: center;
   text-shadow: 10px 4px 4px rgba(0, 0, 0, 0.25);
