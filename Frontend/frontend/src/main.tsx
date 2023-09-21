@@ -22,6 +22,7 @@ import SuperEmployee from "./Components/SuperEmployee";
 import SuperRequest from "./Components/SuperRequest";
 import SuperUser from "./Components/SuperUser";
 import Signup from "./Components/Signup";
+import Requestsearchnormal from "./Components/Requestsearchnormal";
 
 const router = createBrowserRouter([
   {
@@ -97,8 +98,12 @@ const router = createBrowserRouter([
     element: <SuperUser />,
   },
   {
-    path: "/Register",
+    path: "/Signup",
     element: <Signup />,
+  },
+  {
+    path: "/Requestsearchnormal",
+    element: <Requestsearchnormal />,
   },
 ]);
 

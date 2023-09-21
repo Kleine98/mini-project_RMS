@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { FiAirplay, FiX, FiMenu } from "react-icons/fi";
 import "./Navbar.css";
+import myImage from "./mutic_name 1.jpg";
 import { Link } from "react-router-dom";
 
 function NavEmp() {
@@ -13,9 +14,7 @@ function NavEmp() {
       <div className="container">
         <div className="header-con">
           <div className="logo-container">
-            <a href="#">
-              MUT <FiAirplay />
-            </a>
+            <img src={myImage} alt="My Image" className="mut" />
           </div>
           <ul className={click ? "menu active" : "menu"}>
             <li className="menu-link" onClick={closeMoblieMenu}>

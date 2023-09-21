@@ -1,0 +1,90 @@
+.table-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 90vh;
+  overflow: hidden;
+  position: relative;
+}
+
+.table-scroll {
+  max-height: 100%;
+  overflow-y: scroll;
+  width: auto;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  padding-right: 35px;
+}
+
+.table-scroll-container {
+  max-height: 400px;
+  overflow: auto;
+}
+
+.custom-table {
+  width: 100%;
+  border-radius: inherit;
+  border: 5px solid #000;
+  background: #d9d9d9;
+  border-collapse: collapse;
+}
+
+.custom-table td {
+  border: 1px solid #333;
+  padding: 10px;
+  text-align: center;
+  vertical-align: top;
+  padding: 10px;
+}
+
+.custom-table th {
+  border: 1px solid #333;
+  padding: 10px;
+  text-align: center;
+  vertical-align: top;
+  padding: 10px;
+}
+
+.cell-content {
+  padding: 5px;
+}
+
+.add-row-button {
+  position: absolute;
+  top: 120px;
+  right: 670px;
+  color: black;
+  padding: 5px 10px;
+  cursor: pointer;
+  border-radius: 200px;
+  background: #0f6;
+  box-shadow: 0px 0px 5px 5px rgba(0, 0, 0, 0.5);
+}
+
+.list-box-container {
+  position: absolute;
+  top: 81px;
+  left: 574px;
+  z-index: 2;
+  padding: 10px;
+  border-radius: 5px;
+  color: white;
+}
+
+.list-box {
+  width: 100%;
+  padding: 5px;
+  border: 1px solid #ccc;
+  border-radius: 3px;
+}
+
+.selected-item {
+  margin-top: 10px;
+  font-weight: bold;
+  color: #007bff;
+}
+
+.bgred {
+  background: rgba(200, 7, 7, 0.79);
+}
