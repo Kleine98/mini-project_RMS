@@ -36,16 +36,16 @@ function Requestsearchsuper() {
     setFilteredData(filteredData);
   }, [departmentFilter, rankFilter, data]);
 
-  const handleAddRow = () => {
-    setData([...data, newEntry]);
-    setNewEntry({
-      name: "",
-      department: "",
-      rank: "",
-      status: "",
-      data: "",
-    });
-  };
+  //   const handleAddRow = () => {
+  //     setData([...data, newEntry]);
+  //     setNewEntry({
+  //       name: "",
+  //       department: "",
+  //       rank: "",
+  //       status: "",
+  //       data: "",
+  //     });
+  //   };
   return (
     <>
       <NavSuper />
@@ -76,7 +76,7 @@ function Requestsearchsuper() {
             <option value="Intermediate">Intermediate</option>
             <option value="Senior">Senior</option>
           </select>
-          <button onClick={handleAddRow}>Add Row</button>
+          {/* <button onClick={handleAddRow}>Add Row</button> */}
         </div>
         <br />
         <br />
