@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import NavHr from "./NavHr";
 import "./EmpSearchHr.css";
+import { Link } from "react-router-dom";
 
 function EmpSearchHr() {
   const initialData = [
@@ -98,7 +99,10 @@ function EmpSearchHr() {
                 <td>{item.department}</td>
                 <td>{item.rank}</td>
                 <td>{item.status}</td>
-                <td>{item.data}</td>
+                {/* Add a Link to the next page using react-router-dom */}
+                <td>
+                  <Link to="/EmpAndHr">View</Link>
+                </td>
               </tr>
             ))}
           </tbody>
