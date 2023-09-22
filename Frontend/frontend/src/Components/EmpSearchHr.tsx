@@ -50,31 +50,35 @@ function EmpSearchHr() {
   return (
     <>
       <NavHr />
-      <div>
+      <div className="HrContainer">
         <h1>Employee Data</h1>
-        <label htmlFor="departmentFilter">Filter by Department:</label>
-        <select
-          id="departmentFilter"
-          value={departmentFilter}
-          onChange={(e) => setDepartmentFilter(e.target.value)}
-        >
-          <option value="">All</option>
-          <option value="HR">HR</option>
-          <option value="IT">IT</option>
-          <option value="Finance">Finance</option>
-        </select>
-        <label htmlFor="rankFilter">Filter by Rank:</label>
-        <select
-          id="rankFilter"
-          value={rankFilter}
-          onChange={(e) => setRankFilter(e.target.value)}
-        >
-          <option value="">All</option>
-          <option value="Junior">Junior</option>
-          <option value="Intermediate">Intermediate</option>
-          <option value="Senior">Senior</option>
-        </select>
-        <button onClick={handleAddRow}>Add Row</button>
+        <div className="filter-row">
+          <label htmlFor="departmentFilter">Filter by Department:</label>
+          <select
+            id="departmentFilter"
+            name="departmentFilter"
+            value={departmentFilter}
+            onChange={(e) => setDepartmentFilter(e.target.value)}
+          >
+            <option value="">All</option>
+            <option value="HR">HR</option>
+            <option value="IT">IT</option>
+            <option value="Finance">Finance</option>
+          </select>
+          <label htmlFor="rankFilter">Filter by Rank:</label>
+          <select
+            id="rankFilter"
+            name="rankFilter"
+            value={rankFilter}
+            onChange={(e) => setRankFilter(e.target.value)}
+          >
+            <option value="">All</option>
+            <option value="Junior">Junior</option>
+            <option value="Intermediate">Intermediate</option>
+            <option value="Senior">Senior</option>
+          </select>
+          <button onClick={handleAddRow}>Add Row</button>
+        </div>
         <br />
         <br />
         <table>
