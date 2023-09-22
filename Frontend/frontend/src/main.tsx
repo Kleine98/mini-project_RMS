@@ -23,9 +23,9 @@ import SuperRequest from "./Components/SuperRequest";
 import SuperUser from "./Components/SuperUser";
 import Signup from "./Components/Signup";
 import Requestsearchnormal from "./Components/Requestsearchnormal";
-import EmpSearchHr from "./Components/EmpSearchHr";
 import EmpAndHr from "./Components/EmpAndHr";
 import Requestsearchsuper from "./Components/Requestsearchsuper";
+import Requestsearchhr from "./Components/Requestsearchhr";
 
 const router = createBrowserRouter([
   {
@@ -109,8 +109,8 @@ const router = createBrowserRouter([
     element: <Requestsearchnormal />,
   },
   {
-    path: "/EmpSearchHR",
-    element: <EmpSearchHr />,
+    path: "/Requestsearchhr",
+    element: <Requestsearchhr />,
   },
   {
     path: "/EmpAndHr",

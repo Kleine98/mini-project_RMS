@@ -1,9 +1,9 @@
 import React, { useState, useEffect } from "react";
 import NavHr from "./NavHr";
-import "./EmpSearchHr.css";
+import "./Requestsearchhr.css";
 import { Link } from "react-router-dom";
 
-function EmpSearchHr() {
+function Requestsearchhr() {
   const initialData = [
     // Your initial data goes here
   ];
@@ -112,4 +112,4 @@ function EmpSearchHr() {
   );
 }
 
-export default EmpSearchHr;
+export default Requestsearchhr;
