@@ -22,6 +22,8 @@ import SuperEmployee from "./Components/SuperEmployee";
 import SuperRequest from "./Components/SuperRequest";
 import SuperUser from "./Components/SuperUser";
 import EmployeeManagement from "./Components/EmployeeManagement";
+import EmployeeDetailPage from "./Components/EmployeeDetailPage";
+import AddEmployeePage from "./Components/AddEmployeePage";
 
 const router = createBrowserRouter([
   {
@@ -99,6 +101,14 @@ const router = createBrowserRouter([
   {
     path: "/EmployeeManagement",
     element: <EmployeeManagement />,
+  },
+  {
+    path: "/EmployeeDetailPage/:id",
+    element: <EmployeeDetailPage />,
+  },
+  {
+    path: "/addEmployee",
+    element: <AddEmployeePage />,
   },
 ]);
 
