@@ -26,6 +26,7 @@ import Requestsearchnormal from "./Components/Requestsearchnormal";
 import EmpAndHr from "./Components/EmpAndHr";
 import Requestsearchsuper from "./Components/Requestsearchsuper";
 import Requestsearchhr from "./Components/Requestsearchhr";
+import EmpInfoHr from "./Components/EmpInfoHr";
 
 const router = createBrowserRouter([
   {
@@ -119,6 +120,10 @@ const router = createBrowserRouter([
   {
     path: "/Requestsearchsuper",
     element: <Requestsearchsuper />,
+  },
+  {
+    path: "/EmpInfoHr",
+    element: <EmpInfoHr />,
   },
 ]);
 

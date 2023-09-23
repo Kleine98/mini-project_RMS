@@ -1,9 +1,8 @@
 import React from "react";
 import NavHr from "./NavHr";
-import "./EmpAndHr.css";
 import { Link } from "react-router-dom";
 
-function EmpAndHr() {
+function EmpInfoHr() {
   return (
     <>
       <NavHr />
@@ -72,12 +71,16 @@ function EmpAndHr() {
         </div>
         <div className="AddEmp">
           <Link to="/EmpInfoHr">
-            <button>Add</button>
+            <button>Permission</button>
           </Link>
+          <Link to="/EmpInfoHr">
+            <button>Edit</button>
+          </Link>
+          <button>Delete</button>
         </div>
       </div>
     </>
   );
 }
 
-export default EmpAndHr;
+export default EmpInfoHr;
