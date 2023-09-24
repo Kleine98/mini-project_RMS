@@ -6,6 +6,8 @@ function Requestnorm() {
   const [inputValue, setInputValue] = useState("");
   const [inputValue2, setInputValue2] = useState("");
   const [selectedItem, setSelectedItem] = useState("");
+  const [isButtonActive, setIsButtonActive] = useState(false);
+  const [isButtonActive2, setIsButtonActive2] = useState(false);
 
   const handleInputChange = (e) => {
     setInputValue(e.target.value);
@@ -27,6 +29,14 @@ function Requestnorm() {
   };
 
   const items = ["Item 1", "Item 2", "Item 3", "Item 4", "Item 5"];
+
+  const handleEllipsisButtonClick = () => {
+    setIsButtonActive(!isButtonActive);
+  };
+
+  const handleEllipsisButtonClick2 = () => {
+    setIsButtonActive2(!isButtonActive2);
+  };
 
   return (
     <>
@@ -51,9 +61,15 @@ function Requestnorm() {
           <button onClick={handleSubmit} className="butsub">
             Submit
           </button>
-          <button className="ellipsis-button"></button>
+          <button
+            className={`ellipsis-button ${isButtonActive ? "active" : ""}`}
+            onClick={handleEllipsisButtonClick}
+          ></button>
           <span className="ellipsis-message">คำร้องทั่วไป</span>
-          <button className="ellipsis-button2"></button>
+          <button
+            className={`ellipsis-button2 ${isButtonActive2 ? "active" : ""}`}
+            onClick={handleEllipsisButtonClick2}
+          ></button>
           <span className="ellipsis-message2">คำร้องขอเพิ่มพนักงาน</span>
         </div>
         <div className="list-box-container">

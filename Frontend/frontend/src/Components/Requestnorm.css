@@ -126,9 +126,9 @@
   left: 500px;
 }
 
-.ellipsis-button:hover {
-  background: #999;
-  color: #fff;
+.ellipsis-button.active {
+  background: black;
+  border: 1px solid white;
 }
 
 .ellipsis-button2 {
@@ -148,9 +148,9 @@
   right: 800px;
 }
 
-.ellipsis-button2:hover {
-  background: #999;
-  color: #fff;
+.ellipsis-button2.active {
+  background: black;
+  border: 1px solid white;
 }
 
 .ellipsis-message {
