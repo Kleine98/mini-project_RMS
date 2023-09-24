@@ -32,7 +32,7 @@ function AddEmployeePage() {
     try {
       // Assuming you have an API endpoint for adding employees
       await fetch(
-        "http://localhost/mini-project/mini-project/Backend/api/employee_management.php",
+        "http://203.188.54.9/~u6411130038/mini-project/Backend/api/employee_management.php",
         {
           method: "POST",
           headers: {

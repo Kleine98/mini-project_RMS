@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom"; // Import useNavigate
+import Cookies from "js-cookie"; // Import js-cookie library
 import "./Userlogin.css";
 
 function Userlogin() {
@@ -10,10 +11,6 @@ function Userlogin() {
   // Use useNavigate inside the component function
   const navigate = useNavigate();
 
-  const setUser = (user) => {
-    // Implement setUser function if needed
-  };
-
   const handleSubmit = (event) => {
     event.preventDefault();
     setLoading(true);
@@ -22,7 +19,7 @@ function Userlogin() {
 
     // Example fetch request
     fetch(
-      "http://localhost/mini-project/mini-project/Backend/api/login.php?request=login",
+      "http://203.188.54.9/~u6411130038/mini-project/Backend/api/login.php?request=login",
       {
         method: "POST",
         headers: {
@@ -38,10 +35,11 @@ function Userlogin() {
 
         if (result.id) {
           setMessage("Login successful.");
-          setUser(result);
 
+          // Set a cookie with the user ID
+          Cookies.set("userID", result.employee_id, { expires: 7 }); // Expires in 7 days
           // Redirect to the homepage with user data
-          navigate("/", { state: { user: result } });
+          navigate("/");
         } else {
           setMessage("Login failed. Please check your credentials.");
         }

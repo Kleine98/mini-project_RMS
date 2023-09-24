@@ -16,11 +16,19 @@ function getEmployeeById($conn, $id)
     $id = mysqli_real_escape_string($conn, $id);
 
     // Construct the SQL query with a parameterized query
-    $sql = "SELECT Employee.id AS employee_id, Employee.*, User_Management.id as user_id, User_Management.*, Permission.*
+    $sql = "SELECT 
+            Employee.id AS employee_id, 
+            Employee.*, 
+            Department.name AS department_name,
+            Employee_Position.name AS position_name,
+            User_Management.id as user_id, 
+            User_Management.*, 
+            Permission.*
         FROM Employee
         JOIN User_Management ON Employee.id = User_Management.employee_id
         JOIN Permission ON User_Management.id = Permission.user_id
         JOIN Employee_Position ON Employee.position_id = Employee_Position.id
+        JOIN Department ON Employee.department_id = Department.id
         WHERE Employee.id = '$id'"; // Use single quotes around the ID
 
     $result = mysqli_query($conn, $sql);

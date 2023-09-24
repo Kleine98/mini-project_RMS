@@ -66,7 +66,7 @@ function handleLogin($conn)
         // SQL query to check if the provided 'id' and 'password' match a record
         $sql = "SELECT User_Management.*, Permission.permission_name, Permission.permission
                 FROM User_Management
-                INNER JOIN Permission ON User_Management.permission_id = Permission.id
+                INNER JOIN Permission ON User_Management.id = Permission.user_id
                 WHERE User_Management.id = '$id' AND User_Management.password = '$password'";
 
         // Execute the query

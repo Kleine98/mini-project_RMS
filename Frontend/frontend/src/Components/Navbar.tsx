@@ -1,12 +1,17 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { FiAirplay, FiX, FiMenu } from "react-icons/fi";
 import "./Navbar.css";
 import { Link } from "react-router-dom";
+import Cookies from "js-cookie"; // Import js-cookie library
 
 function Navbar() {
   const [click, setClick] = useState(false);
   const handleClick = () => setClick(!click);
-  const closeMoblieMenu = () => setClick(false);
+  const closeMobileMenu = () => setClick(false);
+
+  // Retrieve the user ID and permission from the cookie
+  const userID = Cookies.get("userID");
+  const userPermission = Cookies.get("userPermission");
 
   return (
     <div className="header">
@@ -18,25 +23,34 @@ function Navbar() {
             </a>
           </div>
           <ul className={click ? "menu active" : "menu"}>
-            <li className="menu-link" onClick={closeMoblieMenu}>
+            <li className="menu-link" onClick={closeMobileMenu}>
               <Link to="/">Home</Link>
             </li>
-            <li className="menu-link" onClick={closeMoblieMenu}>
+            <li className="menu-link" onClick={closeMobileMenu}>
               <Link to="/About">About</Link>
             </li>
-            <li className="menu-link" onClick={closeMoblieMenu}>
+            <li className="menu-link" onClick={closeMobileMenu}>
               <Link to="/Job">Job</Link>
             </li>
-            <li className="menu-link" onClick={closeMoblieMenu}>
+            <li className="menu-link" onClick={closeMobileMenu}>
               <Link to="/Contact">Contact</Link>
             </li>
-            {/* Add a link to the EmployeeManagement page */}
-            <li className="menu-link" onClick={closeMoblieMenu}>
-              <Link to="/EmployeeManagement">Employee Management</Link>
-            </li>
-            <li className="menu-link" onClick={closeMoblieMenu}>
-              <Link to="/UserAndEmp">Login/Signup</Link>
-            </li>
+            {/* Conditional rendering of EmployeeManagement link */}
+            {userID && userPermission?.charAt(0) === "1" && (
+              <li className="menu-link" onClick={closeMobileMenu}>
+                <Link to="/EmployeeManagement">Employee Management</Link>
+              </li>
+            )}
+            {/* Conditional rendering of user's name or Login/Signup */}
+            {userID ? (
+              <li className="menu-link" onClick={closeMobileMenu}>
+                <Link to={`/ProfilePage/${userID}`}>{userID}</Link>
+              </li>
+            ) : (
+              <li className="menu-link" onClick={closeMobileMenu}>
+                <Link to="/UserAndEmp">Login/Signup</Link>
+              </li>
+            )}
           </ul>
           <div className="mobile-menu" onClick={handleClick}>
             {click ? <FiX /> : <FiMenu />}

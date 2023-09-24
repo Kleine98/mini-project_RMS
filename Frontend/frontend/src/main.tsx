@@ -24,6 +24,7 @@ import SuperUser from "./Components/SuperUser";
 import EmployeeManagement from "./Components/EmployeeManagement";
 import EmployeeDetailPage from "./Components/EmployeeDetailPage";
 import AddEmployeePage from "./Components/AddEmployeePage";
+import ProfilePage from "./Components/ProfilePage";
 
 const router = createBrowserRouter([
   {
@@ -109,6 +110,10 @@ const router = createBrowserRouter([
   {
     path: "/addEmployee",
     element: <AddEmployeePage />,
+  },
+  {
+    path: "/ProfilePage/:userID",
+    element: <ProfilePage />,
   },
 ]);
 
