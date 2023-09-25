@@ -28,6 +28,7 @@ import Requestsearchsuper from "./Components/Requestsearchsuper";
 import Requestsearchhr from "./Components/Requestsearchhr";
 import Requestnorm from "./Components/Requestnorm";
 import Requeststatus from "./Components/Requeststatus";
+import Emppersonalinfonorm from "./Components/Emppersonalinfonorm";
 
 const router = createBrowserRouter([
   {
@@ -129,6 +130,10 @@ const router = createBrowserRouter([
   {
     path: "/Requeststatus",
     element: <Requeststatus />,
+  },
+  {
+    path: "/Emppersonalinfonorm",
+    element: <Emppersonalinfonorm />,
   },
 ]);
 
