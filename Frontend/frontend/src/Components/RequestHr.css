@@ -1,4 +1,9 @@
 /* RequestInformation.css */
+* {
+  padding: 0;
+  margin: 0;
+  box-sizing: border-box;
+}
 
 .request-form {
   display: flex;
@@ -7,8 +12,13 @@
 }
 
 .section-title {
-  font-size: 24px;
-  margin-bottom: 20px;
+  color: #000;
+  text-align: center;
+  font-family: League Gothic;
+  font-size: 64px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: normal;
 }
 
 .radio-section {

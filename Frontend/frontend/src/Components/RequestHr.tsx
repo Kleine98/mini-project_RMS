@@ -91,9 +91,11 @@ function RequestHr() {
             </label>
           </div>
 
-          <button type="submit" className="submit-button">
-            Submit
-          </button>
+          <a href="">
+            <button type="submit" className="submit-button">
+              Submit
+            </button>
+          </a>
         </div>
       </div>
     </>

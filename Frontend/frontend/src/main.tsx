@@ -29,6 +29,7 @@ import Requestsearchhr from "./Components/Requestsearchhr";
 import EmpInfoHr from "./Components/EmpInfoHr";
 import HrPermission from "./Components/HrPermission";
 import RequestHr from "./Components/RequestHr";
+import RequestProgessHR from "./Components/RequestProgessHR";
 
 const router = createBrowserRouter([
   {
@@ -134,6 +135,10 @@ const router = createBrowserRouter([
   {
     path: "/RequestHr",
     element: <RequestHr />,
+  },
+  {
+    path: "/RequestProgessHR",
+    element: <RequestProgessHR />,
   },
 ]);
 
