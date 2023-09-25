@@ -1,5 +1,5 @@
 <?php
-include "./aws-db.php";
+include "./localhost-db.php";
 
 // Set response headers
 // Allow requests from any origin during development (not recommended for production)
@@ -17,19 +17,24 @@ function getEmployeeById($conn, $id)
 
     // Construct the SQL query with a parameterized query
     $sql = "SELECT 
-            Employee.id AS employee_id, 
-            Employee.*, 
-            Department.name AS department_name,
-            Employee_Position.name AS position_name,
-            User_Management.id as user_id, 
-            User_Management.*, 
-            Permission.*
-        FROM Employee
-        JOIN User_Management ON Employee.id = User_Management.employee_id
-        JOIN Permission ON User_Management.id = Permission.user_id
-        JOIN Employee_Position ON Employee.position_id = Employee_Position.id
-        JOIN Department ON Employee.department_id = Department.id
-        WHERE Employee.id = '$id'"; // Use single quotes around the ID
+            employee.id AS employee_id, 
+            employee.*, 
+            department.department_name AS department_name,
+            employee_position.position_name AS position_name,
+            user_management.id as user_id, 
+            user_management.*, 
+            permission.*,
+            GROUP_CONCAT(skills.skill_name) AS skills
+        FROM employee
+        JOIN user_management ON employee.id = user_management.employee_id
+        JOIN permission ON user_management.id = permission.user_id
+        JOIN employee_position ON employee.employee_position_id = employee_position.no
+        JOIN department ON employee_position.department_id = department.id
+        LEFT JOIN employee_skill_list ON employee.id = employee_skill_list.employee_id
+        LEFT JOIN employee_skill_list_to_skills ON employee_skill_list.no = employee_skill_list_to_skills.employee_skill_list_id
+        LEFT JOIN skills ON employee_skill_list_to_skills.skill_id = skills.id
+        WHERE employee.id = '$id' 
+        GROUP BY employee.id"; // Use single quotes around the ID
 
     $result = mysqli_query($conn, $sql);
 
@@ -39,6 +44,8 @@ function getEmployeeById($conn, $id)
     } else {
         $data = array();
         while ($row = mysqli_fetch_assoc($result)) {
+            // Split the skills string into an array
+            $row['skills'] = explode(',', $row['skills']);
             $data[] = $row;
         }
         echo json_encode($data);

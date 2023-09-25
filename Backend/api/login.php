@@ -1,7 +1,7 @@
 <?php
 session_start(); // Start a new session or resume the existing session
 
-include "./aws-db.php";
+include "./localhost-db.php";
 
 // Check connection
 if (!$conn) {
@@ -64,10 +64,14 @@ function handleLogin($conn)
         $password = $_POST['password'];
 
         // SQL query to check if the provided 'id' and 'password' match a record
-        $sql = "SELECT User_Management.*, Permission.permission_name, Permission.permission
-                FROM User_Management
-                INNER JOIN Permission ON User_Management.id = Permission.user_id
-                WHERE User_Management.id = '$id' AND User_Management.password = '$password'";
+        $sql = "SELECT UM.*, P.permission_name, P.permission,
+                    E.id AS employee_id, E.name, E.lname, E.email, E.tel, E.address, E.join_date, E.experience, E.employee_position_id,
+                    M.employee_id AS manager_employee_id
+                FROM User_Management UM
+                INNER JOIN Permission P ON UM.id = P.user_id
+                LEFT JOIN employee E ON UM.employee_id = E.id
+                LEFT JOIN manager M ON UM.employee_id = M.employee_id
+                WHERE UM.id = '$id' AND UM.password = '$password'";
 
         // Execute the query
         $result = mysqli_query($conn, $sql);

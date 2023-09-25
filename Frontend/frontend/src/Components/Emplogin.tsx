@@ -19,7 +19,7 @@ function Emplogin() {
 
     // Example fetch request
     fetch(
-      "http://203.188.54.9/~u6411130038/mini-project/Backend/api/login.php?request=login",
+      "http://localhost/mini-project/mini-project/Backend/api/login.php?request=login",
       {
         method: "POST",
         headers: {
@@ -39,6 +39,9 @@ function Emplogin() {
           // Set a cookie with the user ID
           Cookies.set("userID", result.employee_id, { expires: 7 }); // Expires in 7 days
           Cookies.set("userPermission", result.permission, { expires: 7 });
+          Cookies.set("manager_employee_id", result.manager_employee_id, {
+            expires: 7,
+          });
           // Redirect to the homepage with user data
           navigate("/");
         } else {

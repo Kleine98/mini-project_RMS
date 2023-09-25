@@ -1,5 +1,5 @@
 <?php
-include "./aws-db.php";
+include "./localhost-db.php";
 
 // Set response headers
 // Allow requests from any origin during development (not recommended for production)
@@ -13,19 +13,18 @@ header("Content-Type: application/json");
 function getAllEmployees($conn)
 {
     $sql = "SELECT 
-            Employee.id AS employee_id, 
-            Employee.*, 
-            Department.name AS department_name,
-            Employee_Position.name AS position_name,
-            User_Management.id as user_id, 
-            User_Management.*, 
-            Permission.*
-        FROM Employee
-        JOIN User_Management ON Employee.id = User_Management.employee_id
-        JOIN Permission ON User_Management.id = Permission.user_id
-        JOIN Employee_Position ON Employee.position_id = Employee_Position.id
-        JOIN Department ON Employee.department_id = Department.id";
-
+            employee.id AS employee_id, 
+            employee.*, 
+            department.department_name AS department_name,
+            employee_position.position_name AS position_name,
+            user_management.id as user_id, 
+            user_management.*, 
+            permission.*
+        FROM employee
+        JOIN user_management ON employee.id = user_management.employee_id
+        JOIN permission ON user_management.id = permission.user_id
+        JOIN employee_position ON employee.employee_position_id = employee_position.no
+        JOIN department ON employee_position.department_id = department.id";
 
     $result = mysqli_query($conn, $sql);
 
@@ -41,7 +40,6 @@ function getAllEmployees($conn)
     }
 }
 
-// Function to handle POST request to add a new employee
 // Function to handle POST request to add a new employee
 function addEmployee($conn)
 {
@@ -59,19 +57,18 @@ function addEmployee($conn)
     $tel = $data['tel'];
     $address = $data['address'];
     $join_date = $data['join_date'];
-    $skill = $data['skill'];
     $experience = $data['experience'];
     $department_id = $data['department_id'];
     $position_id = $data['position_id'];
 
     // Construct and execute the SQL query to insert a new employee
-    $sql_employee = "INSERT INTO Employee (id, name, lname, email, tel, address, join_date, skill, experience, department_id, position_id) 
-       VALUES ('$id','$name', '$lname', '$email', '$tel', '$address', STR_TO_DATE('$join_date', '%Y-%m-%d'), '$skill', $experience, $department_id, $position_id)";
+    $sql_employee = "INSERT INTO employee (id, name, lname, email, tel, address, join_date, experience, department_id, employee_position_id) 
+       VALUES ('$id','$name', '$lname', '$email', '$tel', '$address', STR_TO_DATE('$join_date', '%Y-%m-%d'), $experience, $department_id, $position_id)";
 
     $result_employee = mysqli_query($conn, $sql_employee);
 
     if (!$result_employee) {
-        $response = array('error' => 'Insert into Employee failed: ' . mysqli_error($conn));
+        $response = array('error' => 'Insert into employee failed: ' . mysqli_error($conn));
         echo json_encode($response);
         return;
     }
@@ -80,18 +77,17 @@ function addEmployee($conn)
     $user_id = $data['user_id'];
     $password = $data['password'];
 
-
     // Construct and execute the SQL query to insert a new User_Management entry
-    $sql_user = "INSERT INTO User_Management (id, password, employee_id)
+    $sql_user = "INSERT INTO user_management (id, password, employee_id)
         VALUES('$user_id', '$password', '$id')";
 
     $result_user = mysqli_query($conn, $sql_user);
 
     if (!$result_user) {
         // Rollback the employee insertion if User_Management insertion fails
-        mysqli_query($conn, "DELETE FROM Employee WHERE id = '$id'");
+        mysqli_query($conn, "DELETE FROM employee WHERE id = '$id'");
 
-        $response = array('error' => 'Insert into User_Management failed: ' . mysqli_error($conn));
+        $response = array('error' => 'Insert into user_management failed: ' . mysqli_error($conn));
         echo json_encode($response);
         return;
     }
@@ -101,17 +97,17 @@ function addEmployee($conn)
     $permission_value = $data['permission'];
 
     // Construct and execute the SQL query to insert a new Permission entry
-    $sql_permission = "INSERT INTO Permission (permission_name, permission, user_id)
+    $sql_permission = "INSERT INTO permission (permission_name, permission, user_id)
         VALUES('$permission_name', '$permission_value', '$user_id')";
 
     $result_permission = mysqli_query($conn, $sql_permission);
 
     if (!$result_permission) {
         // Rollback both employee and User_Management insertions if Permission insertion fails
-        mysqli_query($conn, "DELETE FROM Employee WHERE id = '$id'");
-        mysqli_query($conn, "DELETE FROM User_Management WHERE id = '$user_id'");
+        mysqli_query($conn, "DELETE FROM employee WHERE id = '$id'");
+        mysqli_query($conn, "DELETE FROM user_management WHERE id = '$user_id'");
 
-        $response = array('error' => 'Insert into Permission failed: ' . mysqli_error($conn));
+        $response = array('error' => 'Insert into permission failed: ' . mysqli_error($conn));
         echo json_encode($response);
         return;
     }
@@ -119,7 +115,6 @@ function addEmployee($conn)
     $response = array('message' => 'Employee added successfully');
     echo json_encode($response);
 }
-
 
 // Function to handle PUT request to edit an employee
 function editEmployee($conn, $id)
@@ -136,7 +131,7 @@ function editEmployee($conn, $id)
     $user_id = $data['user_id'];
 
     // Construct and execute the SQL query to update the permission
-    $sql_permission = "UPDATE Permission SET 
+    $sql_permission = "UPDATE permission SET 
                 permission_name = '$permission_name', 
                 permission = '$permission'
             WHERE user_id = $user_id";
@@ -156,20 +151,18 @@ function editEmployee($conn, $id)
     $tel = $data['tel'];
     $address = $data['address'];
     $join_date = $data['join_date'];
-    $skill = $data['skill'];
     $experience = $data['experience'];
     $department_id = $data['department_id'];
     $password = $data['password'];
 
     // Construct and execute the SQL query to update the employee
-    $sql_employee = "UPDATE Employee SET 
+    $sql_employee = "UPDATE employee SET 
                 name = '$name', 
                 lname = '$lname', 
                 email = '$email', 
                 tel = '$tel', 
                 address = '$address', 
                 join_date = STR_TO_DATE('$join_date', '%Y-%m-%d'), 
-                skill = '$skill', 
                 experience = $experience, 
                 department_id = $department_id
             WHERE id = $id";
@@ -181,7 +174,7 @@ function editEmployee($conn, $id)
         echo json_encode($response);
     } else {
         // Update User_Management data
-        $sql_user = "UPDATE User_Management SET 
+        $sql_user = "UPDATE user_management SET 
                 password = '$password'
             WHERE employee_id = $id";
 
@@ -198,15 +191,14 @@ function editEmployee($conn, $id)
 }
 
 // Function to handle DELETE request to delete an employee
-// Function to handle DELETE request to delete an employee
 function deleteEmployee($conn, $id)
 {
     // Construct and execute the SQL query to delete related records from Permission and User_Management tables
-    mysqli_query($conn, "DELETE FROM Permission WHERE user_id = (select id from User_Management where employee_id = $id)");
-    mysqli_query($conn, "DELETE FROM User_Management WHERE employee_id = $id");
+    mysqli_query($conn, "DELETE FROM permission WHERE user_id = (SELECT id FROM user_management WHERE employee_id = $id)");
+    mysqli_query($conn, "DELETE FROM user_management WHERE employee_id = $id");
 
     // Construct and execute the SQL query to delete the employee
-    $sql = "DELETE FROM Employee WHERE id = $id";
+    $sql = "DELETE FROM employee WHERE id = $id";
 
     $result = mysqli_query($conn, $sql);
 
@@ -218,7 +210,6 @@ function deleteEmployee($conn, $id)
         echo json_encode($response);
     }
 }
-
 
 // Handle HTTP requests
 $method = $_SERVER['REQUEST_METHOD'];

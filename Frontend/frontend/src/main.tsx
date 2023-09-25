@@ -25,6 +25,7 @@ import EmployeeManagement from "./Components/EmployeeManagement";
 import EmployeeDetailPage from "./Components/EmployeeDetailPage";
 import AddEmployeePage from "./Components/AddEmployeePage";
 import ProfilePage from "./Components/ProfilePage";
+import InterviewPage from "./Components/InterviewPage";
 
 const router = createBrowserRouter([
   {
@@ -114,6 +115,10 @@ const router = createBrowserRouter([
   {
     path: "/ProfilePage/:userID",
     element: <ProfilePage />,
+  },
+  {
+    path: "/InterviewPage/:managerId",
+    element: <InterviewPage />,
   },
 ]);
 

@@ -15,7 +15,7 @@ function EmployeeDetailPage() {
     const fetchEmployee = async () => {
       try {
         const response = await axios.get(
-          `http://203.188.54.9/~u6411130038/mini-project/Backend/api/employee_search.php?id=${id}`
+          `http://localhost/mini-project/mini-project/Backend/api/employee_search.php?id=${id}`
         );
         setEmployee(response.data[0]); // Assuming you get a single employee with the given id
       } catch (error) {
@@ -160,23 +160,23 @@ function EmployeeDetailPage() {
                     </td>
                   </tr>
                   <tr>
-                    <td>Department ID:</td>
+                    <td>Department:</td>
                     <td>
                       <input
                         type="text"
-                        name="department_id"
-                        value={formData.department_id || ""}
+                        name="department_name"
+                        value={formData.department_name || ""}
                         onChange={handleChange}
                       />
                     </td>
                   </tr>
                   <tr>
-                    <td>Position ID:</td>
+                    <td>Position:</td>
                     <td>
                       <input
                         type="text"
-                        name="position_id"
-                        value={formData.position_id || ""}
+                        name="position_name"
+                        value={formData.position_name || ""}
                         onChange={handleChange}
                       />
                     </td>
@@ -283,12 +283,12 @@ function EmployeeDetailPage() {
                     <td>{employee.experience}</td>
                   </tr>
                   <tr>
-                    <td>Department ID:</td>
-                    <td>{employee.department_id}</td>
+                    <td>Department:</td>
+                    <td>{employee.department_name}</td>
                   </tr>
                   <tr>
-                    <td>Position ID:</td>
-                    <td>{employee.position_id}</td>
+                    <td>Position:</td>
+                    <td>{employee.position_name}</td>
                   </tr>
                   <tr>
                     <td>User ID:</td>

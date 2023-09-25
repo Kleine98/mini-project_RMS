@@ -14,8 +14,8 @@ function AddEmployeePage() {
     join_date: "",
     skill: "",
     experience: "",
-    department_id: "",
-    position_id: "",
+    department_name: "",
+    position_name: "",
     user_id: "",
     permission_name: "",
     password: "",
@@ -32,7 +32,7 @@ function AddEmployeePage() {
     try {
       // Assuming you have an API endpoint for adding employees
       await fetch(
-        "http://203.188.54.9/~u6411130038/mini-project/Backend/api/employee_management.php",
+        "http://localhost/mini-project/mini-project/Backend/api/employee_management.php",
         {
           method: "POST",
           headers: {
@@ -184,28 +184,28 @@ function AddEmployeePage() {
             </tr>
             <tr>
               <td>
-                <label htmlFor="department_id">Department ID:</label>
+                <label htmlFor="department_id">Department:</label>
               </td>
               <td>
                 <input
                   type="text"
-                  id="department_id"
-                  name="department_id"
-                  value={formData.department_id}
+                  id="department_name"
+                  name="department_name"
+                  value={formData.department_name}
                   onChange={handleInputChange}
                 />
               </td>
             </tr>
             <tr>
               <td>
-                <label htmlFor="position_id">Position ID:</label>
+                <label htmlFor="position_id">Position:</label>
               </td>
               <td>
                 <input
                   type="text"
-                  id="position_id"
-                  name="position_id"
-                  value={formData.position_id}
+                  id="position_name"
+                  name="position_name"
+                  value={formData.position_name}
                   onChange={handleInputChange}
                 />
               </td>

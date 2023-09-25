@@ -15,7 +15,7 @@ function EmployeeManagement() {
   const fetchEmployees = async () => {
     try {
       const response = await axios.get(
-        "http://203.188.54.9/~u6411130038/mini-project/Backend/api/employee_management.php"
+        "http://localhost/mini-project/mini-project/Backend/api/employee_management.php"
       );
       setEmployees(response.data);
       setLoading(false); // Data has been loaded, set loading to false
@@ -42,8 +42,8 @@ function EmployeeManagement() {
               <th>ID</th>
               <th>Name</th>
               <th>Last Name</th>
-              <th>Department ID</th>
-              <th>Position ID</th>
+              <th>Department</th>
+              <th>Position</th>
               <th>Actions</th>
             </tr>
           </thead>
@@ -53,8 +53,8 @@ function EmployeeManagement() {
                 <td>{employee.employee_id}</td>
                 <td>{employee.name}</td>
                 <td>{employee.lname}</td>
-                <td>{employee.department_id}</td>
-                <td>{employee.position_id}</td>
+                <td>{employee.department_name}</td>
+                <td>{employee.position_name}</td>
                 <td>
                   {/* Pass the employee ID as a route parameter */}
                   <Link to={`/EmployeeDetailPage/${employee.employee_id}`}>

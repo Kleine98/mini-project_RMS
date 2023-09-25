@@ -12,6 +12,7 @@ function Navbar() {
   // Retrieve the user ID and permission from the cookie
   const userID = Cookies.get("userID");
   const userPermission = Cookies.get("userPermission");
+  const managerId = Cookies.get("manager_employee_id");
 
   return (
     <div className="header">
@@ -49,6 +50,11 @@ function Navbar() {
             ) : (
               <li className="menu-link" onClick={closeMobileMenu}>
                 <Link to="/UserAndEmp">Login/Signup</Link>
+              </li>
+            )}
+            {managerId && (
+              <li className="menu-link" onClick={closeMobileMenu}>
+                <Link to="/InterviewPage/${managerId}">Interview</Link>
               </li>
             )}
           </ul>

@@ -13,7 +13,7 @@ function ProfilePage() {
     const fetchEmployee = async () => {
       try {
         const response = await axios.get(
-          `http://203.188.54.9/~u6411130038/mini-project/Backend/api/employee_search.php?id=${userID}`
+          `http://localhost/mini-project/mini-project/Backend/api/employee_search.php?id=${userID}`
         );
         setEmployee(response.data[0]);
       } catch (error) {
@@ -27,6 +27,8 @@ function ProfilePage() {
   const handleLogoutClick = () => {
     // Remove the userID cookie
     Cookies.remove("userID");
+    Cookies.remove("userPermission");
+    Cookies.remove("manager_employee_id");
 
     // Use navigate to redirect the user to the login page
     navigate("/UserAndEmp"); // Replace with your login page route
@@ -80,12 +82,12 @@ function ProfilePage() {
                   <td>{employee.experience}</td>
                 </tr>
                 <tr>
-                  <td>Department ID:</td>
-                  <td>{employee.department_id}</td>
+                  <td>Department:</td>
+                  <td>{employee.department_name}</td>
                 </tr>
                 <tr>
-                  <td>Position ID:</td>
-                  <td>{employee.position_id}</td>
+                  <td>Position:</td>
+                  <td>{employee.position_name}</td>
                 </tr>
                 <tr>
                   <td>User ID:</td>
