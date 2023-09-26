@@ -19,12 +19,17 @@ function getAllEmployees($conn)
             employee_position.position_name AS position_name,
             user_management.id as user_id, 
             user_management.*, 
-            permission.*
+            permission.*,
+            GROUP_CONCAT(skills.skill_name) AS skills
         FROM employee
         JOIN user_management ON employee.id = user_management.employee_id
         JOIN permission ON user_management.id = permission.user_id
         JOIN employee_position ON employee.employee_position_id = employee_position.no
-        JOIN department ON employee_position.department_id = department.id";
+        JOIN department ON employee_position.department_id = department.id
+        LEFT JOIN employee_skill_list ON employee.id = employee_skill_list.employee_id
+        LEFT JOIN employee_skill_list_to_skills ON employee_skill_list.no = employee_skill_list_to_skills.employee_skill_list_id
+        LEFT JOIN skills ON employee_skill_list_to_skills.skill_id = skills.id
+        GROUP BY employee.id"; // Using GROUP_CONCAT to concatenate employee skills
 
     $result = mysqli_query($conn, $sql);
 
@@ -34,6 +39,8 @@ function getAllEmployees($conn)
     } else {
         $data = array();
         while ($row = mysqli_fetch_assoc($result)) {
+            // Convert the comma-separated skills to an array
+            $row['skills'] = explode(',', $row['skills']);
             $data[] = $row;
         }
         echo json_encode($data);

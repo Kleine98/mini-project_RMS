@@ -74,8 +74,18 @@ function ProfilePage() {
                   <td>{employee.join_date}</td>
                 </tr>
                 <tr>
-                  <td>Skill:</td>
-                  <td>{employee.skill}</td>
+                  <td>Skills:</td>
+                  <td>
+                    {employee.skills ? (
+                      <ul>
+                        {employee.skills.map((skill, index) => (
+                          <li key={index}>{skill}</li>
+                        ))}
+                      </ul>
+                    ) : (
+                      "No skills available"
+                    )}
+                  </td>
                 </tr>
                 <tr>
                   <td>Experience:</td>
