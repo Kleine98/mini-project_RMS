@@ -9,7 +9,7 @@
   margin: 6px;
   position: absolute;
   left: 123px;
-  top: 453px;
+  top: 395px;
   font-size: 30px;
 }
 
@@ -20,7 +20,7 @@
   font-size: 16px;
   width: 75%;
   height: 300px;
-  margin-top: 400px;
+  margin-top: 360px;
   vertical-align: top;
   resize: none;
   position: absolute;
@@ -46,7 +46,7 @@
   align-items: center;
   justify-content: center;
   position: absolute;
-  top: 130px;
+  top: 110px;
   left: 120px;
 }
 
@@ -68,7 +68,7 @@
   align-items: center;
   justify-content: center;
   position: absolute;
-  top: 235px;
+  top: 220px;
   left: 120px;
 }
 
@@ -81,7 +81,7 @@
   margin-left: 5px;
   color: #333;
   position: absolute;
-  top: 133px;
+  top: 113px;
   left: 160px;
   font-size: 24px;
   margin: 5px;
@@ -91,7 +91,7 @@
   margin-left: 5px;
   color: #333;
   position: absolute;
-  top: 238px;
+  top: 224px;
   left: 160px;
   font-size: 24px;
   margin: 5px;
@@ -100,7 +100,7 @@
 .backcolorpls2 {
   background: cyan;
   overflow: hidden;
-  height: 90vh;
+  height: 100vh;
 }
 
 .ellipsis-button5 {
@@ -116,7 +116,7 @@
   align-items: center;
   justify-content: center;
   position: absolute;
-  top: 350px;
+  top: 334px;
   left: 120px;
 }
 
@@ -129,7 +129,7 @@
   margin-left: 5px;
   color: #333;
   position: absolute;
-  top: 353px;
+  top: 337px;
   left: 160px;
   font-size: 24px;
   margin: 5px;
