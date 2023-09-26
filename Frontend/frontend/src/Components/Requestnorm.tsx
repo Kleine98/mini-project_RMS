@@ -47,7 +47,7 @@ function Requestnorm() {
           placeholder=""
           value={inputValue2}
           onChange={handleInputChange2}
-          className="custom-input2"
+          className="custom-inputx2"
         />
         <h6 className="textpls">ข้อมูลคำร้อง</h6>
         <div className="input-container">
