@@ -7,9 +7,11 @@ const Requestsearchnormal = () => {
   const scrollContainerRef = useRef(null);
   const [numRows, setNumRows] = useState(1);
   const [selectedItem, setSelectedItem] = useState("");
+  const [expanded, setExpanded] = useState(false);
 
   const addRow = () => {
     setNumRows(numRows + 1);
+    setExpanded(true);
   };
 
   const tableRows = [];
@@ -44,7 +46,7 @@ const Requestsearchnormal = () => {
     <>
       <NavEmp />
       <div className="bgred">
-        <div className="table-container">
+        <div className={`table-container ${expanded ? "expanded" : ""}`}>
           <button className="add-row-button" onClick={addRow}>
             Add
           </button>

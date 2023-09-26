@@ -7,23 +7,26 @@
   position: relative;
 }
 
+.table-container.expanded {
+  flex-direction: column;
+}
+
 .table-scroll {
   max-height: 100%;
-  overflow-y: scroll;
   width: auto;
   display: flex;
   flex-direction: column;
   align-items: flex-start;
-  padding-right: 35px;
+  padding-right: 930px;
 }
 
 .table-scroll-container {
-  max-height: 400px;
+  max-height: 450px;
   overflow: auto;
 }
 
 .custom-table {
-  width: 100%;
+  width: 290%;
   border-radius: inherit;
   border: 5px solid #000;
   background: #d9d9d9;
@@ -52,28 +55,37 @@
 
 .add-row-button {
   position: absolute;
-  top: 120px;
-  right: 670px;
+  top: 40px;
+  right: 6%;
+  width: 100px;
+  height: 50px;
   color: black;
   padding: 5px 10px;
   cursor: pointer;
   border-radius: 200px;
   background: #0f6;
   box-shadow: 0px 0px 5px 5px rgba(0, 0, 0, 0.5);
+  color: #000;
+  text-align: center;
+  font-family: League Gothic;
+  font-size: 30px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: normal;
 }
 
 .list-box-container {
   position: absolute;
-  top: 81px;
-  left: 574px;
+  top: 10px;
+  right: 90%;
   z-index: 2;
   padding: 10px;
   border-radius: 5px;
-  color: white;
+  color: black;
 }
 
 .list-box {
-  width: 100%;
+  width: 400%;
   padding: 5px;
   border: 1px solid #ccc;
   border-radius: 3px;
@@ -86,5 +98,5 @@
 }
 
 .bgred {
-  background: rgba(200, 7, 7, 0.79);
+  background: lightblue;
 }
