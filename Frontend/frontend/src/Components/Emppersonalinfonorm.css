@@ -2,14 +2,13 @@
   display: flex;
   flex-direction: column;
   margin: 20px auto;
-  width: 1590px;
 }
 
 .textpls1 {
   font-size: 40px;
   margin: 6px;
   position: absolute;
-  left: 700px;
+  left: 40%;
   top: 100px;
 }
 
@@ -17,42 +16,42 @@
   font-size: 40px;
   margin: 6px;
   position: absolute;
-  left: 760px;
+  left: 44%;
   top: 360px;
 }
 
 .textcapa1 {
   margin: 6px;
   position: absolute;
-  left: 530px;
+  left: 32%;
   top: 230px;
 }
 
 .textcapa2 {
   margin: 6px;
   position: absolute;
-  left: 943px;
+  left: 57%;
   top: 230px;
 }
 
 .textcapa3 {
   margin: 6px;
   position: absolute;
-  left: 1300px;
+  right: 20%;
   top: 230px;
 }
 
 .textcapa4 {
   margin: 6px;
   position: absolute;
-  left: 500px;
+  left: 29%;
   top: 300px;
 }
 
 .textcapa5 {
   margin: 6px;
   position: absolute;
-  right: 720px;
+  right: 45%;
   top: 300px;
 }
 
@@ -115,7 +114,7 @@
 .textcapa14 {
   margin: 6px;
   position: absolute;
-  right: 628px;
+  right: 37%;
   top: 448px;
 }
 
@@ -130,7 +129,7 @@
   resize: none;
   position: absolute;
   top: 0px;
-  right: 800px;
+  right: 45%;
   z-index: 2;
   padding: 0;
   vertical-align: top;
@@ -147,7 +146,7 @@
   resize: none;
   position: absolute;
   top: 0px;
-  right: 450px;
+  right: 25%;
   z-index: 2;
   padding: 0;
   vertical-align: top;
@@ -164,7 +163,7 @@
   resize: none;
   position: absolute;
   top: 0px;
-  right: 100px;
+  right: 5%;
   z-index: 2;
   padding: 0;
   vertical-align: top;
@@ -181,7 +180,7 @@
   resize: none;
   position: absolute;
   top: 0px;
-  right: 900px;
+  right: 53%;
   z-index: 2;
   padding: 0;
   vertical-align: top;
@@ -198,7 +197,7 @@
   resize: none;
   position: absolute;
   top: 0px;
-  right: 450px;
+  right: 30%;
   z-index: 2;
   padding: 0;
   vertical-align: top;
@@ -368,7 +367,7 @@
   background: #f00;
   box-shadow: 0px 0px 5px 5px rgba(0, 0, 0, 0.5);
   position: absolute;
-  top: 750px;
+  top: 730px;
   right: 97px;
   color: black;
   padding: 5px 10px;
@@ -387,10 +386,10 @@
 .backcolorpls2 {
   background: #e6e6e6;
   overflow: hidden;
-  height: 90vh;
+  height: 100vh;
 }
 
-.logo {
+.logo2 {
   width: 80%;
   height: 80%;
   flex-shrink: 0;
@@ -408,6 +407,6 @@
   height: 30%;
   position: absolute;
   top: 138px;
-  left: 100px;
+  left: 5%;
   background: white;
 }
