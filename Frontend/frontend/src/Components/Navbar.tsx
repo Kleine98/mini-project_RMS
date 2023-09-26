@@ -42,6 +42,16 @@ function Navbar() {
                 <Link to="/EmployeeManagement">Employee Management</Link>
               </li>
             )}
+            {managerId && (
+              <li className="menu-link" onClick={closeMobileMenu}>
+                <Link to="/InterviewPage/${managerId}">Interview</Link>
+              </li>
+            )}
+            {managerId && (
+              <li className="menu-link" onClick={closeMobileMenu}>
+                <Link to="/InterviewReportPage">Interview Report</Link>
+              </li>
+            )}
             {/* Conditional rendering of user's name or Login/Signup */}
             {userID ? (
               <li className="menu-link" onClick={closeMobileMenu}>
@@ -50,11 +60,6 @@ function Navbar() {
             ) : (
               <li className="menu-link" onClick={closeMobileMenu}>
                 <Link to="/UserAndEmp">Login/Signup</Link>
-              </li>
-            )}
-            {managerId && (
-              <li className="menu-link" onClick={closeMobileMenu}>
-                <Link to="/InterviewPage/${managerId}">Interview</Link>
               </li>
             )}
           </ul>

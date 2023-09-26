@@ -26,6 +26,7 @@ import EmployeeDetailPage from "./Components/EmployeeDetailPage";
 import AddEmployeePage from "./Components/AddEmployeePage";
 import ProfilePage from "./Components/ProfilePage";
 import InterviewPage from "./Components/InterviewPage";
+import InterviewReportPage from "./Components/InterviewReportPage";
 
 const router = createBrowserRouter([
   {
@@ -119,6 +120,10 @@ const router = createBrowserRouter([
   {
     path: "/InterviewPage/:managerId",
     element: <InterviewPage />,
+  },
+  {
+    path: "/InterviewReportPage/",
+    element: <InterviewReportPage />,
   },
 ]);
 

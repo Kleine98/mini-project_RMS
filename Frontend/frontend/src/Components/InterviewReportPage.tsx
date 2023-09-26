@@ -1,27 +1,21 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
-import Cookies from "js-cookie";
 import Navbar from "./Navbar";
-import InterviewScoringForm from "./InterviewScoringForm"; // Import the scoring form
+import InterviewDetail from "./InterviewDetail";
 
-function InterviewPage() {
+function InterviewReportPage() {
   const [interviews, setInterviews] = useState([]);
   const [loading, setLoading] = useState(true);
   const [selectedInterview, setSelectedInterview] = useState(null);
 
   useEffect(() => {
-    const managerId = Cookies.get("manager_employee_id");
-    if (managerId) {
-      fetchInterviews(managerId);
-    } else {
-      console.error("Manager ID not found in cookies.");
-    }
+    fetchInterviews(); // Fetch all interviews
   }, []);
 
-  const fetchInterviews = async (managerId) => {
+  const fetchInterviews = async () => {
     try {
       const response = await axios.get(
-        `http://localhost/mini-project/mini-project/Backend/api/interview/interview.php?manager_id=${managerId}`
+        "http://localhost/mini-project/mini-project/Backend/api/interview/interview.php"
       );
       setInterviews(response.data);
       setLoading(false);
@@ -31,20 +25,17 @@ function InterviewPage() {
   };
 
   const handleInterviewClick = (interviewId) => {
-    // Set the selected interview when clicked
     setSelectedInterview(interviewId);
   };
 
   return (
     <div>
       <Navbar />
-      <h2>Interview Management</h2>
+      <h2>Interview Report</h2>
 
-      {/* Display loading message while waiting for data */}
       {loading ? (
         <p>Loading...</p>
       ) : (
-        // Table to display interviews
         <table>
           <thead>
             <tr>
@@ -60,7 +51,6 @@ function InterviewPage() {
               <th>Register Date</th>
               <th>Request ID</th>
               <th>No</th>
-              {/* Add more table headers for additional fields */}
             </tr>
           </thead>
           <tbody>
@@ -82,18 +72,18 @@ function InterviewPage() {
                 <td>{interview.register_date}</td>
                 <td>{interview.request_id}</td>
                 <td>{interview.no}</td>
-                {/* Add more table cells for additional fields */}
               </tr>
             ))}
           </tbody>
         </table>
       )}
-      {/* Display the scoring form if an interview is selected */}
       {selectedInterview && (
-        <InterviewScoringForm interviewId={selectedInterview} />
+        <div>
+          <InterviewDetail interviewId={selectedInterview} />
+        </div>
       )}
     </div>
   );
 }
 
-export default InterviewPage;
+export default InterviewReportPage;
