@@ -25,7 +25,7 @@ function RequestHr() {
         <h2 className="section-title">Request Information</h2>
         <div onSubmit={handleSubmit}>
           <div className="radio-section">
-            <label>
+            <label className="General">
               <input
                 type="radio"
                 value="general"
@@ -34,7 +34,7 @@ function RequestHr() {
               />
               General Request
             </label>
-            <label>
+            <label className="Add-Emp">
               <input
                 type="radio"
                 value="addEmployee"
@@ -46,7 +46,7 @@ function RequestHr() {
           </div>
 
           <div className="input-section">
-            <label>
+            <label className="Position">
               Position:
               <select
                 value={position}
@@ -58,7 +58,7 @@ function RequestHr() {
                 {/* Add more position options */}
               </select>
             </label>
-            <label>
+            <label className="Department">
               Department:
               <select
                 value={department}
@@ -70,7 +70,7 @@ function RequestHr() {
                 {/* Add more department options */}
               </select>
             </label>
-            <label>
+            <label className="Amonut">
               Amount:
               <input
                 type="text"
