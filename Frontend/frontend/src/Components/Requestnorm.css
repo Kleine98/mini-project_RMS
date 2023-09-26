@@ -2,27 +2,28 @@
   display: flex;
   flex-direction: column;
   margin: 20px auto;
-  width: 1590px;
+  width: 92%;
 }
 
 .textpls {
   font-size: 40px;
-  margin: 6px;
+  margin: 7px;
   position: absolute;
   left: 59px;
+  top: 97px;
 }
 
 .textpic {
   margin: 6px;
   position: absolute;
-  left: 53px;
-  top: 347px;
+  left: 4%;
+  top: 320px;
 }
 
 .textcapa {
   margin: 6px;
   position: absolute;
-  right: 175px;
+  right: 12%;
   top: 204px;
 }
 
@@ -33,7 +34,7 @@
   font-size: 16px;
   width: 100%;
   height: 300px;
-  margin-top: 275px;
+  margin-top: 250px;
   vertical-align: top;
   resize: none;
 }
@@ -49,7 +50,7 @@
   background: #0f6;
   box-shadow: 0px 0px 5px 5px rgba(0, 0, 0, 0.5);
   position: absolute;
-  top: 700px;
+  top: 670px;
   right: 59px;
   color: black;
   padding: 5px 10px;
@@ -61,7 +62,7 @@
 .list-box-container {
   position: absolute;
   top: 200px;
-  left: 50px;
+  left: 3%;
   z-index: 2;
   padding: 10px;
   border-radius: 5px;
@@ -69,7 +70,7 @@
 }
 
 .list-box {
-  width: 500%;
+  width: 400%;
   padding: 5px;
   border: 1px solid #ccc;
   border-radius: 3px;
@@ -84,7 +85,7 @@
 .list-box-container-right {
   position: absolute;
   top: 200px;
-  right: 835px;
+  right: 50%;
   z-index: 2;
   padding: 10px;
   border-radius: 5px;
@@ -102,7 +103,7 @@
   resize: none;
   position: absolute;
   top: 0px;
-  right: 60px;
+  right: 6%;
   z-index: 2;
   padding: 0;
   vertical-align: middle;
@@ -123,12 +124,12 @@
   justify-content: center;
   position: absolute;
   top: 110px;
-  left: 500px;
+  left: 34%;
 }
 
-.ellipsis-button.active {
-  background: black;
-  border: 1px solid white;
+.ellipsis-button:hover {
+  background: #999;
+  color: #fff;
 }
 
 .ellipsis-button2 {
@@ -145,12 +146,12 @@
   justify-content: center;
   position: absolute;
   top: 110px;
-  right: 800px;
+  right: 44%;
 }
 
-.ellipsis-button2.active {
-  background: black;
-  border: 1px solid white;
+.ellipsis-button2:hover {
+  background: #999;
+  color: #fff;
 }
 
 .ellipsis-message {
@@ -158,7 +159,7 @@
   color: #333;
   position: absolute;
   top: 115px;
-  left: 550px;
+  left: 37%;
   font-size: 24px;
   margin: 5px;
 }
@@ -168,7 +169,7 @@
   color: #333;
   position: absolute;
   top: 115px;
-  right: 573px;
+  left: 56%;
   font-size: 24px;
   margin: 5px;
 }
@@ -176,5 +177,5 @@
 .backcolorpls {
   background: aquamarine;
   overflow: hidden;
-  height: 90vh;
+  height: 100vh;
 }
