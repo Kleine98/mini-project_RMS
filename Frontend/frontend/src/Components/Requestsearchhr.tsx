@@ -78,7 +78,19 @@ function Requestsearchhr() {
             <option value="Intermediate">Intermediate</option>
             <option value="Senior">Senior</option>
           </select>
-          <button onClick={handleAddRow}>Add Row</button>
+          <label htmlFor="statusFilter">Filter by Status:</label>
+          <select
+            id="statusFilter"
+            name="statusFilter"
+            value={rankFilter}
+            onChange={(e) => setRankFilter(e.target.value)}
+          >
+            <option value="">All</option>
+            <option value="Junior">Online</option>
+            <option value="Intermediate">Offline</option>
+            <option value="Senior">Reject</option>
+          </select>
+          <button onClick={handleAddRow}>Add</button>
         </div>
         <br />
         <br />
