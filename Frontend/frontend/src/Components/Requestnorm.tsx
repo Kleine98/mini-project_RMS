@@ -61,10 +61,11 @@ function Requestnorm() {
           <button onClick={handleSubmit} className="butsub">
             Submit
           </button>
-          <button
+          <input
+            type="checkbox"
             className={`ellipsis-button ${isButtonActive ? "active" : ""}`}
             onClick={handleEllipsisButtonClick}
-          ></button>
+          ></input>
           <span className="ellipsis-message">คำร้องทั่วไป</span>
           <button
             className={`ellipsis-button2 ${isButtonActive2 ? "active" : ""}`}
