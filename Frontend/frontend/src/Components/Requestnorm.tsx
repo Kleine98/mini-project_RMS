@@ -8,8 +8,13 @@ const Requestnorm: React.FC<RequestnormProps> = () => {
   const [inputValue, setInputValue] = useState<string>("");
   const [inputValue2, setInputValue2] = useState<string>("");
   const [selectedItem, setSelectedItem] = useState<string>("");
-  const [isGeneralRequest, setIsGeneralRequest] = useState<boolean>(false);
-  const [isAddEmployeeRequest, setIsAddEmployeeRequest] =
+  const [selectedItem2, setSelectedItem2] = useState<string>("");
+  const [selectedItem3, setSelectedItem3] = useState<string>("");
+  const [selectedItem4, setSelectedItem4] = useState<string>("");
+  const [selectedItem5, setSelectedItem5] = useState<string>("");
+  const [isinputcheckRequest, setIsinputcheckRequest] =
+    useState<boolean>(false);
+  const [isinputcheckRequest2, setIsinputcheckRequest2] =
     useState<boolean>(false);
 
   const handleInputChange = (e: ChangeEvent<HTMLTextAreaElement>) => {
@@ -32,6 +37,30 @@ const Requestnorm: React.FC<RequestnormProps> = () => {
   };
 
   const items = ["Item 1", "Item 2", "Item 3", "Item 4", "Item 5"];
+
+  const handleItemSelect2 = (event: ChangeEvent<HTMLSelectElement>) => {
+    setSelectedItem2(event.target.value);
+  };
+
+  const items2 = ["Item 1", "Item 2", "Item 3", "Item 4", "Item 5"];
+
+  const handleItemSelect3 = (event: ChangeEvent<HTMLSelectElement>) => {
+    setSelectedItem3(event.target.value);
+  };
+
+  const items3 = ["Item 1", "Item 2", "Item 3", "Item 4", "Item 5"];
+
+  const handleItemSelect4 = (event: ChangeEvent<HTMLSelectElement>) => {
+    setSelectedItem4(event.target.value);
+  };
+
+  const items4 = ["Item 1", "Item 2", "Item 3", "Item 4", "Item 5"];
+
+  const handleItemSelect5 = (event: ChangeEvent<HTMLSelectElement>) => {
+    setSelectedItem5(event.target.value);
+  };
+
+  const items5 = ["Item 1", "Item 2", "Item 3", "Item 4", "Item 5"];
 
   return (
     <>
@@ -59,8 +88,8 @@ const Requestnorm: React.FC<RequestnormProps> = () => {
           <label className="checkbox-container">
             <input
               type="checkbox"
-              checked={isGeneralRequest}
-              onChange={() => setIsGeneralRequest(!isGeneralRequest)}
+              checked={isinputcheckRequest}
+              onChange={() => setIsinputcheckRequest(!isinputcheckRequest)}
             />
             <span className="checkmark"></span>
           </label>
@@ -68,8 +97,8 @@ const Requestnorm: React.FC<RequestnormProps> = () => {
           <label className="checkbox-container2">
             <input
               type="checkbox"
-              checked={isAddEmployeeRequest}
-              onChange={() => setIsAddEmployeeRequest(!isAddEmployeeRequest)}
+              checked={isinputcheckRequest2}
+              onChange={() => setIsinputcheckRequest2(!isinputcheckRequest2)}
             />
             <span className="checkmark"></span>
           </label>
@@ -89,23 +118,64 @@ const Requestnorm: React.FC<RequestnormProps> = () => {
               </option>
             ))}
           </select>
-          {selectedItem && <p>You selected the location: {selectedItem}</p>}
         </div>
         <div className="list-box-container-right">
           <h4>แผนก</h4>
           <select
-            className="list-box"
-            onChange={handleItemSelect}
-            value={selectedItem}
+            className="list-box2"
+            onChange={handleItemSelect2}
+            value={selectedItem2}
           >
             <option value="">เลือกแผนก</option>
-            {items.map((item, index) => (
+            {items2.map((item, index) => (
               <option key={index} value={item}>
                 {item}
               </option>
             ))}
           </select>
-          {selectedItem && <p>You selected the location: {selectedItem}</p>}
+        </div>
+        <div className="list-box-container3">
+          <h3>Skill Request</h3>
+          <select
+            className="list-box3"
+            onChange={handleItemSelect3}
+            value={selectedItem3}
+          >
+            <option value="">Select Skill</option>
+            {items3.map((item, index) => (
+              <option key={index} value={item}>
+                {item}
+              </option>
+            ))}
+          </select>
+        </div>
+        <div className="list-box-container4">
+          <select
+            className="list-box4"
+            onChange={handleItemSelect4}
+            value={selectedItem4}
+          >
+            <option value="">Select Skill</option>
+            {items4.map((item, index) => (
+              <option key={index} value={item}>
+                {item}
+              </option>
+            ))}
+          </select>
+        </div>
+        <div className="list-box-container5">
+          <select
+            className="list-box5"
+            onChange={handleItemSelect5}
+            value={selectedItem5}
+          >
+            <option value="">Select Skill</option>
+            {items5.map((item, index) => (
+              <option key={index} value={item}>
+                {item}
+              </option>
+            ))}
+          </select>
         </div>
       </div>
     </>

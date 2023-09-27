@@ -3,50 +3,55 @@ import "./Requestsearchnormal.css";
 import NavEmp from "./NavEmp";
 
 const Requestsearchnormal = () => {
-  const numColumns = 3;
   const scrollContainerRef = useRef(null);
   const [numRows, setNumRows] = useState(1);
   const [selectedItem, setSelectedItem] = useState("");
-  const [expanded, setExpanded] = useState(false);
+  const [tableData, setTableData] = useState([]);
 
   const addRow = () => {
-    setNumRows(numRows + 1);
-    setExpanded(true);
+    if (selectedItem !== "") {
+      const newRow = {
+        position: selectedItem,
+        data: `>>`,
+      };
+      setTableData([...tableData, newRow]);
+      setSelectedItem("");
+      setNumRows(numRows + 1);
+    }
   };
 
-  const tableRows = [];
-  for (let i = 1; i <= numRows; i++) {
-    const tableColumns = [];
-    for (let j = 1; j <= numColumns; j++) {
-      tableColumns.push(
-        <td key={j}>
-          <div className="cell-content">
-            Row {i}, Column {j}
-          </div>
-        </td>
-      );
-    }
-    tableRows.push(<tr key={i}>{tableColumns}</tr>);
-  }
+  const tableRows = tableData.map((row, rowIndex) => (
+    <tr key={rowIndex}>
+      <td>Request{rowIndex + 1}</td>
+      <td>{row.position}</td>
+      <td>{row.data}</td>
+    </tr>
+  ));
 
   useEffect(() => {
     if (scrollContainerRef.current) {
       scrollContainerRef.current.scrollTop =
         scrollContainerRef.current.scrollHeight;
     }
-  }, [numRows]);
+  }, [tableData]);
 
   const handleItemSelect = (event) => {
     setSelectedItem(event.target.value);
   };
 
-  const items = ["Item 1", "Item 2", "Item 3", "Item 4", "Item 5"];
+  const items = [
+    "วิศวกรระบบ",
+    "วิศวกรไฟฟ้า",
+    "วิศวกรเครื่องกล",
+    "วิศวกรโยธา",
+    "วิศวกรข้อมูล",
+  ];
 
   return (
     <>
       <NavEmp />
       <div className="bgred">
-        <div className={`table-container ${expanded ? "expanded" : ""}`}>
+        <div className="table-container">
           <button className="add-row-button" onClick={addRow}>
             Add
           </button>
@@ -78,7 +83,6 @@ const Requestsearchnormal = () => {
                 </option>
               ))}
             </select>
-            {selectedItem && <p>คุณเลือกตำแหน่ง: {selectedItem}</p>}
           </div>
         </div>
       </div>
