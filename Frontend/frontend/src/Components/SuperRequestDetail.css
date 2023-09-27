@@ -1,0 +1,49 @@
+/* SuperRequestDetail.css */
+.super-request-detail {
+  padding: 20px;
+  background-color: #f5f5f5;
+  border-radius: 5px;
+}
+
+.request-info {
+  background-color: #fff;
+  padding: 20px;
+  border-radius: 5px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+}
+
+.select-bar {
+  width: 100%;
+  padding: 10px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+}
+
+table.info {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 20px;
+}
+
+table.info th,
+table.info td {
+  padding: 10px;
+  border: 1px solid #ccc;
+}
+
+.approve-button,
+.reject-button {
+  margin-top: 20px;
+  padding: 10px 20px;
+  background-color: #4caf50; /* Green for Approve */
+  border: none;
+  color: white;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background-color 0.3s;
+}
+
+.approve-button:hover,
+.reject-button:hover {
+  background-color: #f44336; /* Red for Reject */
+}

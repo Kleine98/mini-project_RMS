@@ -1,0 +1,38 @@
+/* SuperEmpInfo.css */
+.super-emp-info-container {
+  padding: 20px;
+}
+
+.form-container {
+  display: flex;
+  justify-content: space-between;
+}
+
+.img-container {
+  flex: 1;
+  text-align: center;
+}
+
+.section-container {
+  flex: 2;
+  padding: 20px;
+  background-color: #fff;
+  border: 1px solid #e0e0e0;
+  border-radius: 5px;
+  margin: 0 10px;
+}
+
+.input-field {
+  width: 100%;
+  padding: 10px;
+  margin: 10px 0;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+}
+
+.add-employee-button {
+  text-align: center;
+  margin-top: 20px;
+}
+
+/* You can add more specific styles as needed */

@@ -34,6 +34,7 @@ import EmpPersonalInfoHr from "./Components/EmpPersonalInfoHr";
 import EmpAddHr from "./Components/EmpAddHr";
 import EmpSelectMenu from "./Components/EmpSelectMenu";
 import RequestSearch from "./Components/RequestSearch";
+import SuperEmpInfo from "./Components/SuperEmpInfo";
 
 const router = createBrowserRouter([
   {
@@ -161,6 +162,11 @@ const router = createBrowserRouter([
   {
     path: "/RequestSearch",
     element: <RequestSearch />,
+  },
+
+  {
+    path: "/SuperEmpInfo",
+    element: <SuperEmpInfo />,
   },
 ]);
 
