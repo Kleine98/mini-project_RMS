@@ -33,6 +33,7 @@ import RequestProgessHR from "./Components/RequestProgessHR";
 import EmpPersonalInfoHr from "./Components/EmpPersonalInfoHr";
 import EmpAddHr from "./Components/EmpAddHr";
 import EmpSelectMenu from "./Components/EmpSelectMenu";
+import RequestSearch from "./Components/RequestSearch";
 
 const router = createBrowserRouter([
   {
@@ -156,6 +157,10 @@ const router = createBrowserRouter([
   {
     path: "/EmpSelectMenu",
     element: <EmpSelectMenu />,
+  },
+  {
+    path: "/RequestSearch",
+    element: <RequestSearch />,
   },
 ]);
 
