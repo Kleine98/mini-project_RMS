@@ -1,19 +1,22 @@
-import React, { useState } from "react";
+import React, { useState, ChangeEvent } from "react";
 import "./Requestnorm.css";
 import NavEmp from "./NavEmp";
 
-function Requestnorm() {
-  const [inputValue, setInputValue] = useState("");
-  const [inputValue2, setInputValue2] = useState("");
-  const [selectedItem, setSelectedItem] = useState("");
-  const [isButtonActive, setIsButtonActive] = useState(false);
-  const [isButtonActive2, setIsButtonActive2] = useState(false);
+interface RequestnormProps {}
 
-  const handleInputChange = (e) => {
+const Requestnorm: React.FC<RequestnormProps> = () => {
+  const [inputValue, setInputValue] = useState<string>("");
+  const [inputValue2, setInputValue2] = useState<string>("");
+  const [selectedItem, setSelectedItem] = useState<string>("");
+  const [isGeneralRequest, setIsGeneralRequest] = useState<boolean>(false);
+  const [isAddEmployeeRequest, setIsAddEmployeeRequest] =
+    useState<boolean>(false);
+
+  const handleInputChange = (e: ChangeEvent<HTMLTextAreaElement>) => {
     setInputValue(e.target.value);
   };
 
-  const handleInputChange2 = (e) => {
+  const handleInputChange2 = (e: ChangeEvent<HTMLTextAreaElement>) => {
     setInputValue2(e.target.value);
   };
 
@@ -24,19 +27,11 @@ function Requestnorm() {
     setInputValue2("");
   };
 
-  const handleItemSelect = (event) => {
+  const handleItemSelect = (event: ChangeEvent<HTMLSelectElement>) => {
     setSelectedItem(event.target.value);
   };
 
   const items = ["Item 1", "Item 2", "Item 3", "Item 4", "Item 5"];
-
-  const handleEllipsisButtonClick = () => {
-    setIsButtonActive(!isButtonActive);
-  };
-
-  const handleEllipsisButtonClick2 = () => {
-    setIsButtonActive2(!isButtonActive2);
-  };
 
   return (
     <>
@@ -58,19 +53,26 @@ function Requestnorm() {
             onChange={handleInputChange}
             className="custom-input"
           />
-          <button onClick={handleSubmit} className="butsub">
+          <button onClick={handleSubmit} className="butsubx">
             Submit
           </button>
-          <input
-            type="checkbox"
-            className={`ellipsis-button ${isButtonActive ? "active" : ""}`}
-            onClick={handleEllipsisButtonClick}
-          ></input>
+          <label className="checkbox-container">
+            <input
+              type="checkbox"
+              checked={isGeneralRequest}
+              onChange={() => setIsGeneralRequest(!isGeneralRequest)}
+            />
+            <span className="checkmark"></span>
+          </label>
           <span className="ellipsis-message">คำร้องทั่วไป</span>
-          <button
-            className={`ellipsis-button2 ${isButtonActive2 ? "active" : ""}`}
-            onClick={handleEllipsisButtonClick2}
-          ></button>
+          <label className="checkbox-container2">
+            <input
+              type="checkbox"
+              checked={isAddEmployeeRequest}
+              onChange={() => setIsAddEmployeeRequest(!isAddEmployeeRequest)}
+            />
+            <span className="checkmark"></span>
+          </label>
           <span className="ellipsis-message2">คำร้องขอเพิ่มพนักงาน</span>
         </div>
         <div className="list-box-container">
@@ -108,6 +110,6 @@ function Requestnorm() {
       </div>
     </>
   );
-}
+};
 
 export default Requestnorm;

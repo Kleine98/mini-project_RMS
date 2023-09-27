@@ -45,7 +45,7 @@
   box-shadow: 0 0 5px rgba(0, 123, 255, 0.5);
 }
 
-.butsub {
+.butsubx {
   border-radius: 200px;
   background: #0f6;
   box-shadow: 0px 0px 5px 5px rgba(0, 0, 0, 0.5);
@@ -110,56 +110,12 @@
   text-align: center;
 }
 
-.ellipsis-button {
-  background: white;
-  border: 1px solid black;
-  border-radius: 50%;
-  cursor: pointer;
-  width: 40px;
-  height: 40px;
-  font-size: 24px;
-  margin: 5px;
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  position: absolute;
-  top: 110px;
-  left: 34%;
-}
-
-.ellipsis-button:hover {
-  background: #999;
-  color: #fff;
-}
-
-.ellipsis-button2 {
-  background: white;
-  border: 1px solid black;
-  border-radius: 50%;
-  cursor: pointer;
-  width: 40px;
-  height: 40px;
-  font-size: 24px;
-  margin: 5px;
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  position: absolute;
-  top: 110px;
-  right: 44%;
-}
-
-.ellipsis-button2:hover {
-  background: #999;
-  color: #fff;
-}
-
 .ellipsis-message {
   margin-left: 5px;
   color: #333;
   position: absolute;
-  top: 115px;
-  left: 37%;
+  top: 114px;
+  left: 32%;
   font-size: 24px;
   margin: 5px;
 }
@@ -168,8 +124,8 @@
   margin-left: 5px;
   color: #333;
   position: absolute;
-  top: 115px;
-  left: 56%;
+  top: 114px;
+  left: 52%;
   font-size: 24px;
   margin: 5px;
 }
@@ -178,4 +134,66 @@
   background: aquamarine;
   overflow: hidden;
   height: 100vh;
+}
+
+.checkbox-container {
+  display: block;
+  position: relative;
+  cursor: pointer;
+  margin-top: 15px;
+  position: absolute;
+  top: 100px;
+  right: 70%;
+}
+
+.checkbox-container input {
+  position: absolute;
+  opacity: 0;
+  cursor: pointer;
+}
+
+.checkbox-container .checkmark {
+  position: absolute;
+  top: 0;
+  left: 0;
+  height: 40px;
+  width: 40px;
+  border-radius: 50%;
+  border: 1px solid #000;
+  background-color: #fff;
+}
+
+.checkbox-container input:checked + .checkmark {
+  background-color: #000;
+}
+
+.checkbox-container2 {
+  display: block;
+  position: relative;
+  cursor: pointer;
+  margin-top: 15px;
+  position: absolute;
+  top: 100px;
+  right: 50%;
+}
+
+.checkbox-container2 input {
+  position: absolute;
+  opacity: 0;
+  cursor: pointer;
+}
+
+.checkbox-container2 .checkmark {
+  position: absolute;
+  top: 0;
+  left: 0;
+  height: 40px;
+  width: 40px;
+  border-radius: 50%;
+  border: 1px solid #000;
+  background-color: #fff;
+}
+
+.checkbox-container2 input:checked + .checkmark {
+  background-color: #000;
 }
