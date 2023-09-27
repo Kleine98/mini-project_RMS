@@ -1,5 +1,5 @@
 <?php
-include "./localhost-db.php";
+include "./203-db.php";
 
 // Set response headers
 // Allow requests from any origin during development (not recommended for production)
@@ -20,19 +20,19 @@ function getEmployeeById($conn, $id)
             employee.id AS employee_id, 
             employee.*, 
             department.department_name AS department_name,
-            employee_position.position_name AS position_name,
+            employee_position.position_name,  -- Select position_name directly
             user_management.id as user_id, 
             user_management.*, 
-            permission.*,
+            P.*,
             GROUP_CONCAT(skills.skill_name) AS skills
         FROM employee
         JOIN user_management ON employee.id = user_management.employee_id
-        JOIN permission ON user_management.id = permission.user_id
         JOIN employee_position ON employee.employee_position_id = employee_position.no
         JOIN department ON employee_position.department_id = department.id
         LEFT JOIN employee_skill_list ON employee.id = employee_skill_list.employee_id
         LEFT JOIN employee_skill_list_to_skills ON employee_skill_list.no = employee_skill_list_to_skills.employee_skill_list_id
         LEFT JOIN skills ON employee_skill_list_to_skills.skill_id = skills.id
+        LEFT JOIN permission P ON employee_position.permission_id = P.id
         WHERE employee.id = '$id' 
         GROUP BY employee.id"; // Use single quotes around the ID
 

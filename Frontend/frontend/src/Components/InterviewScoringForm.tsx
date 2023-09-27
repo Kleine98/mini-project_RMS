@@ -21,7 +21,7 @@ function InterviewScoringForm({ interviewId }) {
 
     try {
       const response = await axios.post(
-        "http://localhost/mini-project/mini-project/Backend/api/interview/interview.php",
+        "http://203.188.54.9/~u6411130038/mini-project/Backend/api/interview/interview.php",
         {
           candidate_id: interviewId,
           technical_score: scores.technicalScore,

@@ -15,7 +15,7 @@ function InterviewReportPage() {
   const fetchInterviews = async () => {
     try {
       const response = await axios.get(
-        "http://localhost/mini-project/mini-project/Backend/api/interview/interview.php"
+        "http://203.188.54.9/~u6411130038/mini-project/Backend/api/interview/interview.php"
       );
       setInterviews(response.data);
       setLoading(false);

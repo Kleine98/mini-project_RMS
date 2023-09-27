@@ -21,7 +21,7 @@ function InterviewPage() {
   const fetchInterviews = async (managerId) => {
     try {
       const response = await axios.get(
-        `http://localhost/mini-project/mini-project/Backend/api/interview/interview.php?manager_id=${managerId}`
+        `http://203.188.54.9/~u6411130038/mini-project/Backend/api/interview/interview.php?manager_id=${managerId}`
       );
       setInterviews(response.data);
       setLoading(false);

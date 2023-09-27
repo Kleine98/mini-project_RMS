@@ -42,12 +42,12 @@ function Navbar() {
                 <Link to="/EmployeeManagement">Employee Management</Link>
               </li>
             )}
-            {managerId && (
+            {managerId && userPermission?.charAt(1) === "1" && (
               <li className="menu-link" onClick={closeMobileMenu}>
                 <Link to="/InterviewPage/${managerId}">Interview</Link>
               </li>
             )}
-            {managerId && (
+            {managerId && userPermission?.charAt(1) === "1" && (
               <li className="menu-link" onClick={closeMobileMenu}>
                 <Link to="/InterviewReportPage">Interview Report</Link>
               </li>

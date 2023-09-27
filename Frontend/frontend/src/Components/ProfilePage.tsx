@@ -13,7 +13,7 @@ function ProfilePage() {
     const fetchEmployee = async () => {
       try {
         const response = await axios.get(
-          `http://localhost/mini-project/mini-project/Backend/api/employee_search.php?id=${userID}`
+          `http://203.188.54.9/~u6411130038/mini-project/Backend/api/employee_search.php?id=${userID}`
         );
         setEmployee(response.data[0]);
       } catch (error) {

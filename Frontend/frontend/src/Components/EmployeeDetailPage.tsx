@@ -15,7 +15,7 @@ function EmployeeDetailPage() {
     const fetchEmployee = async () => {
       try {
         const response = await axios.get(
-          `http://localhost/mini-project/mini-project/Backend/api/employee_search.php?id=${id}`
+          `http://203.188.54.9/~u6411130038/mini-project/Backend/api/employee_search.php?id=${id}`
         );
         setEmployee(response.data[0]); // Assuming you get a single employee with the given id
       } catch (error) {
@@ -26,10 +26,18 @@ function EmployeeDetailPage() {
     fetchEmployee();
   }, [id]);
 
+  useEffect(() => {
+    // When entering edit mode, populate the formData including skills
+    if (editMode && employee) {
+      setFormData({
+        ...employee,
+        skill: employee.skills ? employee.skills.join(", ") : "",
+      });
+    }
+  }, [editMode, employee]);
+
   const handleEditClick = () => {
     setEditMode(true);
-    // Initialize form data with existing employee data
-    setFormData(employee);
   };
 
   const handleCancelEdit = () => {
@@ -54,6 +62,7 @@ function EmployeeDetailPage() {
         setEmployee(formData);
         setEditMode(false);
         // Reload the page to reflect the updated data
+        window.location.reload();
       }
     } catch (error) {
       console.error("Error updating employee:", error);
@@ -138,7 +147,7 @@ function EmployeeDetailPage() {
                     </td>
                   </tr>
                   <tr>
-                    <td>Skill:</td>
+                    <td>Skills:</td>
                     <td>
                       <input
                         type="text"
@@ -275,8 +284,8 @@ function EmployeeDetailPage() {
                     <td>{employee.join_date}</td>
                   </tr>
                   <tr>
-                    <td>Skill:</td>
-                    <td>{employee.skill}</td>
+                    <td>Skills:</td>
+                    <td>{employee.skills ? employee.skills.join(", ") : ""}</td>
                   </tr>
                   <tr>
                     <td>Experience:</td>

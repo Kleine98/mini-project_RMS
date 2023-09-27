@@ -12,7 +12,7 @@ function InterviewDetail({ interviewId }) {
   const fetchInterview = async (interviewId) => {
     try {
       const response = await axios.get(
-        `http://localhost/mini-project/mini-project/Backend/api/interview/interview.php?interview_id=${interviewId}`
+        `http://203.188.54.9/~u6411130038/mini-project/Backend/api/interview/interview.php?interview_id=${interviewId}`
       );
       setInterview(response.data[0]); // Access the first object in the array
       setLoading(false);
