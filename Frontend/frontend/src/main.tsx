@@ -37,6 +37,9 @@ import RequestSearch from "./Components/RequestSearch";
 import SuperEmpInfo from "./Components/SuperEmpInfo";
 import SuperPerInfo from "./Components/SuperPerInfo";
 import SuperRequestDetail from "./Components/SuperRequestDetail";
+import Requeststatus from "./Components/Requeststatus";
+import Emppersonalinfonorm from "./Components/Emppersonalinfonorm";
+import Requestnorm from "./Components/Requestnorm";
 
 const router = createBrowserRouter([
   {
@@ -176,6 +179,19 @@ const router = createBrowserRouter([
   {
     path: "/SuperRequestDetail",
     element: <SuperRequestDetail />,
+  },
+  {
+    path: "/Requeststatus",
+    element: <Requeststatus />,
+  },
+  {
+    path: "/Emppersonalinfonorm",
+    element: <Emppersonalinfonorm />,
+  },
+
+  {
+    path: "/Requestnorm",
+    element: <Requestnorm />,
   },
 ]);
 
