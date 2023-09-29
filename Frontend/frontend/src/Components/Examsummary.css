@@ -1,0 +1,60 @@
+.table-containerscore {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 90vh;
+  overflow: hidden;
+  position: relative;
+}
+
+.custom-tablescore {
+  width: 290%;
+  border-radius: inherit;
+  border: 5px solid #000;
+  background: #d9d9d9;
+  border-collapse: collapse;
+  margin: 120px;
+}
+
+.custom-tablescore th {
+  color: white;
+}
+
+.custom-tablescore th,
+.custom-tablescore td {
+  border: 1px solid #ccc;
+  padding: 8px;
+  text-align: top;
+  text-align: center;
+}
+
+.custom-tablescore th {
+  background-color: rgb(8, 8, 79);
+}
+
+.custom-tablescore tbody tr:nth-child(odd) {
+  background-color: #f9f9f9;
+}
+
+.custom-tablescore tbody tr:nth-child(even) {
+  background-color: #ffffff;
+}
+
+.custom-checkboxscore {
+  display: inline-block;
+  width: 10px;
+  height: 10px;
+  background-color: red;
+  border: 1px solid black;
+  cursor: pointer;
+  margin-right: 5px;
+  border-radius: 3px;
+}
+
+.custom-checkboxscore.checked {
+  background-color: green;
+}
+
+.bgscore {
+  background: aquamarine;
+}
