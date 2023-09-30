@@ -27,6 +27,10 @@ import AddEmployeePage from "./Components/AddEmployeePage";
 import ProfilePage from "./Components/ProfilePage";
 import InterviewPage from "./Components/InterviewPage";
 import InterviewReportPage from "./Components/InterviewReportPage";
+import CandidateProfilePage from "./Components/CandidateProfilePage";
+import CandidateInterviewPage from "./Components/CandidateInterviewPage";
+import EnterInterviewPage from "./Components/EnterInterviewPage";
+import PermissionManagement from "./Components/PermissionManagement";
 
 const router = createBrowserRouter([
   {
@@ -122,8 +126,24 @@ const router = createBrowserRouter([
     element: <InterviewPage />,
   },
   {
-    path: "/InterviewReportPage/",
+    path: "/InterviewReportPage",
     element: <InterviewReportPage />,
+  },
+  {
+    path: "/CandidateProfilePage/:candidateID",
+    element: <CandidateProfilePage />,
+  },
+  {
+    path: "/CandidateInterviewPage/:candidateID",
+    element: <CandidateInterviewPage />,
+  },
+  {
+    path: "/EnterInterviewPage",
+    element: <EnterInterviewPage />,
+  },
+  {
+    path: "/PermissionManagement",
+    element: <PermissionManagement />,
   },
 ]);
 

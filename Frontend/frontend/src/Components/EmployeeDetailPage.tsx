@@ -9,6 +9,7 @@ function EmployeeDetailPage() {
   const [employee, setEmployee] = useState(null);
   const [editMode, setEditMode] = useState(false); // Track edit mode
   const [formData, setFormData] = useState({}); // Store form data
+  const [positions, setPositions] = useState([]); // Store employee positions
 
   useEffect(() => {
     // Fetch employee details based on the id
@@ -27,11 +28,28 @@ function EmployeeDetailPage() {
   }, [id]);
 
   useEffect(() => {
-    // When entering edit mode, populate the formData including skills
+    // Fetch employee positions
+    const fetchPositions = async () => {
+      try {
+        const response = await axios.get(
+          "http://203.188.54.9/~u6411130038/mini-project/Backend/api/direct_search/position.php"
+        );
+        setPositions(response.data); // Assuming response.data is an array of positions
+      } catch (error) {
+        console.error("Error fetching employee positions:", error);
+      }
+    };
+
+    fetchPositions();
+  }, []);
+
+  useEffect(() => {
+    // When entering edit mode, populate the formData including skills and position name
     if (editMode && employee) {
       setFormData({
         ...employee,
         skill: employee.skills ? employee.skills.join(", ") : "",
+        employee_position_name: employee.position_name || "", // Initialize with the current position name
       });
     }
   }, [editMode, employee]);
@@ -63,6 +81,7 @@ function EmployeeDetailPage() {
         setEditMode(false);
         // Reload the page to reflect the updated data
         window.location.reload();
+        console.log(formData);
       }
     } catch (error) {
       console.error("Error updating employee:", error);
@@ -169,25 +188,28 @@ function EmployeeDetailPage() {
                     </td>
                   </tr>
                   <tr>
-                    <td>Department:</td>
-                    <td>
-                      <input
-                        type="text"
-                        name="department_name"
-                        value={formData.department_name || ""}
-                        onChange={handleChange}
-                      />
-                    </td>
-                  </tr>
-                  <tr>
                     <td>Position:</td>
                     <td>
-                      <input
-                        type="text"
-                        name="position_name"
-                        value={formData.position_name || ""}
+                      <select
+                        name="employee_position_id"
+                        value={formData.no || ""}
                         onChange={handleChange}
-                      />
+                      >
+                        <option value="">Select Position</option>
+                        {positions.map(
+                          (
+                            position,
+                            index // Add 'index' as the second argument
+                          ) => (
+                            <option
+                              key={index} // Use 'index' as the key
+                              value={position.no}
+                            >
+                              {position.position_name}
+                            </option>
+                          )
+                        )}
+                      </select>
                     </td>
                   </tr>
                   <tr>
@@ -208,28 +230,6 @@ function EmployeeDetailPage() {
                         type="password"
                         name="password"
                         value={formData.password || ""}
-                        onChange={handleChange}
-                      />
-                    </td>
-                  </tr>
-                  <tr>
-                    <td>Permission name:</td>
-                    <td>
-                      <input
-                        type="text"
-                        name="permission_name"
-                        value={formData.permission_name || ""}
-                        onChange={handleChange}
-                      />
-                    </td>
-                  </tr>
-                  <tr>
-                    <td>Permission:</td>
-                    <td>
-                      <input
-                        type="text"
-                        name="permission"
-                        value={formData.permission || ""}
                         onChange={handleChange}
                       />
                     </td>

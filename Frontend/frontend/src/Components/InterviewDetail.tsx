@@ -1,9 +1,13 @@
 import React, { useState, useEffect } from "react";
+import { Navigate, useNavigate } from "react-router-dom"; // Import useNavigate
 import axios from "axios";
+import Cookies from "js-cookie";
 
 function InterviewDetail({ interviewId }) {
   const [interview, setInterview] = useState({});
   const [loading, setLoading] = useState(true);
+  const candidateId = Cookies.get("candidateID");
+  const navigate = useNavigate(); // Use useNavigate inside the component function
 
   useEffect(() => {
     fetchInterview(interviewId);
@@ -29,10 +33,13 @@ function InterviewDetail({ interviewId }) {
     return [];
   };
 
+  const handleEnterInterviewClick = () => {
+    navigate("/EnterInterviewPage");
+  };
+
   return (
     <div>
       <h2>Interview Detail</h2>
-
       {/* Display loading message while waiting for data */}
       {loading ? (
         <p>Loading...</p>
@@ -44,6 +51,13 @@ function InterviewDetail({ interviewId }) {
               <tr>
                 <td>Interview ID</td>
                 <td>{interview.id}</td>
+                <td>
+                  {candidateId && (
+                    <button type="button" onClick={handleEnterInterviewClick}>
+                      Enter interview
+                    </button>
+                  )}
+                </td>
               </tr>
               <tr>
                 <td>Date</td>

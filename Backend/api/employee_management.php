@@ -66,12 +66,12 @@ function addEmployee($conn)
     $address = $data['address'];
     $join_date = $data['join_date'];
     $experience = $data['experience'];
-    $position_id = $data['position_id'];
+    $employee_position_id = $data['employee_position_id'];
     $skills = $data['skills'];
 
     // Construct and execute the SQL query to insert a new employee
     $sql_employee = "INSERT INTO employee (id, name, lname, email, tel, address, join_date, experience, employee_position_id) 
-       VALUES ('$id','$name', '$lname', '$email', '$tel', '$address', STR_TO_DATE('$join_date', '%Y-%m-%d'), $experience, $position_id)";
+       VALUES ('$id','$name', '$lname', '$email', '$tel', '$address', STR_TO_DATE('$join_date', '%Y-%m-%d'), $experience, $employee_position_id)";
 
     $result_employee = mysqli_query($conn, $sql_employee);
 
@@ -110,27 +110,6 @@ function addEmployee($conn)
         mysqli_query($conn, "DELETE FROM employee_skill_list WHERE employee_id = '$id'");
 
         $response = array('error' => 'Insert into user_management failed: ' . mysqli_error($conn));
-        echo json_encode($response);
-        return;
-    }
-
-    // Extract the permission information
-    $permission_name = $data['permission_name'];
-    $permission_value = $data['permission'];
-
-    // Construct and execute the SQL query to insert a new Permission entry
-    $sql_permission = "INSERT INTO permission (permission_name, permission, user_id)
-        VALUES('$permission_name', '$permission_value', '$user_id')";
-
-    $result_permission = mysqli_query($conn, $sql_permission);
-
-    if (!$result_permission) {
-        // Rollback both employee and User_Management insertions if Permission insertion fails
-        mysqli_query($conn, "DELETE FROM employee WHERE id = '$id'");
-        mysqli_query($conn, "DELETE FROM employee_skill_list WHERE employee_id = '$id'");
-        mysqli_query($conn, "DELETE FROM user_management WHERE id = '$user_id'");
-
-        $response = array('error' => 'Insert into permission failed: ' . mysqli_error($conn));
         echo json_encode($response);
         return;
     }
@@ -207,7 +186,7 @@ function addEmployee($conn)
 
 
 // Function to handle PUT request to edit an employee
-function editEmployee($conn, $id)
+function editEmployee($conn)
 {
     // Get the JSON data from the request body
     $json_data = file_get_contents("php://input");
@@ -215,12 +194,11 @@ function editEmployee($conn, $id)
     // Parse the JSON data into an associative array
     $data = json_decode($json_data, true);
 
-    // Extract the permission information
-    $permission_name = $data['permission_name'];
-    $permission = $data['permission'];
-    $user_id = $data['user_id'];
+    // Start a database transaction
+    mysqli_autocommit($conn, false);
 
     // Extract the employee information
+    $employee_id = $data['employee_id'];
     $name = $data['name'];
     $lname = $data['lname'];
     $email = $data['email'];
@@ -229,22 +207,9 @@ function editEmployee($conn, $id)
     $join_date = $data['join_date'];
     $experience = $data['experience'];
     $employee_position_id = $data['employee_position_id'];
+    $user_id = $data['user_id'];
     $password = $data['password'];
     $skills = $data['skills'];
-
-    // Construct and execute the SQL query to update the permission
-    $sql_permission = "UPDATE permission SET 
-                permission_name = '$permission_name', 
-                permission = '$permission'
-            WHERE user_id = $user_id";
-
-    $result_permission = mysqli_query($conn, $sql_permission);
-
-    if (!$result_permission) {
-        $response = array('error' => 'Permission Update failed: ' . mysqli_error($conn));
-        echo json_encode($response);
-        return;
-    }
 
     // Construct and execute the SQL query to update the employee
     $sql_employee = "UPDATE employee SET 
@@ -253,28 +218,42 @@ function editEmployee($conn, $id)
                 email = '$email', 
                 tel = '$tel', 
                 address = '$address', 
-                join_date = STR_TO_DATE('$join_date', '%Y-%m-%d'), 
+                join_date = '$join_date', 
                 experience = $experience, 
                 employee_position_id = $employee_position_id
-            WHERE id = $id";
+            WHERE id = '$employee_id'";
 
     $result_employee = mysqli_query($conn, $sql_employee);
 
     if (!$result_employee) {
+        mysqli_rollback($conn);
         $response = array('error' => 'Employee Update failed: ' . mysqli_error($conn));
         echo json_encode($response);
         return;
     }
 
     // Update User_Management data
-    $sql_user = "UPDATE user_management SET 
+    $sql_user = "UPDATE user_management SET
+                id = '$user_id',
                 password = '$password'
-            WHERE employee_id = $id";
+            WHERE employee_id = '$employee_id'";
 
     $result_user = mysqli_query($conn, $sql_user);
 
     if (!$result_user) {
+        mysqli_rollback($conn);
         $response = array('error' => 'User Update failed: ' . mysqli_error($conn));
+        echo json_encode($response);
+        return;
+    }
+
+    // Clear existing employee skills
+    $sql_clear_employee_skills = "DELETE FROM employee_skill_list_to_skills WHERE employee_skill_list_id = '$employee_id'";
+    $result_clear_employee_skills = mysqli_query($conn, $sql_clear_employee_skills);
+
+    if (!$result_clear_employee_skills) {
+        mysqli_rollback($conn);
+        $response = array('error' => 'Failed to clear existing employee skills: ' . mysqli_error($conn));
         echo json_encode($response);
         return;
     }
@@ -287,6 +266,7 @@ function editEmployee($conn, $id)
             $result_check_skill = mysqli_query($conn, $sql_check_skill);
 
             if (!$result_check_skill) {
+                mysqli_rollback($conn);
                 $response = array('error' => 'Skill Check failed: ' . mysqli_error($conn));
                 echo json_encode($response);
                 return;
@@ -297,26 +277,15 @@ function editEmployee($conn, $id)
                 $row = mysqli_fetch_assoc($result_check_skill);
                 $skill_id = $row['id'];
 
-                // Check if the employee is already linked to this skill
-                $sql_check_employee_skill = "SELECT * FROM employee_skill_list_to_skills WHERE employee_skill_list_id = $id AND skill_id = $skill_id";
-                $result_check_employee_skill = mysqli_query($conn, $sql_check_employee_skill);
+                // Link the employee to the existing skill
+                $sql_link_employee_skill = "INSERT INTO employee_skill_list_to_skills (employee_skill_list_id, skill_id) VALUES ('$employee_id', '$skill_id')";
+                $result_link_employee_skill = mysqli_query($conn, $sql_link_employee_skill);
 
-                if (!$result_check_employee_skill) {
-                    $response = array('error' => 'Employee Skill Check failed: ' . mysqli_error($conn));
+                if (!$result_link_employee_skill) {
+                    mysqli_rollback($conn);
+                    $response = array('error' => 'Employee Skill Linking failed: ' . mysqli_error($conn));
                     echo json_encode($response);
                     return;
-                }
-
-                if (mysqli_num_rows($result_check_employee_skill) === 0) {
-                    // Link the employee to the existing skill
-                    $sql_link_employee_skill = "INSERT INTO employee_skill_list_to_skills (employee_skill_list_id, skill_id) VALUES ($id, $skill_id)";
-                    $result_link_employee_skill = mysqli_query($conn, $sql_link_employee_skill);
-
-                    if (!$result_link_employee_skill) {
-                        $response = array('error' => 'Employee Skill Linking failed: ' . mysqli_error($conn));
-                        echo json_encode($response);
-                        return;
-                    }
                 }
             } else {
                 // Skill does not exist, insert the new skill and link the employee
@@ -324,6 +293,7 @@ function editEmployee($conn, $id)
                 $result_insert_skill = mysqli_query($conn, $sql_insert_skill);
 
                 if (!$result_insert_skill) {
+                    mysqli_rollback($conn);
                     $response = array('error' => 'Skill Insertion failed: ' . mysqli_error($conn));
                     echo json_encode($response);
                     return;
@@ -333,10 +303,11 @@ function editEmployee($conn, $id)
                 $skill_id = mysqli_insert_id($conn);
 
                 // Link the employee to the new skill
-                $sql_link_employee_skill = "INSERT INTO employee_skill_list_to_skills (employee_skill_list_id, skill_id) VALUES ($id, $skill_id)";
+                $sql_link_employee_skill = "INSERT INTO employee_skill_list_to_skills (employee_skill_list_id, skill_id) VALUES ('$employee_id', '$skill_id')";
                 $result_link_employee_skill = mysqli_query($conn, $sql_link_employee_skill);
 
                 if (!$result_link_employee_skill) {
+                    mysqli_rollback($conn);
                     $response = array('error' => 'Employee Skill Linking failed: ' . mysqli_error($conn));
                     echo json_encode($response);
                     return;
@@ -345,31 +316,76 @@ function editEmployee($conn, $id)
         }
     }
 
+    // Commit the transaction if all updates were successful
+    mysqli_commit($conn);
+
     $response = array('message' => 'Employee updated successfully');
     echo json_encode($response);
 }
 
 
 
-// Function to handle DELETE request to delete an employee
-function deleteEmployee($conn, $id)
+
+
+
+// Function to delete employee data by ID
+function deleteEmployee($conn, $employee_id)
 {
-    // Construct and execute the SQL query to delete related records from Permission and User_Management tables
-    mysqli_query($conn, "DELETE FROM permission WHERE user_id = (SELECT id FROM user_management WHERE employee_id = $id)");
-    mysqli_query($conn, "DELETE FROM user_management WHERE employee_id = $id");
+    // Ensure the provided employee ID is safe to use in SQL queries
+    $employee_id = mysqli_real_escape_string($conn, $employee_id);
 
-    // Construct and execute the SQL query to delete the employee
-    $sql = "DELETE FROM employee WHERE id = $id";
+    // Start a database transaction
+    mysqli_autocommit($conn, false);
 
-    $result = mysqli_query($conn, $sql);
+    // Delete records from 'employee_skill_list_to_skills'
+    $sql_delete_employee_skill_links = "DELETE FROM employee_skill_list_to_skills WHERE employee_skill_list_id = $employee_id";
+    $result_delete_employee_skill_links = mysqli_query($conn, $sql_delete_employee_skill_links);
 
-    if (!$result) {
-        $response = array('error' => 'Delete failed: ' . mysqli_error($conn));
+    if (!$result_delete_employee_skill_links) {
+        mysqli_rollback($conn);
+        $response = array('error' => 'Failed to delete employee skill links: ' . mysqli_error($conn));
         echo json_encode($response);
-    } else {
-        $response = array('message' => 'Employee deleted successfully');
-        echo json_encode($response);
+        return;
     }
+
+    // Delete records from 'employee_skill_list'
+    $sql_delete_employee_skill_list = "DELETE FROM employee_skill_list WHERE no = $employee_id";
+    $result_delete_employee_skill_list = mysqli_query($conn, $sql_delete_employee_skill_list);
+
+    if (!$result_delete_employee_skill_list) {
+        mysqli_rollback($conn);
+        $response = array('error' => 'Failed to delete employee skill list: ' . mysqli_error($conn));
+        echo json_encode($response);
+        return;
+    }
+
+    // Delete records from 'user_management'
+    $sql_delete_user_management = "DELETE FROM user_management WHERE employee_id = '$employee_id'";
+    $result_delete_user_management = mysqli_query($conn, $sql_delete_user_management);
+
+    if (!$result_delete_user_management) {
+        mysqli_rollback($conn);
+        $response = array('error' => 'Failed to delete user management: ' . mysqli_error($conn));
+        echo json_encode($response);
+        return;
+    }
+
+    // Delete records from 'employee'
+    $sql_delete_employee = "DELETE FROM employee WHERE id = '$employee_id'";
+    $result_delete_employee = mysqli_query($conn, $sql_delete_employee);
+
+    if (!$result_delete_employee) {
+        mysqli_rollback($conn);
+        $response = array('error' => 'Failed to delete employee: ' . mysqli_error($conn));
+        echo json_encode($response);
+        return;
+    }
+
+    // Commit the transaction if all deletions were successful
+    mysqli_commit($conn);
+
+    $response = array('message' => 'Employee deleted successfully');
+    echo json_encode($response);
 }
 
 // Handle HTTP requests
@@ -383,11 +399,7 @@ switch ($method) {
         addEmployee($conn);
         break;
     case 'PUT':
-        // Extract the employee ID from the URL
-        $url = $_SERVER['REQUEST_URI'];
-        $url_parts = explode('/', $url);
-        $id = end($url_parts);
-        editEmployee($conn, $id);
+        editEmployee($conn);
         break;
     case 'DELETE':
         // Extract the employee ID from the URL

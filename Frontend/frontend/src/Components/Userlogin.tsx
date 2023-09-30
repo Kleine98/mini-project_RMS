@@ -19,13 +19,13 @@ function Emplogin() {
 
     // Example fetch request
     fetch(
-      "http://203.188.54.9/~u6411130038/mini-project/Backend/api/login.php?request=login",
+      "http://203.188.54.9/~u6411130038/mini-project/Backend/api/login_candidate.php?request=login",
       {
         method: "POST",
         headers: {
           "Content-Type": "application/x-www-form-urlencoded",
         },
-        body: `id=${inputs.username}&password=${inputs.password}`,
+        body: `email=${inputs.email}&password=${inputs.password}`,
       }
     )
       .then((response) => response.json())
@@ -37,11 +37,7 @@ function Emplogin() {
           setMessage("Login successful.");
 
           // Set a cookie with the user ID
-          Cookies.set("userID", result.employee_id, { expires: 7 }); // Expires in 7 days
-          Cookies.set("userPermission", result.permission, { expires: 7 });
-          Cookies.set("manager_employee_id", result.manager_employee_id, {
-            expires: 7,
-          });
+          Cookies.set("candidateID", result.id, { expires: 7 }); // Expires in 7 days
           // Redirect to the homepage with user data
           navigate("/");
         } else {
@@ -70,15 +66,15 @@ function Emplogin() {
             onSubmit={handleSubmit}
           >
             <div className="form-group">
-              <label className="username">Username:</label>
+              <label className="email">Email:</label>
               <input
                 type="text"
                 name="username"
-                value={inputs.username || ""}
+                value={inputs.email || ""}
                 onChange={(e) =>
-                  setInputs({ ...inputs, username: e.target.value })
+                  setInputs({ ...inputs, email: e.target.value })
                 }
-                placeholder="Enter your username"
+                placeholder="Enter your email"
                 required
               ></input>
             </div>

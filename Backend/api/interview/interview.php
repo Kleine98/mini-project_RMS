@@ -10,8 +10,6 @@ header('Access-Control-Allow-Credentials: true');
 header("Content-Type: application/json");
 
 // Function to retrieve candidates for scoring
-// Function to retrieve candidates for scoring
-// Function to retrieve candidates for scoring
 function getCandidatesForScoring($conn, $manager_id)
 {
     if (isset($manager_id)) {

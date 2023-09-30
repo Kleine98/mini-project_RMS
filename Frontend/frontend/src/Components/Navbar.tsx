@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import { FiAirplay, FiX, FiMenu } from "react-icons/fi";
 import "./Navbar.css";
 import { Link } from "react-router-dom";
-import Cookies from "js-cookie"; // Import js-cookie library
+import Cookies from "js-cookie";
 
 function Navbar() {
   const [click, setClick] = useState(false);
@@ -10,6 +10,7 @@ function Navbar() {
   const closeMobileMenu = () => setClick(false);
 
   // Retrieve the user ID and permission from the cookie
+  const candidateID = Cookies.get("candidateID");
   const userID = Cookies.get("userID");
   const userPermission = Cookies.get("userPermission");
   const managerId = Cookies.get("manager_employee_id");
@@ -42,6 +43,11 @@ function Navbar() {
                 <Link to="/EmployeeManagement">Employee Management</Link>
               </li>
             )}
+            {userID && userPermission?.charAt(2) === "1" && (
+              <li className="menu-link" onClick={closeMobileMenu}>
+                <Link to="/PermissionManagement">Permission Management</Link>
+              </li>
+            )}
             {managerId && userPermission?.charAt(1) === "1" && (
               <li className="menu-link" onClick={closeMobileMenu}>
                 <Link to="/InterviewPage/${managerId}">Interview</Link>
@@ -52,12 +58,27 @@ function Navbar() {
                 <Link to="/InterviewReportPage">Interview Report</Link>
               </li>
             )}
+            {candidateID && (
+              <li className="menu-link" onClick={closeMobileMenu}>
+                <Link to="/CandidateInterviewPage/${candidateID}">
+                  Interview
+                </Link>
+              </li>
+            )}
             {/* Conditional rendering of user's name or Login/Signup */}
-            {userID ? (
+            {userID && (
               <li className="menu-link" onClick={closeMobileMenu}>
                 <Link to={`/ProfilePage/${userID}`}>{userID}</Link>
               </li>
-            ) : (
+            )}
+            {candidateID && (
+              <li className="menu-link" onClick={closeMobileMenu}>
+                <Link to={`/CandidateProfilePage/${candidateID}`}>
+                  {candidateID}
+                </Link>
+              </li>
+            )}
+            {!userID && !candidateID && (
               <li className="menu-link" onClick={closeMobileMenu}>
                 <Link to="/UserAndEmp">Login/Signup</Link>
               </li>

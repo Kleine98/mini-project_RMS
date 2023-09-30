@@ -1,5 +1,6 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
+import axios from "axios";
 import Navbar from "./Navbar";
 
 function AddEmployeePage() {
@@ -14,13 +15,27 @@ function AddEmployeePage() {
     join_date: "",
     skill: "",
     experience: "",
-    department_name: "",
-    position_name: "",
+    employee_position_id: "",
     user_id: "",
-    permission_name: "",
     password: "",
-    permission: "",
   });
+  const [positions, setPositions] = useState([]);
+
+  useEffect(() => {
+    // Fetch employee positions
+    const fetchPositions = async () => {
+      try {
+        const response = await axios.get(
+          "http://203.188.54.9/~u6411130038/mini-project/Backend/api/direct_search/position.php"
+        );
+        setPositions(response.data);
+      } catch (error) {
+        console.error("Error fetching employee positions:", error);
+      }
+    };
+
+    fetchPositions();
+  }, []);
 
   const handleInputChange = (e) => {
     const { name, value } = e.target;
@@ -28,22 +43,27 @@ function AddEmployeePage() {
   };
 
   const handleAddEmployee = async () => {
-    // Perform your employee addition logic here
     try {
-      // Assuming you have an API endpoint for adding employees
-      await fetch(
+      // Split the skills input by comma and trim spaces
+      const skillsArray = formData.skill
+        .split(",")
+        .map((skill) => skill.trim());
+
+      // Update the formData with the skills array
+      const updatedFormData = {
+        ...formData,
+        skills: skillsArray,
+      };
+
+      // Send a POST request to add the employee data
+      await axios.post(
         "http://203.188.54.9/~u6411130038/mini-project/Backend/api/employee_management.php",
-        {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify(formData),
-        }
+        updatedFormData
       );
 
       // After adding the employee, you can navigate to another page:
       navigate("/EmployeeManagement"); // Replace with your desired route
+      console.log(updatedFormData);
     } catch (error) {
       console.error("Error adding employee:", error);
     }
@@ -53,17 +73,14 @@ function AddEmployeePage() {
     <div>
       <Navbar />
       <h2>Add Employee</h2>
-      <form>
+      <div>
         <table>
           <tbody>
             <tr>
-              <td>
-                <label htmlFor="id">ID:</label>
-              </td>
+              <td>ID:</td>
               <td>
                 <input
                   type="text"
-                  id="id"
                   name="id"
                   value={formData.id}
                   onChange={handleInputChange}
@@ -71,13 +88,10 @@ function AddEmployeePage() {
               </td>
             </tr>
             <tr>
-              <td>
-                <label htmlFor="name">Name:</label>
-              </td>
+              <td>Name:</td>
               <td>
                 <input
                   type="text"
-                  id="name"
                   name="name"
                   value={formData.name}
                   onChange={handleInputChange}
@@ -85,13 +99,10 @@ function AddEmployeePage() {
               </td>
             </tr>
             <tr>
-              <td>
-                <label htmlFor="lname">Last Name:</label>
-              </td>
+              <td>Last Name:</td>
               <td>
                 <input
                   type="text"
-                  id="lname"
                   name="lname"
                   value={formData.lname}
                   onChange={handleInputChange}
@@ -99,13 +110,10 @@ function AddEmployeePage() {
               </td>
             </tr>
             <tr>
-              <td>
-                <label htmlFor="email">Email:</label>
-              </td>
+              <td>Email:</td>
               <td>
                 <input
                   type="email"
-                  id="email"
                   name="email"
                   value={formData.email}
                   onChange={handleInputChange}
@@ -113,13 +121,10 @@ function AddEmployeePage() {
               </td>
             </tr>
             <tr>
-              <td>
-                <label htmlFor="tel">Telephone:</label>
-              </td>
+              <td>Telephone:</td>
               <td>
                 <input
                   type="text"
-                  id="tel"
                   name="tel"
                   value={formData.tel}
                   onChange={handleInputChange}
@@ -127,13 +132,10 @@ function AddEmployeePage() {
               </td>
             </tr>
             <tr>
-              <td>
-                <label htmlFor="address">Address:</label>
-              </td>
+              <td>Address:</td>
               <td>
                 <input
                   type="text"
-                  id="address"
                   name="address"
                   value={formData.address}
                   onChange={handleInputChange}
@@ -141,13 +143,10 @@ function AddEmployeePage() {
               </td>
             </tr>
             <tr>
-              <td>
-                <label htmlFor="join_date">Join Date:</label>
-              </td>
+              <td>Join Date:</td>
               <td>
                 <input
                   type="date"
-                  id="join_date"
                   name="join_date"
                   value={formData.join_date}
                   onChange={handleInputChange}
@@ -155,13 +154,10 @@ function AddEmployeePage() {
               </td>
             </tr>
             <tr>
-              <td>
-                <label htmlFor="skill">Skill:</label>
-              </td>
+              <td>Skills:</td>
               <td>
                 <input
                   type="text"
-                  id="skill"
                   name="skill"
                   value={formData.skill}
                   onChange={handleInputChange}
@@ -169,13 +165,10 @@ function AddEmployeePage() {
               </td>
             </tr>
             <tr>
-              <td>
-                <label htmlFor="experience">Experience:</label>
-              </td>
+              <td>Experience:</td>
               <td>
                 <input
-                  type="text"
-                  id="experience"
+                  type="number"
                   name="experience"
                   value={formData.experience}
                   onChange={handleInputChange}
@@ -183,41 +176,35 @@ function AddEmployeePage() {
               </td>
             </tr>
             <tr>
+              <td>Position:</td>
               <td>
-                <label htmlFor="department_id">Department:</label>
-              </td>
-              <td>
-                <input
-                  type="text"
-                  id="department_name"
-                  name="department_name"
-                  value={formData.department_name}
+                <select
+                  name="employee_position_id"
+                  value={formData.no || ""}
                   onChange={handleInputChange}
-                />
+                >
+                  <option value="">Select Position</option>
+                  {positions.map(
+                    (
+                      position,
+                      index // Add 'index' as the second argument
+                    ) => (
+                      <option
+                        key={index} // Use 'index' as the key
+                        value={position.no}
+                      >
+                        {position.position_name}
+                      </option>
+                    )
+                  )}
+                </select>
               </td>
             </tr>
             <tr>
-              <td>
-                <label htmlFor="position_id">Position:</label>
-              </td>
+              <td>User ID:</td>
               <td>
                 <input
                   type="text"
-                  id="position_name"
-                  name="position_name"
-                  value={formData.position_name}
-                  onChange={handleInputChange}
-                />
-              </td>
-            </tr>
-            <tr>
-              <td>
-                <label htmlFor="user_id">User ID:</label>
-              </td>
-              <td>
-                <input
-                  type="text"
-                  id="user_id"
                   name="user_id"
                   value={formData.user_id}
                   onChange={handleInputChange}
@@ -225,27 +212,10 @@ function AddEmployeePage() {
               </td>
             </tr>
             <tr>
-              <td>
-                <label htmlFor="permission_name">Permission Name:</label>
-              </td>
-              <td>
-                <input
-                  type="text"
-                  id="permission_name"
-                  name="permission_name"
-                  value={formData.permission_name}
-                  onChange={handleInputChange}
-                />
-              </td>
-            </tr>
-            <tr>
-              <td>
-                <label htmlFor="password">Password:</label>
-              </td>
+              <td>Password:</td>
               <td>
                 <input
                   type="password"
-                  id="password"
                   name="password"
                   value={formData.password}
                   onChange={handleInputChange}
@@ -253,25 +223,15 @@ function AddEmployeePage() {
               </td>
             </tr>
             <tr>
-              <td>
-                <label htmlFor="permission">Permission:</label>
-              </td>
-              <td>
-                <input
-                  type="text"
-                  id="permission"
-                  name="permission"
-                  value={formData.permission}
-                  onChange={handleInputChange}
-                />
+              <td colSpan="2">
+                <button type="button" onClick={handleAddEmployee}>
+                  Add Employee
+                </button>
               </td>
             </tr>
           </tbody>
         </table>
-        <button type="button" onClick={handleAddEmployee}>
-          Add Employee
-        </button>
-      </form>
+      </div>
     </div>
   );
 }
