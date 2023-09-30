@@ -1,0 +1,234 @@
+.calendar-frame {
+  display: flex;
+  position: absolute;
+  left: 32%;
+  top: 438px;
+}
+
+.calendar {
+  width: 300px;
+  border: 1px solid black;
+  padding: 10px;
+  text-align: center;
+  background-color: black;
+  color: white;
+}
+
+.headerc {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.weekdays {
+  display: flex;
+}
+
+.weekday {
+  flex: 1;
+  padding: 5px;
+  background-color: #333;
+  color: white;
+}
+
+.days {
+  display: grid;
+  grid-template-columns: repeat(7, 1fr);
+}
+
+.day {
+  flex: 1;
+  padding: 10px;
+  text-align: center;
+  cursor: pointer;
+}
+
+.empty-day {
+  flex: 1;
+}
+
+.input-container-c {
+  display: flex;
+  flex-direction: column;
+  margin: 20px auto;
+}
+
+.textcapa1-c {
+  margin: 6px;
+  position: absolute;
+  right: 60%;
+  top: 230px;
+}
+
+.textcapa2-c {
+  margin: 6px;
+  position: absolute;
+  left: 57%;
+  top: 230px;
+}
+
+.textcapa3-c {
+  margin: 6px;
+  position: absolute;
+  right: 20%;
+  top: 230px;
+}
+
+.textcapa4-c {
+  margin: 6px;
+  position: absolute;
+  left: 29%;
+  top: 300px;
+}
+
+.textcapa5-c {
+  margin: 6px;
+  position: absolute;
+  right: 45%;
+  top: 300px;
+}
+
+.custom-input2-c {
+  border: 1px solid #000;
+  border-radius: 5px;
+  font-size: 16px;
+  width: 15%;
+  height: 30px;
+  margin-top: 231px;
+  resize: none;
+  position: absolute;
+  top: 0px;
+  right: 45%;
+  z-index: 2;
+  padding: 0;
+  vertical-align: top;
+}
+
+.custom-input3-c {
+  border: 1px solid #000;
+  border-radius: 5px;
+  font-size: 16px;
+  width: 15%;
+  height: 30px;
+  margin-top: 231px;
+  resize: none;
+  position: absolute;
+  top: 0px;
+  right: 25%;
+  z-index: 2;
+  padding: 0;
+  vertical-align: top;
+}
+
+.custom-input4-c {
+  border: 1px solid #000;
+  border-radius: 5px;
+  font-size: 16px;
+  width: 15%;
+  height: 30px;
+  margin-top: 231px;
+  resize: none;
+  position: absolute;
+  top: 0px;
+  right: 5%;
+  z-index: 2;
+  padding: 0;
+  vertical-align: top;
+}
+
+.custom-input5-c {
+  border: 1px solid #000;
+  border-radius: 5px;
+  font-size: 16px;
+  width: 15%;
+  height: 30px;
+  margin-top: 300px;
+  resize: none;
+  position: absolute;
+  top: 0px;
+  right: 53%;
+  z-index: 2;
+  padding: 0;
+  vertical-align: top;
+}
+
+.custom-input6-c {
+  border: 1px solid #000;
+  border-radius: 5px;
+  font-size: 16px;
+  width: 15%;
+  height: 30px;
+  margin-top: 300px;
+  resize: none;
+  position: absolute;
+  top: 0px;
+  right: 30%;
+  z-index: 2;
+  padding: 0;
+  vertical-align: top;
+}
+
+.textadd {
+  font-size: 40px;
+  margin: 6px;
+  position: absolute;
+  left: 44%;
+  top: 100px;
+}
+
+.textin {
+  font-size: 40px;
+  margin: 6px;
+  position: absolute;
+  left: 40%;
+  top: 380px;
+}
+
+.butsub-c {
+  border-radius: 200px;
+  background: #0f6;
+  box-shadow: 0px 0px 5px 5px rgba(0, 0, 0, 0.5);
+  position: absolute;
+  top: 670px;
+  right: 97px;
+  color: black;
+  padding: 5px 10px;
+  cursor: pointer;
+  width: 130px;
+  height: 50px;
+  color: black;
+  text-align: center;
+  font-family: League Gothic;
+  font-size: 30px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: normal;
+}
+
+.logoc {
+  width: 80%;
+  height: 80%;
+  flex-shrink: 0;
+  position: absolute;
+  top: 25px;
+  left: 30px;
+  display: block;
+}
+
+.image-framec {
+  border: 10px solid white;
+  padding: 10px;
+  display: inline-block;
+  width: 21%;
+  height: 40%;
+  position: absolute;
+  top: 138px;
+  left: 5%;
+  background: white;
+}
+
+.bgadd {
+  background: aquamarine;
+  overflow: hidden;
+  height: 90vh;
+}
