@@ -31,6 +31,7 @@ import Requeststatus from "./Components/Requeststatus";
 import Emppersonalinfonorm from "./Components/Emppersonalinfonorm";
 import Examsummary from "./Components/Examsummary";
 import Empaddhr from "./Components/Empaddhr";
+import Requestsearch from "./Components/Requestsearch";
 
 const router = createBrowserRouter([
   {
@@ -144,6 +145,10 @@ const router = createBrowserRouter([
   {
     path: "/Empaddhr",
     element: <Empaddhr />,
+  },
+  {
+    path: "/Requestsearch",
+    element: <Requestsearch />,
   },
 ]);
 
