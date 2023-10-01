@@ -32,6 +32,7 @@ import Emppersonalinfonorm from "./Components/Emppersonalinfonorm";
 import Examsummary from "./Components/Examsummary";
 import Empaddhr from "./Components/Empaddhr";
 import Requestsearch from "./Components/Requestsearch";
+import Scorefrom from "./Components/Scorefrom";
 
 const router = createBrowserRouter([
   {
@@ -149,6 +150,10 @@ const router = createBrowserRouter([
   {
     path: "/Requestsearch",
     element: <Requestsearch />,
+  },
+  {
+    path: "/Scorefrom",
+    element: <Scorefrom />,
   },
 ]);
 
