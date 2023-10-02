@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import axios from "axios";
 import Navbar from "./Navbar";
 import InterviewDetail from "./InterviewDetail";
+import InterviewReportAVG from "./InterviewReportAVG";
 
 function InterviewReportPage() {
   const [interviews, setInterviews] = useState([]);
@@ -89,6 +90,7 @@ function InterviewReportPage() {
           />
         </div>
       )}
+      <InterviewReportAVG />
     </div>
   );
 }
