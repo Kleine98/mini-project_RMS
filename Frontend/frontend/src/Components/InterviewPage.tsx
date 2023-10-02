@@ -30,9 +30,9 @@ function InterviewPage() {
     }
   };
 
-  const handleInterviewClick = (interviewId) => {
+  const handleInterviewClick = (no) => {
     // Set the selected interview when clicked
-    setSelectedInterview(interviewId);
+    setSelectedInterview(no);
   };
 
   return (
@@ -67,7 +67,7 @@ function InterviewPage() {
             {interviews.map((interview) => (
               <tr
                 key={interview.id}
-                onClick={() => handleInterviewClick(interview.id)}
+                onClick={() => handleInterviewClick(interview.no)}
                 style={{ cursor: "pointer" }}
               >
                 <td>{interview.id}</td>
@@ -89,9 +89,7 @@ function InterviewPage() {
         </table>
       )}
       {/* Display the scoring form if an interview is selected */}
-      {selectedInterview && (
-        <InterviewScoringForm interviewId={selectedInterview} />
-      )}
+      {selectedInterview && <InterviewScoringForm no={selectedInterview} />}
     </div>
   );
 }

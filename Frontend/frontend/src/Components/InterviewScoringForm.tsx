@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import axios from "axios";
 
-function InterviewScoringForm({ interviewId }) {
+function InterviewScoringForm({ no }) {
   const [scores, setScores] = useState({
     technicalScore: "",
     creativeScore: "",
@@ -23,7 +23,7 @@ function InterviewScoringForm({ interviewId }) {
       const response = await axios.post(
         "http://203.188.54.9/~u6411130038/mini-project/Backend/api/interview/interview.php",
         {
-          candidate_id: interviewId,
+          no: no,
           technical_score: scores.technicalScore,
           creative_score: scores.creativeScore,
           human_relation_score: scores.humanRelationScore,
@@ -44,7 +44,7 @@ function InterviewScoringForm({ interviewId }) {
   return (
     <div>
       <h2>Interview Scoring</h2>
-      <p>Interview ID: {interviewId}</p>
+      <p>Interview Result ID: {no}</p>
       <form onSubmit={handleSubmit}>
         <table>
           <tbody>
