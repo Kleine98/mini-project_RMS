@@ -3,20 +3,20 @@ import { Navigate, useNavigate } from "react-router-dom"; // Import useNavigate
 import axios from "axios";
 import Cookies from "js-cookie";
 
-function InterviewDetail({ interviewId }) {
+function InterviewDetail({ interviewId, managerId }) {
   const [interview, setInterview] = useState({});
   const [loading, setLoading] = useState(true);
   const candidateId = Cookies.get("candidateID");
   const navigate = useNavigate(); // Use useNavigate inside the component function
 
   useEffect(() => {
-    fetchInterview(interviewId);
-  }, [interviewId]);
+    fetchInterview(interviewId, managerId);
+  }, [interviewId, managerId]);
 
-  const fetchInterview = async (interviewId) => {
+  const fetchInterview = async (interviewId, managerId) => {
     try {
       const response = await axios.get(
-        `http://203.188.54.9/~u6411130038/mini-project/Backend/api/interview/interview.php?interview_id=${interviewId}`
+        `http://203.188.54.9/~u6411130038/mini-project/Backend/api/interview/interview.php?interview_id=${interviewId}&manager_id=${managerId}`
       );
       setInterview(response.data[0]); // Access the first object in the array
       setLoading(false);

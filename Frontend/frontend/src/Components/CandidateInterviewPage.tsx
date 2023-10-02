@@ -8,6 +8,7 @@ function CandidateInterviewPage() {
   const [interviews, setInterviews] = useState([]);
   const [loading, setLoading] = useState(true);
   const [selectedInterview, setSelectedInterview] = useState(null);
+  const [selectedManager, setSelectedManager] = useState(null);
 
   useEffect(() => {
     const candidateId = Cookies.get("candidateID");
@@ -30,9 +31,9 @@ function CandidateInterviewPage() {
     }
   };
 
-  const handleInterviewClick = (interviewId) => {
-    // Set the selected interview when clicked
+  const handleInterviewClick = (interviewId, managerId) => {
     setSelectedInterview(interviewId);
+    setSelectedManager(managerId);
   };
 
   return (
@@ -67,7 +68,9 @@ function CandidateInterviewPage() {
             {interviews.map((interview) => (
               <tr
                 key={interview.id}
-                onClick={() => handleInterviewClick(interview.id)}
+                onClick={() =>
+                  handleInterviewClick(interview.id, interview.manager_id)
+                }
                 style={{ cursor: "pointer" }}
               >
                 <td>{interview.id}</td>
@@ -89,7 +92,14 @@ function CandidateInterviewPage() {
         </table>
       )}
       {/* Display the scoring form if an interview is selected */}
-      {selectedInterview && <InterviewDetail interviewId={selectedInterview} />}
+      {selectedInterview && (
+        <div>
+          <InterviewDetail
+            interviewId={selectedInterview}
+            managerId={selectedManager}
+          />
+        </div>
+      )}
     </div>
   );
 }

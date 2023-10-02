@@ -14,7 +14,10 @@ function getCandidatesForScoring($conn, $manager_id)
 {
     if (isset($manager_id)) {
         // Implement logic to retrieve candidates who need scoring
-        $query = "SELECT c.*, cq.*, s.*, i.*, sl.*, GROUP_CONCAT(sk.skill_name) AS skills
+        $query = "SELECT c.*, cq.*, s.*, i.*, sl.*,
+            (SELECT GROUP_CONCAT(DISTINCT sk.skill_name) FROM skills sk
+             JOIN request_skill_list_to_skills req_skill_skills ON sk.id = req_skill_skills.skill_id
+             WHERE req_skill_skills.request_skill_list_id = req_skill_list.no) AS skills
         FROM candidate c
         JOIN candidate_queue cq ON c.id = cq.candidate_id
         JOIN interview_schedule s ON cq.no = s.candidate_id
@@ -22,23 +25,25 @@ function getCandidatesForScoring($conn, $manager_id)
         LEFT JOIN score_list sl ON i.no = sl.interview_result_id
         LEFT JOIN request req ON c.request_id = req.id
         LEFT JOIN request_skill_list req_skill_list ON req.id = req_skill_list.request_id
-        LEFT JOIN request_skill_list_to_skills req_skill_skills ON req_skill_list.no = req_skill_skills.request_skill_list_id
-        LEFT JOIN skills sk ON req_skill_skills.skill_id = sk.id
         WHERE i.manager_id = $manager_id
         GROUP BY c.id";
     } else {
         // Handle the case where manager_id is not specified
-        $query = "SELECT c.*, cq.*, s.*, i.*, sl.*, GROUP_CONCAT(sk.skill_name) AS skills
-            FROM candidate c
-            JOIN candidate_queue cq ON c.id = cq.candidate_id
-            JOIN interview_schedule s ON cq.no = s.candidate_id
-            JOIN interview_result i ON s.id = i.interview_schedule_id
-            LEFT JOIN score_list sl ON i.no = sl.interview_result_id
-            LEFT JOIN request req ON c.request_id = req.id
-            LEFT JOIN request_skill_list req_skill_list ON req.id = req_skill_list.request_id
-            LEFT JOIN request_skill_list_to_skills req_skill_skills ON req_skill_list.no = req_skill_skills.request_skill_list_id
-            LEFT JOIN skills sk ON req_skill_skills.skill_id = sk.id
-            GROUP BY c.id";
+        $query = "SELECT c.*, cq.*, s.*, i.*, sl.*,
+        (SELECT GROUP_CONCAT(DISTINCT sk.skill_name) FROM skills sk
+        JOIN request_skill_list_to_skills req_skill_skills ON sk.id = req_skill_skills.skill_id
+        WHERE req_skill_skills.request_skill_list_id = req_skill_list.no) AS skills
+        FROM interview_result i
+        JOIN interview_schedule s ON i.interview_schedule_id = s.id
+        JOIN candidate_queue cq ON s.candidate_id = cq.no
+        JOIN candidate c ON cq.candidate_id = c.id
+        LEFT JOIN score_list sl ON i.no = sl.interview_result_id
+        LEFT JOIN request req ON c.request_id = req.id
+        LEFT JOIN request_skill_list req_skill_list ON req.id = req_skill_list.request_id
+        GROUP BY i.no
+        ORDER BY s.id";
+
+
     }
 
     $result = mysqli_query($conn, $query);
@@ -88,6 +93,35 @@ function getInterviewData($conn, $interviewId)
     }
 }
 
+function getInterviewResultByInterviewIdAndManagerId($conn, $interviewId, $managerId)
+{
+    $query = "SELECT c.*, cq.*, s.*, i.*, sl.*, GROUP_CONCAT(sk.skill_name) AS skills
+              FROM candidate c
+              JOIN candidate_queue cq ON c.id = cq.candidate_id
+              JOIN interview_schedule s ON cq.no = s.candidate_id
+              JOIN interview_result i ON s.id = i.interview_schedule_id
+              LEFT JOIN score_list sl ON i.no = sl.interview_result_id
+              LEFT JOIN request req ON c.request_id = req.id
+              LEFT JOIN request_skill_list req_skill_list ON req.id = req_skill_list.request_id
+              LEFT JOIN request_skill_list_to_skills req_skill_skills ON req_skill_list.no = req_skill_skills.request_skill_list_id
+              LEFT JOIN skills sk ON req_skill_skills.skill_id = sk.id
+              WHERE i.interview_schedule_id = $interviewId AND i.manager_id = $managerId
+              GROUP BY c.id";
+
+    $result = mysqli_query($conn, $query);
+
+    if (!$result) {
+        $response = array('error' => 'Query failed: ' . mysqli_error($conn));
+        echo json_encode($response);
+    } else {
+        $data = array();
+        while ($row = mysqli_fetch_assoc($result)) {
+            $data[] = $row;
+        }
+        echo json_encode($data);
+    }
+}
+
 
 // Function to submit scores for a candidate
 function submitScores($conn)
@@ -100,7 +134,7 @@ function submitScores($conn)
 
     // Validate and extract data from the associative array
     if (
-        isset($data['candidate_id']) &&
+        isset($data['interview_result_id']) &&
         isset($data['technical_score']) &&
         isset($data['creative_score']) &&
         isset($data['human_relation_score']) &&
@@ -108,7 +142,7 @@ function submitScores($conn)
         isset($data['decision']) &&
         isset($data['comment'])
     ) {
-        $interview_result_id = $data['candidate_id'];
+        $interview_result_id = $data['interview_result_id'];
         $technical_score = $data['technical_score'];
         $creative_score = $data['creative_score'];
         $human_relation_score = $data['human_relation_score'];
@@ -135,7 +169,6 @@ function submitScores($conn)
     }
 }
 
-
 // Handle HTTP requests
 $method = $_SERVER['REQUEST_METHOD'];
 
@@ -144,12 +177,18 @@ switch ($method) {
         submitScores($conn);
         break;
     case 'GET':
-        if (isset($_GET['manager_id'])) {
+        if (isset($_GET['manager_id']) && !isset($_GET['interview_id'])) {
             $manager_id = $_GET['manager_id'];
             getCandidatesForScoring($conn, $manager_id);
         } elseif (isset($_GET['interview_id'])) {
             $interviewId = $_GET['interview_id'];
-            getInterviewData($conn, $interviewId);
+            if (isset($_GET['manager_id'])) {
+                $managerId = $_GET['manager_id'];
+                getInterviewResultByInterviewIdAndManagerId($conn, $interviewId, $managerId);
+            } else {
+                // Handle the case where manager_id is not specified
+                getInterviewData($conn, $interviewId);
+            }
         } else {
             $manager_id = null;
             getCandidatesForScoring($conn, $manager_id);
@@ -163,4 +202,5 @@ switch ($method) {
 
 // Close the database connection
 mysqli_close($conn);
+
 ?>

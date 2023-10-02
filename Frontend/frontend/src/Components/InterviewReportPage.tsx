@@ -7,6 +7,7 @@ function InterviewReportPage() {
   const [interviews, setInterviews] = useState([]);
   const [loading, setLoading] = useState(true);
   const [selectedInterview, setSelectedInterview] = useState(null);
+  const [selectedManager, setSelectedManager] = useState(null);
 
   useEffect(() => {
     fetchInterviews(); // Fetch all interviews
@@ -24,8 +25,9 @@ function InterviewReportPage() {
     }
   };
 
-  const handleInterviewClick = (interviewId) => {
+  const handleInterviewClick = (interviewId, managerId) => {
     setSelectedInterview(interviewId);
+    setSelectedManager(managerId);
   };
 
   return (
@@ -56,8 +58,10 @@ function InterviewReportPage() {
           <tbody>
             {interviews.map((interview) => (
               <tr
-                key={interview.id}
-                onClick={() => handleInterviewClick(interview.id)}
+                key={interview.no}
+                onClick={() =>
+                  handleInterviewClick(interview.id, interview.manager_id)
+                }
                 style={{ cursor: "pointer" }}
               >
                 <td>{interview.id}</td>
@@ -79,7 +83,10 @@ function InterviewReportPage() {
       )}
       {selectedInterview && (
         <div>
-          <InterviewDetail interviewId={selectedInterview} />
+          <InterviewDetail
+            interviewId={selectedInterview}
+            managerId={selectedManager}
+          />
         </div>
       )}
     </div>
