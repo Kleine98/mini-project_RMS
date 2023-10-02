@@ -40,6 +40,10 @@ import SuperRequestDetail from "./Components/SuperRequestDetail";
 import Requeststatus from "./Components/Requeststatus";
 import Emppersonalinfonorm from "./Components/Emppersonalinfonorm";
 import Requestnorm from "./Components/Requestnorm";
+import Scorefrom from "./Components/Scorefrom";
+import InterviewDate from "./Components/InterviewDate";
+import InterviewRequestSearch from "./Components/InterviewRequestSearch";
+import Examsummary from "./Components/Examsummary";
 
 const router = createBrowserRouter([
   {
@@ -188,10 +192,26 @@ const router = createBrowserRouter([
     path: "/Emppersonalinfonorm",
     element: <Emppersonalinfonorm />,
   },
-
   {
     path: "/Requestnorm",
     element: <Requestnorm />,
+  },
+  {
+    path: "/Scorefrom",
+    element: <Scorefrom />,
+  },
+
+  {
+    path: "/InterviewDate",
+    element: <InterviewDate />,
+  },
+  {
+    path: "/InterviewRequestSearch",
+    element: <InterviewRequestSearch />,
+  },
+  {
+    path: "/Examsummary",
+    element: <Examsummary />,
   },
 ]);
 
