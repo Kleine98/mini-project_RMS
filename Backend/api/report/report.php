@@ -1,8 +1,8 @@
 <?php
+// Include your database connection script (e.g., "../203-db.php").
 include "../203-db.php";
 
 // Set response headers
-// Allow requests from any origin during development (not recommended for production)
 header('Access-Control-Allow-Origin: *');
 header('Access-Control-Allow-Methods: GET, POST, OPTIONS');
 header('Access-Control-Allow-Headers: Origin, Content-Type, X-Auth-Token');
@@ -10,101 +10,54 @@ header('Access-Control-Allow-Credentials: true');
 header("Content-Type: application/json");
 
 // Function to calculate insights
+// ...
+
 // Function to calculate insights
 function calculateInsights($conn)
 {
     // Initialize data array to store insights
     $insights = array();
 
-    // Calculate Average Scores by Skill
+    // Modify the SQL query to join the tables as per your reference query
     $query = "SELECT
-                skill_name,
-                AVG(technical_score) AS avg_technical_score,
-                AVG(creative_score) AS avg_creative_score,
-                AVG(human_relation_score) AS avg_human_relation_score,
-                AVG(learning_score) AS avg_learning_score
-            FROM
-                (
-                    SELECT
-                        ir.technical_score,
-                        ir.creative_score,
-                        ir.human_relation_score,
-                        ir.learning_score,
-                        s.skill_name
-                    FROM
-                        interview_result ir
-                    LEFT JOIN
-                        score_list sl ON ir.interview_result_id = sl.interview_result_id
-                    LEFT JOIN
-                        (
-                            SELECT DISTINCT
-                                skill_name
-                            FROM
-                                interview_result
-                        ) s ON 1 = 1
-                ) subquery
-            GROUP BY
-                skill_name";
+        d.department_name,
+        s.skill_name,
+        COUNT(e.id) AS employee_count,
+        tc.total_employees,
+        (COUNT(e.id) * 100.0 / tc.total_employees) AS percentage_of_employees
+        FROM department d
+        LEFT JOIN employee_position ep ON d.id = ep.department_id
+        LEFT JOIN employee e ON ep.no = e.employee_position_id
+        LEFT JOIN employee_skill_list esl ON e.id = esl.employee_id
+        LEFT JOIN employee_skill_list_to_skills esls ON esl.no = esls.employee_skill_list_id
+        LEFT JOIN skills s ON esls.skill_id = s.id
+        LEFT JOIN (
+            SELECT
+            d.department_name,
+            COUNT(e.id) AS total_employees
+            FROM department d
+            LEFT JOIN employee_position ep ON d.id = ep.department_id
+            LEFT JOIN employee e ON ep.no = e.employee_position_id
+            GROUP BY d.department_name
+            ) 
+        tc ON d.department_name = tc.department_name
+        GROUP BY d.department_name, s.skill_name
+        ORDER BY d.department_name, employee_count DESC";
 
     $result = mysqli_query($conn, $query);
 
     if ($result) {
         while ($row = mysqli_fetch_assoc($result)) {
-            $insights['average_scores_by_skill'][] = $row;
-        }
-    }
-
-    // Calculate Acceptance Rate by Manager
-    $query = "SELECT
-                manager_id,
-                COUNT(DISTINCT candidate_id) AS total_candidates,
-                SUM(CASE WHEN decision = 'accept' THEN 1 ELSE 0 END) AS accepted_candidates,
-                (SUM(CASE WHEN decision = 'accept' THEN 1 ELSE 0 END) / COUNT(DISTINCT candidate_id)) * 100 AS acceptance_rate
-            FROM
-                interview_result
-            GROUP BY
-                manager_id";
-
-    $result = mysqli_query($conn, $query);
-
-    if ($result) {
-        while ($row = mysqli_fetch_assoc($result)) {
-            $insights['acceptance_rate_by_manager'][] = $row;
-        }
-    }
-
-    // Calculate Skill Popularity
-    $query = "SELECT
-                skill_name,
-                COUNT(DISTINCT candidate_id) AS popularity
-            FROM
-                (
-                    SELECT
-                        ir.candidate_id,
-                        s.skill_name
-                    FROM
-                        interview_result ir
-                    LEFT JOIN
-                        (
-                            SELECT DISTINCT
-                                skill_name
-                            FROM
-                                interview_result
-                        ) s ON 1 = 1
-                ) subquery
-            GROUP BY
-                skill_name";
-
-    $result = mysqli_query($conn, $query);
-
-    if ($result) {
-        while ($row = mysqli_fetch_assoc($result)) {
-            $insights['skill_popularity'][] = $row;
+            // Format percentage_of_employees with two decimal places
+            $row['percentage_of_employees'] = number_format($row['percentage_of_employees'], 2);
+            $insights[] = $row;
         }
     }
 
     return $insights;
 }
+
+
 
 
 // Handle HTTP requests

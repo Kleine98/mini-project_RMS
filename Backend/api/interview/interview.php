@@ -134,7 +134,7 @@ function submitScores($conn)
 
     // Validate and extract data from the associative array
     if (
-        isset($data['interview_result_id']) &&
+        isset($data['no']) &&
         isset($data['technical_score']) &&
         isset($data['creative_score']) &&
         isset($data['human_relation_score']) &&
@@ -142,7 +142,7 @@ function submitScores($conn)
         isset($data['decision']) &&
         isset($data['comment'])
     ) {
-        $interview_result_id = $data['interview_result_id'];
+        $interview_result_id = $data['no'];
         $technical_score = $data['technical_score'];
         $creative_score = $data['creative_score'];
         $human_relation_score = $data['human_relation_score'];
