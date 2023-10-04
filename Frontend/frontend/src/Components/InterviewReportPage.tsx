@@ -34,7 +34,7 @@ function InterviewReportPage() {
   return (
     <div>
       <Navbar />
-      <h2>Interview Report</h2>
+      <h2>All Interview</h2>
 
       {loading ? (
         <p>Loading...</p>

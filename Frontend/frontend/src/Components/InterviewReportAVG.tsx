@@ -24,7 +24,7 @@ function InterviewReportAVG() {
 
   return (
     <div>
-      <h2>Interview Report Data</h2>
+      <h2>Interview Report</h2>
 
       {loading ? (
         <p>Loading...</p>

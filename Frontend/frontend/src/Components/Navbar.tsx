@@ -29,14 +29,16 @@ function Navbar() {
               <Link to="/">Home</Link>
             </li>
             <li className="menu-link" onClick={closeMobileMenu}>
-              <Link to="/About">About</Link>
-            </li>
-            <li className="menu-link" onClick={closeMobileMenu}>
               <Link to="/Job">Job</Link>
             </li>
             <li className="menu-link" onClick={closeMobileMenu}>
               <Link to="/Contact">Contact</Link>
             </li>
+            {managerId && userPermission?.charAt(4) === "1" && (
+              <li className="menu-link" onClick={closeMobileMenu}>
+                <Link to="/JobApplications">Job Applications</Link>
+              </li>
+            )}
             {/* Conditional rendering of EmployeeManagement link */}
             {userID && userPermission?.charAt(0) === "1" && (
               <li className="menu-link" onClick={closeMobileMenu}>
@@ -53,11 +55,17 @@ function Navbar() {
                 <Link to="/InterviewPage/${managerId}">Interview</Link>
               </li>
             )}
-            {managerId && userPermission?.charAt(1) === "1" && (
+            {userPermission?.charAt(1) === "1" && (
               <li className="menu-link" onClick={closeMobileMenu}>
                 <Link to="/InterviewReportPage">Interview Report</Link>
               </li>
             )}
+            {userPermission?.charAt(3) === "1" && (
+              <li className="menu-link" onClick={closeMobileMenu}>
+                <Link to="/ReportPage">Report</Link>
+              </li>
+            )}
+
             {candidateID && (
               <li className="menu-link" onClick={closeMobileMenu}>
                 <Link to="/CandidateInterviewPage/${candidateID}">
