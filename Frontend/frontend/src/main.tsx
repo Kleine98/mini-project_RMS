@@ -33,7 +33,8 @@ import EnterInterviewPage from "./Components/EnterInterviewPage";
 import PermissionManagement from "./Components/PermissionManagement";
 import InterviewReportAVG from "./Components/InterviewReportAVG";
 import ReportPage from "./Components/ReportPage";
-import JobApplications from "./Components/JobApplications";
+import JobRequests from "./Components/JobRequests";
+import AddJobRequests from "./Components/AddJobRequests";
 
 const router = createBrowserRouter([
   {
@@ -157,8 +158,12 @@ const router = createBrowserRouter([
     element: <ReportPage />,
   },
   {
-    path: "/JobApplications",
-    element: <JobApplications />,
+    path: "/JobRequests",
+    element: <JobRequests />,
+  },
+  {
+    path: "/AddJobRequests",
+    element: <AddJobRequests />,
   },
 ]);
 

@@ -1,9 +1,11 @@
 import React, { useState, useEffect } from "react";
+import { useNavigate } from "react-router-dom"; // Import useNavigate
 import axios from "axios";
 import Cookies from "js-cookie";
 import Navbar from "./Navbar";
 
-function JobApplications() {
+function JobRequests() {
+  const navigate = useNavigate(); // Initialize useNavigate
   const [jobApplications, setJobApplications] = useState([]);
   const [loading, setLoading] = useState(true);
   const [selectedRequest, setSelectedRequest] = useState(null);
@@ -15,13 +17,13 @@ function JobApplications() {
   useEffect(() => {
     const managerId = Cookies.get("manager_employee_id");
     if (managerId) {
-      fetchJobApplications(managerId);
+      fetchJobRequests(managerId);
     } else {
       console.error("Manager ID not found in cookies.");
     }
   }, []);
 
-  const fetchJobApplications = async (managerId) => {
+  const fetchJobRequests = async (managerId) => {
     try {
       const response = await axios.get(
         // Replace with the URL to your job applications API endpoint
@@ -86,10 +88,17 @@ function JobApplications() {
     }
   };
 
+  // Function to handle creating a new job request
+  const handleNewRequestClick = () => {
+    navigate("/AddJobRequests");
+  };
+
   return (
     <div>
       <Navbar />
-      <h2>Job Applications</h2>
+      <h2>Job Requests</h2>
+
+      <button onClick={handleNewRequestClick}>Add New Request</button>
 
       {loading ? (
         <p>Loading...</p>
@@ -99,13 +108,14 @@ function JobApplications() {
             <thead>
               <tr>
                 <th>Request ID</th>
-                <th>Request Date</th>
-                <th>Request Status</th>
-                <th>Request Experience</th>
-                <th>Request Amount</th>
+                <th>Date</th>
+                <th>Status</th>
+                <th>Experience</th>
+                <th>Amount</th>
                 <th>Department</th>
                 <th>Position</th>
                 <th>Skills</th>
+                <th>Commet</th>
               </tr>
             </thead>
             <tbody>
@@ -118,11 +128,12 @@ function JobApplications() {
                   <td>{job.request_id}</td>
                   <td>{job.request_date}</td>
                   <td>{job.request_status}</td>
-                  <td>{job.request_experience}</td>
-                  <td>{job.request_amount}</td>
+                  <td>{job.request_experience} years</td>
+                  <td>{job.request_amount} units</td>
                   <td>{job.request_department_name}</td>
                   <td>{job.request_position_name}</td>
                   <td>{job.required_skills}</td>
+                  <td>{job.comment}</td>
                 </tr>
               ))}
             </tbody>
@@ -160,4 +171,4 @@ function JobApplications() {
   );
 }
 
-export default JobApplications;
+export default JobRequests;

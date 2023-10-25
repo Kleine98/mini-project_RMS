@@ -29,14 +29,14 @@ function Navbar() {
               <Link to="/">Home</Link>
             </li>
             <li className="menu-link" onClick={closeMobileMenu}>
-              <Link to="/Job">Job</Link>
+              <Link to="/Contact">Contact</Link>
             </li>
             <li className="menu-link" onClick={closeMobileMenu}>
-              <Link to="/Contact">Contact</Link>
+              <Link to="/Job">Job Applications</Link>
             </li>
             {managerId && userPermission?.charAt(4) === "1" && (
               <li className="menu-link" onClick={closeMobileMenu}>
-                <Link to="/JobApplications">Job Applications</Link>
+                <Link to="/JobRequests">Job Requests</Link>
               </li>
             )}
             {/* Conditional rendering of EmployeeManagement link */}
