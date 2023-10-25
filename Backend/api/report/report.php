@@ -9,8 +9,6 @@ header('Access-Control-Allow-Headers: Origin, Content-Type, X-Auth-Token');
 header('Access-Control-Allow-Credentials: true');
 header("Content-Type: application/json");
 
-// Function to calculate insights
-// ...
 
 // Function to calculate insights
 function calculateInsights($conn)

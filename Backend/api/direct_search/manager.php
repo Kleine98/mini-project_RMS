@@ -10,9 +10,11 @@ header('Access-Control-Allow-Credentials: true');
 header("Content-Type: application/json");
 
 
-function getPosition($conn)
+function getManager($conn)
 {
-    $sql = "SELECT * FROM employee_position P
+    $sql = "SELECT * FROM employee EMP
+    JOIN manager M ON M.employee_id = EMP.id
+    JOIN employee_position P ON P.no = EMP.employee_position_id
     JOIN department DEPT ON DEPT.id = P.department_id";
 
 
@@ -36,7 +38,7 @@ $method = $_SERVER['REQUEST_METHOD'];
 
 switch ($method) {
     case 'GET':
-        getPosition($conn);
+        getManager($conn);
         break;
     default:
         // Invalid request method

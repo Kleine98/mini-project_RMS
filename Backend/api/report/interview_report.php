@@ -21,10 +21,10 @@ function generateReport($conn)
         SUM(CASE WHEN score_list.decision = 'accept' THEN 1 ELSE 0 END) AS accepted_count,
         SUM(CASE WHEN score_list.decision = 'reject' THEN 1 ELSE 0 END) AS rejected_count
     FROM candidate
-    JOIN candidate_queue ON candidate.id = candidate_queue.candidate_id
-    JOIN interview_schedule ON candidate_queue.no = interview_schedule.candidate_id
-    JOIN interview_result ON interview_schedule.id = interview_result.interview_schedule_id
-    JOIN score_list ON interview_result.no = score_list.interview_result_id
+    LEFT JOIN candidate_queue ON candidate.id = candidate_queue.candidate_id
+    LEFT JOIN interview_schedule ON candidate_queue.no = interview_schedule.candidate_id
+    LEFT JOIN interview_result ON interview_schedule.id = interview_result.interview_schedule_id
+    LEFT JOIN score_list ON interview_result.no = score_list.interview_result_id
     GROUP BY candidate.id, candidate.name";
 
     $result = mysqli_query($conn, $query);

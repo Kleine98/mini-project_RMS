@@ -3,7 +3,7 @@ include "../203-db.php";
 
 // Set response headers
 header('Access-Control-Allow-Origin: *');
-header('Access-Control-Allow-Methods: GET, PUT, OPTIONS');
+header('Access-Control-Allow-Methods: GET, POST, PUT, OPTIONS');
 header('Access-Control-Allow-Headers: Origin, Content-Type, X-Auth-Token');
 header('Access-Control-Allow-Credentials: true');
 header("Content-Type: application/json");
@@ -23,6 +23,7 @@ function fetchJobApplications($conn, $approverId)
         r.employee_position_id AS request_employee_position_id,
         r.requester_id AS request_requester_id,
         r.approver_id AS request_approver_id,
+        r.comment AS comment,
         d.department_name AS request_department_name,
         ep.position_name AS request_position_name,
         e.name AS requester_name,
@@ -44,7 +45,7 @@ function fetchJobApplications($conn, $approverId)
     LEFT JOIN request_skill_list rsl ON r.id = rsl.request_id
     LEFT JOIN request_skill_list_to_skills rsls ON rsl.no = rsls.request_skill_list_id
     LEFT JOIN skills s ON rsls.skill_id = s.id
-    WHERE r.status = 'Pending'  -- Only fetch Pending job requests
+    WHERE r.status = 'Pending' AND r.approver_id = $approverId
     GROUP BY r.id";
 
     $result = mysqli_query($conn, $query);
@@ -58,15 +59,73 @@ function fetchJobApplications($conn, $approverId)
     return $jobApplications;
 }
 
+// Function to add a new job request to the 'request' table
+function addJobRequest($conn, $requestData)
+{
+    // Extract data from the request and ensure proper validation and sanitization
+    $request_id = $requestData['request_id'];
+    $date = $requestData['date'];
+    $status = $requestData['status'];
+    $exp = $requestData['exp'];
+    $amount = $requestData['amount'];
+    $employeePositionId = $requestData['employee_position_id'];
+    $requesterId = $requestData['requester_id'];
+    $approverId = $requestData['approver_id'];
+    $comment = $requestData['comment'];
+    $skills = $requestData['required_skills'];
+
+    // Validate the data before inserting into the database
+    if (empty($request_id) || empty($date) || empty($status) || empty($exp) || empty($amount) || empty($employeePositionId) || empty($requesterId) || empty($approverId) || empty($comment)) {
+        $response = array('error' => 'Missing required data');
+        echo json_encode($response);
+        return; // Exit the function
+    }
+
+    // Insert the new job request into the 'request' table
+    $query = "INSERT INTO request (id, date, status, exp, amount, employee_position_id, requester_id, approver_id, comment)
+              VALUES ('$request_id', '$date', '$status', '$exp', $amount, $employeePositionId, $requesterId, $approverId, '$comment')";
+
+    if (mysqli_query($conn, $query)) {
+        $response = array('message' => 'New job request added successfully');
+        echo json_encode($response);
+    } else {
+        $response = array('error' => 'Failed to add a new job request: ' . mysqli_error($conn));
+        echo json_encode($response);
+    }
+
+    $query = "INSERT INTO request_skill_list (no,request_id)
+              VALUES ('$request_id','$request_id')";
+
+    mysqli_query($conn, $query);
+
+    if (is_array($skills)) {
+        // Loop through the skill IDs and insert them into the database
+        foreach ($skills as $skillId) {
+            $query = "INSERT INTO request_skill_list_to_skills (skill_id, request_skill_list_id)
+                      VALUES ('$skillId', '$request_id')";
+
+            mysqli_query($conn, $query);
+        }
+    } else {
+        $query = "INSERT INTO request_skill_list_to_skills (skill_id, request_skill_list_id)
+        VALUES ('$skills', '$request_id')";
+
+        mysqli_query($conn, $query);
+    }
+
+
+
+}
+
 
 // Function to update the status and add comments for a job request
-function updateJobRequestStatus($conn, $requestId, $requestStatus)
+function updateJobRequestStatus($conn, $requestId, $requestStatus, $comment)
 {
     // Perform validation and update the job request status and comments
     $requestStatus = mysqli_real_escape_string($conn, $requestStatus);
 
     $query = "UPDATE request
-              SET status = '$requestStatus'
+              SET status = '$requestStatus', comment = '$comment'
               WHERE id = $requestId";
 
     return mysqli_query($conn, $query);
@@ -87,13 +146,18 @@ switch ($method) {
             echo json_encode($response);
         }
         break;
+    case 'POST':
+        $data = json_decode(file_get_contents('php://input'), true);
+        addJobRequest($conn, $data);
+        break;
     case 'PUT':
         // Handle approval or rejection of a job request
         $data = json_decode(file_get_contents('php://input'), true);
         $requestId = $data['request_id'];
         $requestStatus = $data['request_status'];
+        $comment = $data['comment'];
 
-        if (updateJobRequestStatus($conn, $requestId, $requestStatus)) {
+        if (updateJobRequestStatus($conn, $requestId, $requestStatus, $comment)) {
             $response = array('message' => 'Job request status updated successfully');
             echo json_encode($response);
         } else {
@@ -106,8 +170,6 @@ switch ($method) {
         echo json_encode($response);
         break;
 }
-
-
 
 // Close the database connection
 mysqli_close($conn);

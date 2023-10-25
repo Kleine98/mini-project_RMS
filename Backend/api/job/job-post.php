@@ -24,6 +24,7 @@ function fetchJobApplications($conn)
         r.employee_position_id AS request_employee_position_id,
         r.requester_id AS request_requester_id,
         r.approver_id AS request_approver_id,
+        r.comment AS comment,
         d.department_name AS request_department_name,
         ep.position_name AS request_position_name,
         e.name AS requester_name,

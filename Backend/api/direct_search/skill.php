@@ -10,10 +10,9 @@ header('Access-Control-Allow-Credentials: true');
 header("Content-Type: application/json");
 
 
-function getPosition($conn)
+function getSkill($conn)
 {
-    $sql = "SELECT * FROM employee_position P
-    JOIN department DEPT ON DEPT.id = P.department_id";
+    $sql = "SELECT * FROM skills S";
 
 
     $result = mysqli_query($conn, $sql);
@@ -36,7 +35,7 @@ $method = $_SERVER['REQUEST_METHOD'];
 
 switch ($method) {
     case 'GET':
-        getPosition($conn);
+        getSkill($conn);
         break;
     default:
         // Invalid request method
