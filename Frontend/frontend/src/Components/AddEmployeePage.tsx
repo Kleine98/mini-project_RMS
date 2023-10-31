@@ -26,7 +26,7 @@ function AddEmployeePage() {
     const fetchPositions = async () => {
       try {
         const response = await axios.get(
-          "http://203.188.54.9/~u6411130038/mini-project/Backend/api/direct_search/position.php"
+          "http://localhost/mini-project/mini-project/Backend/api/direct_search/position.php"
         );
         setPositions(response.data);
       } catch (error) {
@@ -57,7 +57,7 @@ function AddEmployeePage() {
 
       // Send a POST request to add the employee data
       await axios.post(
-        "http://203.188.54.9/~u6411130038/mini-project/Backend/api/employee_management.php",
+        "http://localhost/mini-project/mini-project/Backend/api/employee_management.php",
         updatedFormData
       );
 

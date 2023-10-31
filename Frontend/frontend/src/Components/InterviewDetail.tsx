@@ -18,7 +18,7 @@ function InterviewDetail({ interviewId, managerId }) {
   const fetchInterview = async (interviewId, managerId) => {
     try {
       const response = await axios.get(
-        `http://203.188.54.9/~u6411130038/mini-project/Backend/api/interview/interview.php?interview_id=${interviewId}&manager_id=${managerId}`
+        `http://localhost/mini-project/mini-project/Backend/api/interview/interview.php?interview_id=${interviewId}&manager_id=${managerId}`
       );
       setInterview(response.data[0]); // Access the first object in the array
       setLoading(false);
@@ -47,7 +47,7 @@ function InterviewDetail({ interviewId, managerId }) {
     // Make an API request to delete the interview schedule
     axios
       .delete(
-        `http://203.188.54.9/~u6411130038/mini-project/Backend/api/interview/interview_schedule.php`,
+        `http://localhost/mini-project/mini-project/Backend/api/interview/interview_schedule.php`,
         {
           data: {
             interview_schedule_id: interview.interview_schedule_id,

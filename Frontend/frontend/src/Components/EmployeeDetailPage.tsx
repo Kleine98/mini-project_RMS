@@ -16,7 +16,7 @@ function EmployeeDetailPage() {
     const fetchEmployee = async () => {
       try {
         const response = await axios.get(
-          `http://203.188.54.9/~u6411130038/mini-project/Backend/api/employee_search.php?id=${id}`
+          `http://localhost/mini-project/mini-project/Backend/api/employee_search.php?id=${id}`
         );
         setEmployee(response.data[0]); // Assuming you get a single employee with the given id
       } catch (error) {
@@ -32,7 +32,7 @@ function EmployeeDetailPage() {
     const fetchPositions = async () => {
       try {
         const response = await axios.get(
-          "http://203.188.54.9/~u6411130038/mini-project/Backend/api/direct_search/position.php"
+          "http://localhost/mini-project/mini-project/Backend/api/direct_search/position.php"
         );
         setPositions(response.data); // Assuming response.data is an array of positions
       } catch (error) {
@@ -71,7 +71,7 @@ function EmployeeDetailPage() {
     try {
       // Send a PUT request to update the employee data
       const response = await axios.put(
-        `http://203.188.54.9/~u6411130038/mini-project/Backend/api/employee_management.php/${id}`,
+        `http://localhost/mini-project/mini-project/Backend/api/employee_management.php/${id}`,
         formData
       );
 

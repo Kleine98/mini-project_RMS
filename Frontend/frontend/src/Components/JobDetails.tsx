@@ -20,7 +20,7 @@ function JobDetails() {
   const fetchJobDetails = async (requestId) => {
     try {
       const response = await axios.get(
-        `http://203.188.54.9/~u6411130038/mini-project/Backend/api/job/job-post.php?request_id=${requestId}`
+        `http://localhost/mini-project/mini-project/Backend/api/job/job-post.php?request_id=${requestId}`
       );
 
       setJob(response.data);
@@ -44,7 +44,7 @@ function JobDetails() {
 
     axios
       .put(
-        "http://203.188.54.9/~u6411130038/mini-project/Backend/api/job/job-apply.php",
+        "http://localhost/mini-project/mini-project/Backend/api/job/job-apply.php",
         data
       )
       .then((response) => {
@@ -53,6 +53,28 @@ function JobDetails() {
       .catch((error) => {
         console.error("Error applying for the job:", error);
         alert("Failed to apply for the job.");
+      });
+  };
+
+  const closeJob = () => {
+    const requestData = {
+      request_id: job.request_id,
+    };
+
+    axios
+      .put(
+        "http://localhost/mini-project/mini-project/Backend/api/job/job-post.php",
+        requestData
+      )
+      .then((response) => {
+        // Handle the success message from the API
+        alert(response.data.message);
+        // Update the job status in your local state
+        setJob({ ...job, request_status: "Closed" });
+      })
+      .catch((error) => {
+        console.error("Error closing the job:", error);
+        alert("Failed to close the job.");
       });
   };
 
@@ -103,9 +125,16 @@ function JobDetails() {
               <td>{job.comment}</td>
             </tr>
             <tr>
-              <td colSpan="2">
+              <td>
                 {Cookies.get("candidateID") && (
                   <button onClick={applyForJob}>Apply for this Job</button>
+                )}
+              </td>
+            </tr>
+            <tr>
+              <td>
+                {Cookies.get("userID") && job.request_status !== "Closed" && (
+                  <button onClick={closeJob}>Close this Job</button>
                 )}
               </td>
             </tr>

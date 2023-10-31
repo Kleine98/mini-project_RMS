@@ -22,7 +22,7 @@ function CandidateInterviewPage() {
   const fetchInterviews = async (candidateId) => {
     try {
       const response = await axios.get(
-        `http://203.188.54.9/~u6411130038/mini-project/Backend/api/interview/candidate_interview.php?candidate_id=${candidateId}`
+        `http://localhost/mini-project/mini-project/Backend/api/interview/candidate_interview.php?candidate_id=${candidateId}`
       );
       setInterviews(response.data);
       setLoading(false);

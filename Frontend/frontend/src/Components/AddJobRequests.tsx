@@ -25,7 +25,7 @@ function AddJobRequests() {
     // Fetch employee positions
     axios
       .get(
-        "http://203.188.54.9/~u6411130038/mini-project/Backend/api/direct_search/position.php"
+        "http://localhost/mini-project/mini-project/Backend/api/direct_search/position.php"
       )
       .then((response) => {
         setPositions(response.data);
@@ -37,7 +37,7 @@ function AddJobRequests() {
     // Fetch approvers
     axios
       .get(
-        "http://203.188.54.9/~u6411130038/mini-project/Backend/api/direct_search/manager.php"
+        "http://localhost/mini-project/mini-project/Backend/api/direct_search/manager.php"
       )
       .then((response) => {
         setApprovers(response.data);
@@ -48,7 +48,7 @@ function AddJobRequests() {
     // Fetch skills
     axios
       .get(
-        "http://203.188.54.9/~u6411130038/mini-project/Backend/api/direct_search/skill.php"
+        "http://localhost/mini-project/mini-project/Backend/api/direct_search/skill.php"
       )
       .then((response) => {
         setSkills(response.data);
@@ -95,7 +95,7 @@ function AddJobRequests() {
     try {
       // Send a POST request to add the job request data
       await axios.post(
-        "http://203.188.54.9/~u6411130038/mini-project/Backend/api/job/job-request.php",
+        "http://localhost/mini-project/mini-project/Backend/api/job/job-request.php",
         formData
       );
 

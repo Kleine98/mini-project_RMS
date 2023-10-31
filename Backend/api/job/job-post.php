@@ -1,10 +1,10 @@
 <?php
-// Include your database connection script (e.g., "../203-db.php").
-include "../203-db.php";
+// Include your database connection script (e.g., "../selected-db.php").
+include "../selected-db.php";
 
 // Set response headers
 header('Access-Control-Allow-Origin: *');
-header('Access-Control-Allow-Methods: GET, POST, OPTIONS');
+header('Access-Control-Allow-Methods: GET, POST, PUT, OPTIONS');
 header('Access-Control-Allow-Headers: Origin, Content-Type, X-Auth-Token');
 header('Access-Control-Allow-Credentials: true');
 header("Content-Type: application/json");
@@ -108,6 +108,14 @@ function fetchJobApplications($conn)
     return $jobApplications;
 }
 
+// Function to update the job status from Approved to Closed
+function updateJobStatus($conn, $requestId)
+{
+    // Update the status in the database
+    $query = "UPDATE request SET status = 'Closed' WHERE id = '$requestId'";
+    return mysqli_query($conn, $query);
+}
+
 // Handle HTTP requests
 $method = $_SERVER['REQUEST_METHOD'];
 
@@ -127,6 +135,19 @@ switch ($method) {
         } else {
             $jobApplications = fetchJobApplications($conn);
             echo json_encode($jobApplications);
+        }
+        break;
+
+    case 'PUT':
+        $data = json_decode(file_get_contents('php://input'), true);
+        $requestId = $data['request_id'];
+
+        if (updateJobStatus($conn, $requestId)) {
+            $response = array('message' => 'Job status updated to Closed');
+            echo json_encode($response);
+        } else {
+            $response = array('error' => 'Failed to update job status');
+            echo json_encode($response);
         }
         break;
 

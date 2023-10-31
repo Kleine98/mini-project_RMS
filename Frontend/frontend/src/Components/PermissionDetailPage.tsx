@@ -17,7 +17,7 @@ function PermissionDetailPage({ permissionId }) {
   const fetchPermission = async (id) => {
     try {
       const response = await axios.get(
-        `http://203.188.54.9/~u6411130038/mini-project/Backend/api/direct_search/permission.php?id=${id}`
+        `http://localhost/mini-project/mini-project/Backend/api/direct_search/permission.php?id=${id}`
       );
       setPermission(response.data);
       setEditedPermission(response.data);
@@ -37,7 +37,7 @@ function PermissionDetailPage({ permissionId }) {
 
     try {
       const response = await axios.put(
-        `http://203.188.54.9/~u6411130038/mini-project/Backend/api/direct_search/permission.php`,
+        `http://localhost/mini-project/mini-project/Backend/api/direct_search/permission.php`,
         editedPermission
       );
       console.log(response.data.message);

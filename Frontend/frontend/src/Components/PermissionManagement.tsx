@@ -16,7 +16,7 @@ function PermissionManagement() {
   const fetchPermissions = async () => {
     try {
       const response = await axios.get(
-        "http://203.188.54.9/~u6411130038/mini-project/Backend/api/direct_search/permission.php"
+        "http://localhost/mini-project/mini-project/Backend/api/direct_search/permission.php"
       );
       setPermissions(response.data);
       setLoading(false);

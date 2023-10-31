@@ -1,6 +1,6 @@
 <?php
 // Include your database connection script (e.g., "../203-db.php").
-include "../203-db.php";
+include "../selected-db.php";
 
 // Set response headers
 header('Access-Control-Allow-Origin: *');

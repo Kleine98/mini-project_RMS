@@ -7,7 +7,7 @@ function InterviewScoringForm({ no }) {
     creativeScore: "",
     humanRelationScore: "",
     learningScore: "",
-    decision: "",
+    decision: "accept", // Default value is "accept"
     comment: "",
   });
 
@@ -21,7 +21,7 @@ function InterviewScoringForm({ no }) {
 
     try {
       const response = await axios.post(
-        "http://203.188.54.9/~u6411130038/mini-project/Backend/api/interview/interview.php",
+        "http://localhost/mini-project/mini-project/Backend/api/interview/interview.php",
         {
           no: no,
           technical_score: scores.technicalScore,
@@ -95,12 +95,14 @@ function InterviewScoringForm({ no }) {
             <tr>
               <td>Decision:</td>
               <td>
-                <input
-                  type="text"
+                <select
                   name="decision"
                   value={scores.decision}
                   onChange={handleChange}
-                />
+                >
+                  <option value="accept">Accept</option>
+                  <option value="reject">Reject</option>
+                </select>
               </td>
             </tr>
             <tr>

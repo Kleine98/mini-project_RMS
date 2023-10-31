@@ -1,5 +1,5 @@
 <?php
-include "../203-db.php";
+include "../selected-db.php";
 
 // Set response headers (same as in your existing API)
 header('Access-Control-Allow-Origin: *');
@@ -12,20 +12,22 @@ function generateReport($conn)
 {
     // Implement logic to calculate the report data
     $query = "SELECT
-        candidate.id AS candidate_id,
-        candidate.name AS candidate_name,
-        AVG(score_list.technical_score) AS avg_technical_score,
-        AVG(score_list.creative_score) AS avg_creative_score,
-        AVG(score_list.human_relation_score) AS avg_human_relation_score,
-        AVG(score_list.learning_score) AS avg_learning_score,
-        SUM(CASE WHEN score_list.decision = 'accept' THEN 1 ELSE 0 END) AS accepted_count,
-        SUM(CASE WHEN score_list.decision = 'reject' THEN 1 ELSE 0 END) AS rejected_count
+    candidate.id AS candidate_id,
+    candidate.name AS candidate_name,
+    AVG(score_list.technical_score) AS avg_technical_score,
+    AVG(score_list.creative_score) AS avg_creative_score,
+    AVG(score_list.human_relation_score) AS avg_human_relation_score,
+    AVG(score_list.learning_score) AS avg_learning_score,
+    SUM(CASE WHEN score_list.decision = 'accept' THEN 1 ELSE 0 END) AS accepted_count,
+    SUM(CASE WHEN score_list.decision = 'reject' THEN 1 ELSE 0 END) AS rejected_count
     FROM candidate
     LEFT JOIN candidate_queue ON candidate.id = candidate_queue.candidate_id
     LEFT JOIN interview_schedule ON candidate_queue.no = interview_schedule.candidate_id
     LEFT JOIN interview_result ON interview_schedule.id = interview_result.interview_schedule_id
     LEFT JOIN score_list ON interview_result.no = score_list.interview_result_id
-    GROUP BY candidate.id, candidate.name";
+    LEFT JOIN passed_candidate ON candidate.id = passed_candidate.candidate_id
+    WHERE passed_candidate.candidate_id IS NULL
+    GROUP BY candidate.id, candidate.name;";
 
     $result = mysqli_query($conn, $query);
 

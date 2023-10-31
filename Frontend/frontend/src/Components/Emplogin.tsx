@@ -19,7 +19,7 @@ function Emplogin() {
 
     // Example fetch request
     fetch(
-      "http://203.188.54.9/~u6411130038/mini-project/Backend/api/login.php?request=login",
+      "http://localhost/mini-project/mini-project/Backend/api/login.php?request=login",
       {
         method: "POST",
         headers: {

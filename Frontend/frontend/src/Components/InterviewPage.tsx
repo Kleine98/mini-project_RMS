@@ -28,7 +28,7 @@ function InterviewPage() {
   const fetchSkillsData = async () => {
     try {
       const response = await axios.get(
-        "http://203.188.54.9/~u6411130038/mini-project/Backend/api/direct_search/skill.php"
+        "http://localhost/mini-project/mini-project/Backend/api/direct_search/skill.php"
       );
       setSkills(response.data);
     } catch (error) {
@@ -43,7 +43,7 @@ function InterviewPage() {
   const fetchInterviews = async (managerId) => {
     try {
       const response = await axios.get(
-        `http://203.188.54.9/~u6411130038/mini-project/Backend/api/interview/interview.php?manager_id=${managerId}`
+        `http://localhost/mini-project/mini-project/Backend/api/interview/interview.php?manager_id=${managerId}`
       );
       setInterviews(response.data);
       setLoading(false);
@@ -55,7 +55,7 @@ function InterviewPage() {
   const fetchCandidatesWithoutSchedule = async () => {
     try {
       const response = await axios.get(
-        `http://203.188.54.9/~u6411130038/mini-project/Backend/api/candidate_search.php`
+        `http://localhost/mini-project/mini-project/Backend/api/candidate_search.php`
       );
       setCandidates(response.data);
     } catch (error) {

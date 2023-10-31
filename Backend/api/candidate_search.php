@@ -1,5 +1,5 @@
 <?php
-include "./203-db.php";
+include "./selected-db.php";
 
 // Set response headers
 header('Access-Control-Allow-Origin: *');
@@ -108,8 +108,24 @@ function getCandidatesWithoutScheduleAndSkills($conn)
     }
 }
 
+// Function to add a selected candidate to the 'passed_candidate' table
+function addSelectedCandidate($conn, $candidateId, $status)
+{
+    // Perform necessary validation and escaping of input data
+    $candidateId = mysqli_real_escape_string($conn, $candidateId);
+    $status = mysqli_real_escape_string($conn, $status);
 
+    // Insert the data into the 'passed_candidate' table
+    $sql = "INSERT INTO passed_candidate (candidate_id, status) VALUES ('$candidateId', '$status')";
 
+    if (mysqli_query($conn, $sql)) {
+        $response = array('message' => 'Candidate added to the passed_candidate table');
+        echo json_encode($response);
+    } else {
+        $response = array('error' => 'Failed to add the candidate');
+        echo json_encode($response);
+    }
+}
 
 // Handle HTTP requests
 $method = $_SERVER['REQUEST_METHOD'];
@@ -124,9 +140,17 @@ switch ($method) {
         }
         break;
     case 'POST': {
-            getCandidatesWithoutScheduleAndSkills($conn);
-            break;
+            $data = json_decode(file_get_contents('php://input'), true);
+            if (isset($data['candidate_id']) && isset($data['status'])) {
+                $candidateId = $data['candidate_id'];
+                $status = $data['status'];
+                addSelectedCandidate($conn, $candidateId, $status);
+            } else {
+                $response = array('error' => 'Missing candidate_id or status in the request');
+                echo json_encode($response);
+            }
         }
+        break;
     default:
         $response = array('error' => 'Invalid request method');
         echo json_encode($response);

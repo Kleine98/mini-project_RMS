@@ -39,7 +39,7 @@ function CandidateSchedule({ candidate_id }) {
     const fetchAvailableDates = async () => {
       try {
         const response = await axios.post(
-          "http://203.188.54.9/~u6411130038/mini-project/Backend/api/direct_search/manager_available_date.php",
+          "http://localhost/mini-project/mini-project/Backend/api/direct_search/manager_available_date.php",
           {
             manager_ids: schedule.manager_id.join(","), // Convert the array to a comma-separated string
           }
@@ -64,7 +64,7 @@ function CandidateSchedule({ candidate_id }) {
     // Fetch managers
     axios
       .get(
-        "http://203.188.54.9/~u6411130038/mini-project/Backend/api/direct_search/manager.php"
+        "http://localhost/mini-project/mini-project/Backend/api/direct_search/manager.php"
       )
       .then((response) => {
         setManagers(response.data);
@@ -76,7 +76,7 @@ function CandidateSchedule({ candidate_id }) {
     // Fetch jobs
     axios
       .get(
-        "http://203.188.54.9/~u6411130038/mini-project/Backend/api/job/job-post.php"
+        "http://localhost/mini-project/mini-project/Backend/api/job/job-post.php"
       )
       .then((response) => {
         setJobs(response.data);
@@ -98,7 +98,7 @@ function CandidateSchedule({ candidate_id }) {
       // Perform the scheduling using the selected date, candidate ID, and manager IDs
       const response = await axios.post(
         // Use PUT method to update the interview schedule
-        "http://203.188.54.9/~u6411130038/mini-project/Backend/api/interview/interview_schedule.php",
+        "http://localhost/mini-project/mini-project/Backend/api/interview/interview_schedule.php",
         {
           date: schedule.date,
           candidate_id: candidate_id,
@@ -130,7 +130,7 @@ function CandidateSchedule({ candidate_id }) {
 
     try {
       const response = await axios.put(
-        "http://203.188.54.9/~u6411130038/mini-project/Backend/api/job/job-apply.php",
+        "http://localhost/mini-project/mini-project/Backend/api/job/job-apply.php",
         {
           id: candidate_id,
           request_id: selectedJob,

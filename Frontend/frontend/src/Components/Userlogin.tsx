@@ -18,8 +18,8 @@ function UserLogin() {
     setLoading(true);
 
     const url = isSignUp
-      ? "http://203.188.54.9/~u6411130038/mini-project/Backend/api/signup_candidate.php?request=signup"
-      : "http://203.188.54.9/~u6411130038/mini-project/Backend/api/login_candidate.php?request=login";
+      ? "http://localhost/mini-project/mini-project/Backend/api/signup_candidate.php?request=signup"
+      : "http://localhost/mini-project/mini-project/Backend/api/login_candidate.php?request=login";
 
     const data = isSignUp
       ? {

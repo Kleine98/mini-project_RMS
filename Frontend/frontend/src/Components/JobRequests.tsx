@@ -27,7 +27,7 @@ function JobRequests() {
     try {
       const response = await axios.get(
         // Replace with the URL to your job applications API endpoint
-        `http://203.188.54.9/~u6411130038/mini-project/Backend/api/job/job-request.php?approver_id=${managerId}`
+        `http://localhost/mini-project/mini-project/Backend/api/job/job-request.php?approver_id=${managerId}`
       );
       setJobApplications(response.data);
       setLoading(false);
@@ -66,7 +66,7 @@ function JobRequests() {
     try {
       const response = await axios.put(
         // Replace with the URL to your job applications API endpoint
-        `http://203.188.54.9/~u6411130038/mini-project/Backend/api/job/job-request.php`,
+        `http://localhost/mini-project/mini-project/Backend/api/job/job-request.php`,
         {
           request_id: selectedRequest,
           request_status: approvalStatus,

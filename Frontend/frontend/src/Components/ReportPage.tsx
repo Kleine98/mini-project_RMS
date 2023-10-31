@@ -15,7 +15,7 @@ function ReportPage() {
     try {
       const response = await axios.get(
         // Update the API endpoint to your report API URL
-        "http://203.188.54.9/~u6411130038/mini-project/Backend/api/report/report.php"
+        "http://localhost/mini-project/mini-project/Backend/api/report/report.php"
       );
       setInsights(response.data);
       setLoading(false);

@@ -13,7 +13,7 @@ function CandidateProfilePage() {
     const fetchCandidate = async () => {
       try {
         const response = await axios.get(
-          `http://203.188.54.9/~u6411130038/mini-project/Backend/api/candidate_search.php?id=${candidateID}`
+          `http://localhost/mini-project/mini-project/Backend/api/candidate_search.php?id=${candidateID}`
         );
         setCandidate(response.data[0]); // Assuming the API returns an array with a single candidate object
       } catch (error) {

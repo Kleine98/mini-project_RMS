@@ -15,7 +15,7 @@ function EmployeeManagement() {
   const fetchEmployees = async () => {
     try {
       const response = await axios.get(
-        "http://203.188.54.9/~u6411130038/mini-project/Backend/api/employee_management.php"
+        "http://localhost/mini-project/mini-project/Backend/api/employee_management.php"
       );
       setEmployees(response.data);
       setLoading(false); // Data has been loaded, set loading to false
