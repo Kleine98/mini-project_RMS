@@ -8,6 +8,8 @@ function InterviewDetail({ interviewId, managerId }) {
   const [loading, setLoading] = useState(true);
   const candidateId = Cookies.get("candidateID");
   const navigate = useNavigate(); // Use useNavigate inside the component function
+  const [showAcceptRejectForm, setShowAcceptRejectForm] = useState(true);
+  const [accepted, setAccepted] = useState(false);
 
   useEffect(() => {
     fetchInterview(interviewId, managerId);
@@ -37,6 +39,33 @@ function InterviewDetail({ interviewId, managerId }) {
     navigate("/EnterInterviewPage");
   };
 
+  const handleAcceptInterview = () => {
+    setAccepted(true);
+  };
+
+  const handleRejectInterview = () => {
+    // Make an API request to delete the interview schedule
+    axios
+      .delete(
+        `http://203.188.54.9/~u6411130038/mini-project/Backend/api/interview/interview_schedule.php`,
+        {
+          data: {
+            interview_schedule_id: interview.interview_schedule_id,
+          },
+        }
+      )
+      .then((response) => {
+        // Handle successful deletion
+        console.log(response.data);
+        alert("Interview rejected");
+        setShowAcceptRejectForm(false);
+      })
+      .catch((error) => {
+        // Handle deletion error
+        console.error("Error deleting interview schedule:", error);
+      });
+  };
+
   return (
     <div>
       <h2>Interview Detail</h2>
@@ -51,13 +80,21 @@ function InterviewDetail({ interviewId, managerId }) {
               <tr>
                 <td>Interview ID</td>
                 <td>{interview.id}</td>
-                <td>
-                  {candidateId && (
+                {candidateId && showAcceptRejectForm && !accepted && (
+                  <td>
+                    <p>Your interview has been scheduled.</p>
+                    <button onClick={handleAcceptInterview}>Accept</button>
+                    <button onClick={handleRejectInterview}>Reject</button>
+                  </td>
+                )}
+
+                {accepted && (
+                  <td>
                     <button type="button" onClick={handleEnterInterviewClick}>
                       Enter interview
                     </button>
-                  )}
-                </td>
+                  </td>
+                )}
               </tr>
               <tr>
                 <td>Date</td>
@@ -153,7 +190,6 @@ function InterviewDetail({ interviewId, managerId }) {
                 <td>Comment</td>
                 <td>{interview.comment}</td>
               </tr>
-              {/* ... other rows ... */}
             </tbody>
           </table>
         </div>

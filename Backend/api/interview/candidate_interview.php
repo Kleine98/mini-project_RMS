@@ -15,9 +15,9 @@ function getInterviewListsByCandidateID($conn, $candidate_id)
     // Implement logic to retrieve interview lists for the candidate
     $query = "SELECT c.*, cq.*, s.*, i.*, sl.*, GROUP_CONCAT(sk.skill_name) AS skills
         FROM candidate c
-        JOIN candidate_queue cq ON c.id = cq.candidate_id
-        JOIN interview_schedule s ON cq.no = s.candidate_id
-        JOIN interview_result i ON s.id = i.interview_schedule_id
+        LEFT JOIN candidate_queue cq ON c.id = cq.candidate_id
+        LEFT JOIN interview_schedule s ON cq.no = s.candidate_id
+        LEFT JOIN interview_result i ON s.id = i.interview_schedule_id
         LEFT JOIN score_list sl ON i.no = sl.interview_result_id
         LEFT JOIN request req ON c.request_id = req.id
         LEFT JOIN request_skill_list req_skill_list ON req.id = req_skill_list.request_id

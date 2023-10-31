@@ -35,6 +35,8 @@ import InterviewReportAVG from "./Components/InterviewReportAVG";
 import ReportPage from "./Components/ReportPage";
 import JobRequests from "./Components/JobRequests";
 import AddJobRequests from "./Components/AddJobRequests";
+import JobDetails from "./Components/JobDetails";
+import CandidateSchedule from "./Components/CandidateSchedule";
 
 const router = createBrowserRouter([
   {
@@ -164,6 +166,14 @@ const router = createBrowserRouter([
   {
     path: "/AddJobRequests",
     element: <AddJobRequests />,
+  },
+  {
+    path: "/JobDetails",
+    element: <JobDetails />,
+  },
+  {
+    path: "/CandidateSchedule",
+    element: <CandidateSchedule />,
   },
 ]);
 

@@ -31,9 +31,18 @@ function CandidateInterviewPage() {
     }
   };
 
-  const handleInterviewClick = (interviewId, managerId) => {
-    setSelectedInterview(interviewId);
-    setSelectedManager(managerId);
+  const handleInterviewClick = (interviewId, managerId, request_id) => {
+    if (interviewId) {
+      setSelectedInterview(interviewId);
+      setSelectedManager(managerId);
+    } else if (request_id) {
+      // If interviewId is not available, show a message
+      alert(
+        "This interview didn't schedule yet, please wait for interviewer to schedule your interview"
+      );
+    } else {
+      alert("Please apply the job first");
+    }
   };
 
   return (
@@ -69,7 +78,11 @@ function CandidateInterviewPage() {
               <tr
                 key={interview.id}
                 onClick={() =>
-                  handleInterviewClick(interview.id, interview.manager_id)
+                  handleInterviewClick(
+                    interview.id,
+                    interview.manager_id,
+                    interview.request_id
+                  )
                 }
                 style={{ cursor: "pointer" }}
               >

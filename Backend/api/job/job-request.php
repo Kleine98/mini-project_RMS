@@ -63,7 +63,6 @@ function fetchJobApplications($conn, $approverId)
 function addJobRequest($conn, $requestData)
 {
     // Extract data from the request and ensure proper validation and sanitization
-    $request_id = $requestData['request_id'];
     $date = $requestData['date'];
     $status = $requestData['status'];
     $exp = $requestData['exp'];
@@ -75,18 +74,21 @@ function addJobRequest($conn, $requestData)
     $skills = $requestData['required_skills'];
 
     // Validate the data before inserting into the database
-    if (empty($request_id) || empty($date) || empty($status) || empty($exp) || empty($amount) || empty($employeePositionId) || empty($requesterId) || empty($approverId) || empty($comment)) {
+    if (empty($date) || empty($status) || empty($exp) || empty($amount) || empty($employeePositionId) || empty($requesterId) || empty($approverId) || empty($comment)) {
         $response = array('error' => 'Missing required data');
         echo json_encode($response);
         return; // Exit the function
     }
 
     // Insert the new job request into the 'request' table
-    $query = "INSERT INTO request (id, date, status, exp, amount, employee_position_id, requester_id, approver_id, comment)
-              VALUES ('$request_id', '$date', '$status', '$exp', $amount, $employeePositionId, $requesterId, $approverId, '$comment')";
+    $query = "INSERT INTO request (date, status, exp, amount, employee_position_id, requester_id, approver_id, comment)
+              VALUES ('$date', '$status', '$exp', $amount, $employeePositionId, $requesterId, $approverId, '$comment')";
 
     if (mysqli_query($conn, $query)) {
-        $response = array('message' => 'New job request added successfully');
+        // Get the auto-incremented ID of the newly inserted row
+        $request_id = mysqli_insert_id($conn);
+
+        $response = array('message' => 'New job request added successfully', 'request_id' => $request_id);
         echo json_encode($response);
     } else {
         $response = array('error' => 'Failed to add a new job request: ' . mysqli_error($conn));
@@ -112,10 +114,8 @@ function addJobRequest($conn, $requestData)
 
         mysqli_query($conn, $query);
     }
-
-
-
 }
+
 
 
 // Function to update the status and add comments for a job request

@@ -1,23 +1,23 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
+import Cookies from "js-cookie";
 import Navbar from "./Navbar";
 
 function AddJobRequests() {
+  const currentDate = new Date().toISOString().split("T")[0];
   const [formData, setFormData] = useState({
-    request_id: "",
-    date: "",
+    date: currentDate,
     status: "Pending",
     exp: "",
     amount: "",
     employee_position_id: "", // Selected employee position
     required_skills: [],
-    requester_id: "", // Selected requester
+    requester_id: Cookies.get("manager_employee_id"), // Selected requester
     approver_id: "", // Selected approver
     comment: "",
   });
 
   const [positions, setPositions] = useState([]);
-  const [requesters, setRequesters] = useState([]);
   const [approvers, setApprovers] = useState([]);
   const [skills, setSkills] = useState([]);
 
@@ -32,18 +32,6 @@ function AddJobRequests() {
       })
       .catch((error) => {
         console.error("Error fetching employee positions:", error);
-      });
-
-    // Fetch requesters
-    axios
-      .get(
-        "http://203.188.54.9/~u6411130038/mini-project/Backend/api/direct_search/manager.php"
-      )
-      .then((response) => {
-        setRequesters(response.data);
-      })
-      .catch((error) => {
-        console.error("Error fetching requesters:", error);
       });
 
     // Fetch approvers
@@ -74,8 +62,15 @@ function AddJobRequests() {
     const { name, value } = e.target;
 
     if (name === "required_skills") {
-      // If the selected skill is not already in the array, add it
-      if (!formData.required_skills.includes(value)) {
+      // Check if the selected skill is already in the array
+      if (formData.required_skills.includes(value)) {
+        // If it's in the array, remove it
+        const updatedSkills = formData.required_skills.filter(
+          (skill) => skill !== value
+        );
+        setFormData({ ...formData, required_skills: updatedSkills });
+      } else {
+        // If it's not in the array, add it
         const updatedSkills = [...formData.required_skills, value];
         setFormData({ ...formData, required_skills: updatedSkills });
       }
@@ -85,6 +80,18 @@ function AddJobRequests() {
   };
 
   const handleAddJobRequest = async () => {
+    if (
+      formData.exp.trim() === "" ||
+      formData.amount.trim() === "" ||
+      formData.employee_position_id === "" ||
+      formData.required_skills.length === 0 ||
+      formData.approver_id === "" ||
+      formData.comment.trim() === ""
+    ) {
+      // Display an error message or prevent the submission
+      alert("Please fill in all required fields.");
+      return;
+    }
     try {
       // Send a POST request to add the job request data
       await axios.post(
@@ -106,42 +113,6 @@ function AddJobRequests() {
       <div>
         <table>
           <tbody>
-            <tr>
-              <td>Request ID:</td>
-              <td>
-                <input
-                  type="text"
-                  name="request_id"
-                  value={formData.request_id}
-                  onChange={handleInputChange}
-                />
-              </td>
-            </tr>
-            <tr>
-              <td>Date:</td>
-              <td>
-                <input
-                  type="date"
-                  name="date"
-                  value={formData.date}
-                  onChange={handleInputChange}
-                />
-              </td>
-            </tr>
-            <tr>
-              <td>Status:</td>
-              <td>
-                <select
-                  name="status"
-                  value={formData.status}
-                  onChange={handleInputChange}
-                >
-                  <option value="Pending">Pending</option>
-                  <option value="Approved">Approved</option>
-                  <option value="Rejected">Rejected</option>
-                </select>
-              </td>
-            </tr>
             <tr>
               <td>Experience(years):</td>
               <td>
@@ -200,24 +171,6 @@ function AddJobRequests() {
                 </select>
               </td>
               <td>Selected Skills: {formData.required_skills.join(", ")}</td>
-            </tr>
-            <tr>
-              <td>Requester:</td>
-              <td>
-                <select
-                  name="requester_id"
-                  value={formData.requester_id}
-                  onChange={handleInputChange}
-                >
-                  <option value="">Select Requester</option>
-                  {requesters.map((requester) => (
-                    <option key={requester.id} value={requester.id}>
-                      {requester.id} | {requester.name} {requester.lname} |{" "}
-                      {requester.department_name} | {requester.position_name}
-                    </option>
-                  ))}
-                </select>
-              </td>
             </tr>
             <tr>
               <td>Approver:</td>

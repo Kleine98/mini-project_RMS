@@ -1,11 +1,12 @@
 import React, { useState, useEffect } from "react";
+import { useNavigate } from "react-router-dom";
 import axios from "axios";
 import Navbar from "./Navbar";
 
 function Job() {
   const [jobApplications, setJobApplications] = useState([]);
   const [loading, setLoading] = useState(true);
-  const [selectedJob, setSelectedJob] = useState(null);
+  const navigate = useNavigate();
 
   useEffect(() => {
     fetchJobApplications();
@@ -25,9 +26,7 @@ function Job() {
   };
 
   const handleRowClick = (requestId) => {
-    // Show the form for the selected job request
-    setSelectedJob(requestId);
-    // Reset comment and error when a new request is selected
+    navigate("/JobDetails", { state: { requestId: requestId } });
   };
 
   return (
@@ -73,33 +72,6 @@ function Job() {
               ))}
             </tbody>
           </table>
-
-          {selectedJob && (
-            <div>
-              <h3>Review and Approve/Reject Request ID: {selectedJob}</h3>
-              <div>
-                <label>Approval Status:</label>
-                <select
-                  value={approvalStatus}
-                  onChange={handleApprovalStatusChange}
-                >
-                  <option value="Approved">Approved</option>
-                  <option value="Rejected">Rejected</option>
-                </select>
-              </div>
-              <div>
-                <label>Comment:</label>
-                <textarea
-                  value={comment}
-                  onChange={handleCommentChange}
-                ></textarea>
-                {commentError && <p className="error">{commentError}</p>}
-              </div>
-              <button onClick={handleSubmit} disabled={isSubmitting}>
-                {isSubmitting ? "Submitting..." : "Submit"}
-              </button>
-            </div>
-          )}
         </>
       )}
     </div>

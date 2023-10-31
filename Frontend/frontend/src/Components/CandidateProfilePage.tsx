@@ -39,8 +39,8 @@ function CandidateProfilePage() {
             <table>
               <tbody>
                 <tr>
-                  <td>ID:</td>
-                  <td>{candidate.id}</td>
+                  <td>Candidate ID:</td>
+                  <td>{candidate.candidate_id}</td>
                 </tr>
                 <tr>
                   <td>Name:</td>
@@ -70,7 +70,22 @@ function CandidateProfilePage() {
                   <td>Register Date:</td>
                   <td>{candidate.register_date}</td>
                 </tr>
-                {/* Add more rows for other candidate attributes */}
+                <tr>
+                  <td>Job(Request ID):</td>
+                  <td>{candidate.request_id}</td>
+                </tr>
+                <tr>
+                  <td>Department Name:</td>
+                  <td>{candidate.department_name}</td>
+                </tr>
+                <tr>
+                  <td>Position Name:</td>
+                  <td>{candidate.position_name}</td>
+                </tr>
+                <tr>
+                  <td>Required Skills:</td>
+                  <td>{candidate.required_skills}</td>
+                </tr>
               </tbody>
             </table>
             <button type="button" onClick={handleLogoutClick}>

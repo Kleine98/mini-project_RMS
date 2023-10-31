@@ -18,12 +18,15 @@ header("Content-Type: application/json");
 
 function handleLogin($conn)
 {
-    // Check if 'id' and 'password' are present in the request
-    if (isset($_POST['email']) && isset($_POST['password'])) {
-        $email = $_POST['email'];
-        $password = $_POST['password'];
+    // Check if JSON data is present in the request
+    $data = json_decode(file_get_contents('php://input'), true);
 
-        // SQL query to check if the provided 'id' and 'password' match a candidate record
+    // Check if JSON data is successfully decoded
+    if (is_array($data) && isset($data['email']) && isset($data['password'])) {
+        $email = $data['email'];
+        $password = $data['password'];
+
+        // SQL query to check if the provided 'email' and 'password' match a candidate record
         $sql = "SELECT * FROM candidate WHERE email = '$email' AND password = '$password'";
 
         // Execute the query
@@ -39,9 +42,6 @@ function handleLogin($conn)
                 // Candidate is authenticated
                 $candidate_data = mysqli_fetch_assoc($result);
 
-                // Store candidate data in the session
-                $_SESSION['candidate'] = $candidate_data;
-
                 // Return the candidate data in the response
                 echo json_encode($candidate_data);
             } else {
@@ -55,6 +55,7 @@ function handleLogin($conn)
         echo json_encode($response);
     }
 }
+
 
 function handleLogout()
 {

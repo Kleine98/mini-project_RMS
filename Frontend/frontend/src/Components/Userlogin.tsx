@@ -1,53 +1,85 @@
 import React, { useState } from "react";
-import { useNavigate } from "react-router-dom"; // Import useNavigate
+import { useNavigate } from "react-router-dom";
+import axios from "axios"; // Import Axios
 import Cookies from "js-cookie"; // Import js-cookie library
 import "./Userlogin.css";
 
-function Emplogin() {
-  const [inputs, setInputs] = useState({});
+function UserLogin() {
+  const [inputs, setInputs] = useState({
+    register_date: new Date().toISOString().split("T")[0], // Set the current date
+  });
   const [message, setMessage] = useState("");
   const [loading, setLoading] = useState(false);
-
-  // Use useNavigate inside the component function
+  const [isSignUp, setIsSignUp] = useState(false);
   const navigate = useNavigate();
 
   const handleSubmit = (event) => {
     event.preventDefault();
     setLoading(true);
 
-    // Perform the API request and handle the response here
+    const url = isSignUp
+      ? "http://203.188.54.9/~u6411130038/mini-project/Backend/api/signup_candidate.php?request=signup"
+      : "http://203.188.54.9/~u6411130038/mini-project/Backend/api/login_candidate.php?request=login";
 
-    // Example fetch request
-    fetch(
-      "http://203.188.54.9/~u6411130038/mini-project/Backend/api/login_candidate.php?request=login",
-      {
-        method: "POST",
+    const data = isSignUp
+      ? {
+          id: inputs.id,
+          name: inputs.name,
+          lname: inputs.lname,
+          email: inputs.email,
+          password: inputs.password,
+          tel: inputs.tel,
+          address: inputs.address,
+          register_date: inputs.register_date,
+        }
+      : {
+          email: inputs.email,
+          password: inputs.password,
+        };
+
+    // Use Axios to send the POST request
+    axios
+      .post(url, data, {
         headers: {
-          "Content-Type": "application/x-www-form-urlencoded",
+          "Content-Type": "application/json",
         },
-        body: `email=${inputs.email}&password=${inputs.password}`,
-      }
-    )
-      .then((response) => response.json())
-      .then((result) => {
-        console.log("API Response:", result);
+      })
+      .then((response) => {
+        console.log("API Response:", response.data);
         setLoading(false);
 
-        if (result.id) {
-          setMessage("Login successful.");
+        console.log(response.data);
+        console.log(data);
+        console.log(response);
 
-          // Set a cookie with the user ID
-          Cookies.set("candidateID", result.id, { expires: 7 }); // Expires in 7 days
-          // Redirect to the homepage with user data
-          navigate("/");
+        if (response.data) {
+          if (isSignUp) {
+            setMessage("Signup successful.");
+            Cookies.set("candidateID", data.id, { expires: 7 }); // Expires in 7 days
+            navigate("/");
+          } else {
+            if (response.data.id) {
+              setMessage("Login successful.");
+              Cookies.set("candidateID", response.data.id, { expires: 7 }); // Expires in 7 days
+              navigate("/");
+            } else {
+              // Show an alert when login fails
+              alert("Login failed. Please check your email and password.");
+              setMessage("Login failed. Please check your email and password.");
+              // Return or prevent further actions if needed
+              return;
+            }
+          }
         } else {
-          setMessage("Login failed. Please check your credentials.");
+          setMessage("Login/Signup failed. Please check your credentials.");
         }
       })
       .catch((error) => {
-        console.error("Error during login:", error);
+        console.error("Error during login/signup:", error);
         setLoading(false);
-        setMessage("Login failed. An error occurred.");
+        // Show an alert when an error occurs
+        alert("Login/Signup failed. An error occurred.");
+        setMessage("Login/Signup failed. An error occurred.");
       });
   };
 
@@ -55,7 +87,7 @@ function Emplogin() {
     <>
       <div className="logincontainer">
         <div className="login-form">
-          <h2>Login</h2>
+          <h2>{isSignUp ? "Signup" : "Login"}</h2>
           <div className="icon">
             <i className="fas fa-user"></i>
           </div>
@@ -65,11 +97,80 @@ function Emplogin() {
             method="post"
             onSubmit={handleSubmit}
           >
+            {isSignUp && (
+              <>
+                <div className="form-group">
+                  <label className="name">ID:</label>
+                  <input
+                    type="text"
+                    name="id"
+                    value={inputs.id || ""}
+                    onChange={(e) =>
+                      setInputs({ ...inputs, id: e.target.value })
+                    }
+                    placeholder="Enter your ID"
+                    required
+                  ></input>
+                </div>
+                <div className="form-group">
+                  <label className="name">First Name:</label>
+                  <input
+                    type="text"
+                    name="name"
+                    value={inputs.name || ""}
+                    onChange={(e) =>
+                      setInputs({ ...inputs, name: e.target.value })
+                    }
+                    placeholder="Enter your first name"
+                    required
+                  ></input>
+                </div>
+                <div className="form-group">
+                  <label className="lname">Last Name:</label>
+                  <input
+                    type="text"
+                    name="lname"
+                    value={inputs.lname || ""}
+                    onChange={(e) =>
+                      setInputs({ ...inputs, lname: e.target.value })
+                    }
+                    placeholder="Enter your last name"
+                    required
+                  ></input>
+                </div>
+                <div className="form-group">
+                  <label className="tel">Phone Number:</label>
+                  <input
+                    type="text"
+                    name="tel"
+                    value={inputs.tel || ""}
+                    onChange={(e) =>
+                      setInputs({ ...inputs, tel: e.target.value })
+                    }
+                    placeholder="Enter your phone number"
+                    required
+                  ></input>
+                </div>
+                <div className="form-group">
+                  <label className="address">Address:</label>
+                  <input
+                    type="text"
+                    name="address"
+                    value={inputs.address || ""}
+                    onChange={(e) =>
+                      setInputs({ ...inputs, address: e.target.value })
+                    }
+                    placeholder="Enter your address"
+                    required
+                  ></input>
+                </div>
+              </>
+            )}
             <div className="form-group">
               <label className="email">Email:</label>
               <input
                 type="text"
-                name="username"
+                name="email"
                 value={inputs.email || ""}
                 onChange={(e) =>
                   setInputs({ ...inputs, email: e.target.value })
@@ -92,7 +193,24 @@ function Emplogin() {
               ></input>
             </div>
             <div className="form-group">
-              <input type="submit" value="Login"></input>
+              <input
+                type="submit"
+                value={isSignUp ? "Signup" : "Login"}
+              ></input>
+            </div>
+            <div className="form-group">
+              <p>
+                {isSignUp
+                  ? "Already have an account? "
+                  : "Don't have an account? "}
+                <button
+                  type="button"
+                  onClick={() => setIsSignUp(!isSignUp)}
+                  className="toggle-button"
+                >
+                  {isSignUp ? "Login" : "Signup"}
+                </button>
+              </p>
             </div>
           </form>
         </div>
@@ -101,4 +219,4 @@ function Emplogin() {
   );
 }
 
-export default Emplogin;
+export default UserLogin;
